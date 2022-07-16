@@ -1,0 +1,31 @@
+### H2 ###
+# This profile is for development purposes and uses the embedded H2 database
+
+server:
+  port: 8080
+
+spring:
+
+  profiles:
+    profile-name: H2
+
+  h2:
+    console:
+      enabled: true
+      path: /h2
+
+  jpa:
+    show-sql: false
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+    open-in-view: true
+
+  datasource:
+    username: sa
+    password:
+    url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
