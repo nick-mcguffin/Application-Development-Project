@@ -22,6 +22,7 @@
 *.iws
 *.iml
 *.ipr
+/sql/**
 # Allow run configurations
 !.run/**
 
