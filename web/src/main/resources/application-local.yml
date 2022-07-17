@@ -1,0 +1,27 @@
+### LOCAL ###
+# This profile is for development purposes and uses a local MySQL database
+
+server:
+  port: 8080
+
+spring:
+
+  profiles:
+    profile-name: LOCAL
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    database:
+      name: wilma_db
+      host: localhost
+      port: 3306
+    url: jdbc:mysql://${spring.datasource.database.host}:${spring.datasource.database.port}/${spring.datasource.database.name}
+    username: WILMA_USER
+    password: WILMA_P455W0RD
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties.hibernate.dialect: org.hibernate.dialect.MySQL5Dialect
+hibernate:
+  format_sql: true
