@@ -1,4 +1,4 @@
-package com.app_dev_project;
+package com.wilma.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,9 +7,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.app_dev_project.*"})
-@EntityScan(basePackages = {"com.app_dev_project.*"})
-@EnableJpaRepositories(basePackages = {"com.app_dev_project.*"})
+@ComponentScan(basePackages = {"com.wilma.*"})
+@EntityScan(basePackages = {"com.wilma.*"})
+@EnableJpaRepositories(basePackages = {"com.wilma.*"})
 
 public class App {
 

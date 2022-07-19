@@ -11,17 +11,9 @@
         <version>0.0.1</version>
     </parent>
 
-    <artifactId>repository</artifactId>
-    <name>Repository</name>
+    <artifactId>config</artifactId>
+    <name>Config</name>
     <version>0.0.1</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.wilma</groupId>
-            <artifactId>entity</artifactId>
-            <version>0.0.1</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 </project>

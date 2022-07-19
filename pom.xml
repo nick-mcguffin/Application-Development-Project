@@ -11,17 +11,18 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.app-dev-project</groupId>
+	<groupId>com.wilma</groupId>
 	<artifactId>wilma</artifactId>
 	<version>0.0.1</version>
 	<name>Work Integrated Learning Management Application</name>
 	<description>A Work Integrated Learning System to facilitate employment and placement between students, educators, and employers</description>
 
 	<modules>
-		<module>web</module> <!-- Web host module -->
-		<module>repository</module>
+		<module>config</module>
 		<module>entity</module>
+		<module>repository</module>
 		<module>service</module>
+		<module>web</module> <!-- Web host module -->
 	</modules>
 
 	<developers>
