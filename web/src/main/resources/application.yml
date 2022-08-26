@@ -7,8 +7,4 @@ spring:
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
-    active: h2 # h2, local, aws
-
-#   If running the "local" profile, either:
-#     1. Run "create-db-and-user.sql" to set up the database and user, or
-#     2. Create a local user "WILMA_USER" with password "WILMA_P455W0RD" and access to the database "wilma_db"
+    active: prod # Set this as either dev or prod
