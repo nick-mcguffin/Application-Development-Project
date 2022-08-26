@@ -1,14 +1,5 @@
 # Work Integrated Learning Management Application (WILMA)
 
-## MySQL Database & User
-- [create-db-and-user.sql](sql/create-db-and-user.sql)
-
-## Profiles
-- [application.yml](web/src/main/resources/application.yml) - Common settings including setting the active profile
-- [application-aws.yml](web/src/main/resources/application-aws.yml) - Settings specific to AWS
-- [application-h2.yml](web/src/main/resources/application-h2.yml) - Settings for using an embedded H2 database
-- [application-local.yml](web/src/main/resources/application-local.yml) - Local development using a local instance of MySQL database
-
 <table style="undefined;table-layout: fixed; width: 671px">
 <colgroup>
 <col style="width: 221px">
@@ -137,7 +128,7 @@ Tasks include:
 <a href="https://github.com/" title="GitHub">
 <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"/>
 </a>
- 
+
 <br/><hr/><br/>
 
 **Get In Touch**
