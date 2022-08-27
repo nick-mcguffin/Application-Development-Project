@@ -17,6 +17,10 @@ public class CustomUserDetails implements UserDetails {
 
     private UserAccount user;
 
+    /**
+     * Gets the granted authorities for each role
+     * @return A collection of granted authorities according to each custom {@link com.wilma.entity.forum.users.Role}
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return user.getRoles().stream().map(role ->
