@@ -38,3 +38,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+DB_INFO.md
+ignored/
