@@ -7,4 +7,8 @@ spring:
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
-    active: prod # Set this as either dev or prod
+    active: dev # Set this as either dev or prod
+
+api:
+  v1.context-path: /api/v1
+  v2.context-path: /api/v2
