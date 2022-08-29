@@ -1,6 +1,11 @@
 @charset "UTF-8";
 
 /* We need to replace this with our own */
+
+.card{
+    margin: 10px;
+}
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
