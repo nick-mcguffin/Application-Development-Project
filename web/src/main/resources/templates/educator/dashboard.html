@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar Menu -->
+            <div th:replace="fragments/navigation :: sidebar"></div>
+            <div id="page-content-wrapper">
+                <!-- Top Navigation Bar -->
+                <div th:replace="fragments/navigation :: top-navigation"></div>
+                <div class="container-fluid">
+                    <!-- breadcrumb -->
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        </ol>
+                    </nav>
+                    <!-- Cards -->
+                    <!-- Row 1 -->
+                    <div class="row mx-auto">
+                        <div class="card m-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Jobs & Placements</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                                <p class="card-text">View and manage jobs and placements</p>
+                                <a th:href="@{marketplace}" class="btn btn-primary">Browse</a>
+                            </div>
+                        </div>
+                        <div class="card m-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Forum</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                                <p class="card-text">View and manage forum post and replies</p>
+                                <a th:href="@{forum}" class="btn btn-primary">Browse</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 2 -->
+                    <div class="row mx-auto">
+                        <div class="card m-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Expressions of Interest</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                                <p class="card-text">Receive and release placement expressions of interest</p>
+                                <a th:href="@{forum}" class="btn btn-primary">Browse</a>
+                            </div>
+                        </div>
+                        <div class="card m-3" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">Profile</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                                <p class="card-text">View and manage your personal profile</p>
+                                <a th:href="@{forum}" class="btn btn-primary">Browse</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div th:replace="fragments/scripts"></div>
+    </body>
+</html>
