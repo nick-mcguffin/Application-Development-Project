@@ -2,6 +2,7 @@
 package com.wilma.config.security;
 
 import com.wilma.config.handlers.CustomAccessDeniedHandler;
+import com.wilma.config.handlers.LoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 /**
  * Spring security configuration used while in the PROD profile.
@@ -49,6 +51,11 @@ public class SecurityConfigPROD {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new LoginSuccessHandler();
+    }
+
     /**
      * Instantiating the access denied handler so that it can be aut-wired throughout the application
      * @return The custom access denied handler
@@ -68,12 +75,13 @@ public class SecurityConfigPROD {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/educators/**").hasRole("ADMIN")
-                .antMatchers("/partners/**").hasAnyRole("PARTNER", "ADMIN")
-                .antMatchers("/students/**").hasAnyRole("STUDENT", "ADMIN")
-                .antMatchers("/", "/h2/**").permitAll().and()
+                .antMatchers("/educator/**").hasRole("ADMIN")
+                .antMatchers("/partner/**").hasAnyRole("PARTNER", "ADMIN")
+                .antMatchers("/student/**").hasAnyRole("STUDENT", "ADMIN")
+                .antMatchers("/").permitAll().and()
 
                 .formLogin()//.loginPage("/login")
+                .successHandler(authenticationSuccessHandler())
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
 
                 .logout().logoutSuccessUrl("/")
