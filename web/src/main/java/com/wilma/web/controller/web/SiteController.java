@@ -15,7 +15,7 @@ import java.util.Map;
 public class SiteController {
 
     @GetMapping("/")
-    private String home(Model model) {
+    public String home(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Home"
         ));
