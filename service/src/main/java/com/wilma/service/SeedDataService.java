@@ -56,6 +56,7 @@ public class SeedDataService {
     public void initRoles() {
         var roles = List.of(
                 new Role("STUDENT"),
+                new Role("PARTNER"),
                 new Role("ADMIN")
         );
         roles.forEach(role -> {
@@ -76,6 +77,16 @@ public class SeedDataService {
                         true,
                         true,
                         Set.of(roleRepository.findByName("ADMIN"))),
+                new UserAccount(
+                        null,
+                        "partner",
+                        passwordEncoder.encode("partner"),
+                        "partner@email.com",
+                        true,
+                        true,
+                        true,
+                        true,
+                        Set.of(roleRepository.findByName("PARTNER"))),
                 new UserAccount(
                         null,
                         "student",

@@ -1,0 +1,50 @@
+<nav th:fragment="top-navigation" class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
+     xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid">
+        <button class="btn btn-outline-secondary" id="sidebarToggle">Menu</button>
+        <a class="navbar-brand" th:href="@{~/}">Wilma</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+                <li th:class="| nav-item ${currentPage == home? 'active':''}|">
+                    <a class="nav-link" th:href="@{~/}">Home</a>
+                </li>
+                <li th:class="| nav-item ${currentPage == register? 'active':''}|">
+                    <a class="nav-link" th:href="@{~/register}">Register</a>
+                </li>
+                <li th:class="| nav-item ${currentPage == about? 'active':''}|">
+                    <a class="nav-link" th:href="@{~/about}">About</a>
+                </li>
+                <li th:class="| nav-item ${currentPage == contact? 'active':''}|">
+                    <a class="nav-link" th:href="@{~/contact}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{~/login}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div th:fragment="sidebar" class="border-end bg-white" id="sidebar-wrapper" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <div class="sidebar-heading border-bottom navbar-light bg-light">
+        <a class="navbar-brand" sec:authorize="isAuthenticated()">Hi <span sec:authentication="name"></span>!</a>
+        <a class="navbar-brand" sec:authorize="isAnonymous()">Hi Developer</a>
+    </div>
+    <!-- Sidebar Menu Items -->
+    <div class="list-group list-group-flush">
+        <div th:each="element: ${menuElements}">
+            <a  th:class="| list-group-item list-group-item-action list-group-item-light p-3 ${currentPage == element.page? 'active':''} |"
+                th:href="@{${element.path}}">
+                <span class="material-symbols-outlined" th:text="${element.icon}">house</span>
+                <span th:text="${element.displayName}"></span>
+            </a>
+        </div>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" id="logout-sidebar-bottom"
+                th:href="@{~/}">
+            <span class="material-symbols-outlined">logout</span>Logout</a>
+    </div>
+</div>
