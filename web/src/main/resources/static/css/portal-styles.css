@@ -1,0 +1,33 @@
+/* Educator Jobs & Placements */
+.table-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+
+.pending-approval-table-header {
+    background-color: #e48686
+}
+
+.btn-approve {
+    color: #6bd503;
+}
+
+.btn-edit {
+    color: #034cd5;
+}
+
+.btn-delete {
+    color: #d50303;
+}
+
+.table-heading {
+    font-weight: 400;
+    font-size: 24px;
+}
+
+a, u {
+    text-decoration: none;
+}
+/* End - Educator Jobs & Placements */
