@@ -1,11 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head"></head>
-    <body>
+    <head th:replace="fragments/head"></head>
+    <link th:href="@{~/css/index.css}" rel="stylesheet" />
+
+    <body class="bg-dark bg-opacity-10">
         <div th:replace="fragments/navigation :: top-navigation"></div>
-
-        <h1>Home</h1>
-
+            <div class="position-absolute top-50 start-50 translate-middle p-2 m-6 size">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                    <div class="carousel-indicators">
+                        <buton type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                    </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <img src ="assets/example.jpg" class="d-block w-100" alt="..." />
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>EXAMPLE SLIDE TITLE 1</h5>
+                                    <p>THIS MUST BE CHANGED</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/example2.jpg" class="d-block w-100" alt="..." />
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>EXAMPLE SLIDE TITLE 2</h5>
+                                    <p>THIS MUST BE CHANGED</p>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <img src="assets/example3.jpg" class="d-block w-100" alt="..." />
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>EXAMPLE SLIDE TITLE 3</h5>
+                                    <p>THIS MUST BE CHANGED</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                </div>
+                <hr>
+                <div class="center">
+                    <p class="sign-up-text">"Organising student placements has never been this easy."</p>
+                    <br>
+                </div>
+                <div class="center">
+                    <button type ="button" class="btn btn-primary sign-up-button">Sign Up Free Today!</button>
+                </div>
+                <hr>
+            </div>
         <div th:replace="fragments/scripts"></div>
     </body>
 </html>
