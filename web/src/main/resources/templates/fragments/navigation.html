@@ -1,33 +1,34 @@
-<nav th:fragment="top-navigation" class="navbar navbar-expand-lg navbar-light bg-light border-bottom"
-     xmlns:th="http://www.thymeleaf.org">
+<nav th:fragment="top-navigation" class="navbar navbar-expand-lg navbar-light bg-light border-bottom nav-bar-style"
+    xmlns:th="http://www.thymeleaf.org">
     <div class="container-fluid">
         <button class="btn btn-outline-secondary" id="sidebarToggle">Menu</button>
-        <a class="navbar-brand" th:href="@{~/}">Wilma</a>
+        <img th:src="@{~/assets/cqu-logo-white.png}" width="136" height="90"/>
+        <a class="navbar-brand nav-bar-style nav-bar-title" th:href="@{~/}">Work Integrated Learning Management Application (WILMA)</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"></span></button>
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+        </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                 <li th:class="| nav-item ${currentPage == home? 'active':''}|">
-                    <a class="nav-link" th:href="@{~/}">Home</a>
+                    <a class="nav-link nav-bar-style" th:href="@{~/}">Home</a>
                 </li>
                 <li th:class="| nav-item ${currentPage == register? 'active':''}|">
-                    <a class="nav-link" th:href="@{~/register}">Register</a>
+                    <a class="nav-link nav-bar-style" th:href="@{~/register}">Register</a>
                 </li>
                 <li th:class="| nav-item ${currentPage == about? 'active':''}|">
-                    <a class="nav-link" th:href="@{~/about}">About</a>
+                    <a class="nav-link nav-bar-style" th:href="@{~/about}">About</a>
                 </li>
                 <li th:class="| nav-item ${currentPage == contact? 'active':''}|">
-                    <a class="nav-link" th:href="@{~/contact}">Contact</a>
+                    <a class="nav-link nav-bar-style" th:href="@{~/contact}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{~/login}">Login</a>
+                    <a class="nav-link nav-bar-style" th:href="@{~/login}">Login</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 <div th:fragment="sidebar" class="border-end bg-white" id="sidebar-wrapper" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <div class="sidebar-heading border-bottom navbar-light bg-light">

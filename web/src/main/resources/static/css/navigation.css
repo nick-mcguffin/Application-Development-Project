@@ -1,0 +1,14 @@
+.nav-bar-style {
+    background-color: #003057 !important;
+    color: #FFFFFF !important;
+}
+
+.nav-bar-title {
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 20px;
+    
+}
