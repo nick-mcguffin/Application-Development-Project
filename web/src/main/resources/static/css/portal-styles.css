@@ -11,7 +11,7 @@
 }
 
 .btn-approve {
-    color: #6bd503;
+    color: #4c9900;
 }
 
 .btn-edit {
@@ -29,5 +29,14 @@
 
 a, u {
     text-decoration: none;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-container > div {
+    margin: 10px;
+    padding: 5px;
 }
 /* End - Educator Jobs & Placements */
