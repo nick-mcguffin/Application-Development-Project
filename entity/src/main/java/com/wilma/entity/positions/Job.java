@@ -2,6 +2,7 @@ package com.wilma.entity.positions;
 
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.users.Partner;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,8 +29,8 @@ public class Job extends Position {
     @Column(name = "pay_frequency")
     private Frequency payFrequency;
 
-    public Job(Integer id, Date startDate, Date endDate, Period period, String location, String description, boolean filled, double payRate, PayType payType, Frequency payFrequency) {
-        super(id, startDate, endDate, period, location, description, filled);
+    public Job(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, double payRate, PayType payType, Frequency payFrequency) {
+        super(id, partner, startDate, endDate, period, location, description, filled);
         this.payRate = payRate;
         this.payType = payType;
         this.payFrequency = payFrequency;
