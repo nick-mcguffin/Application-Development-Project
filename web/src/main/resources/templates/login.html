@@ -1,24 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"></head>
-<body>
+<link th:href="@{~/css/login.css}" rel="stylesheet" />
+<body class="bg-dark bg-opacity-10">
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+
+<div class="container">
+    <h1>Login</h1>
+
 <form name='f' action="login" method='POST'>
 
-    <table>
-        <tr>
-            <td>User:</td>
-            <td><input type='text' name='username' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password'/></td>
-        </tr>
-        <tr>
-            <td><input name="submit" type="submit" value="submit"/></td>
-        </tr>
-    </table>
-</form>
 
+            <div class="txt_field">
+
+            <input type='text' name='username' value='' required>
+                <span> </span>
+                <Label>Username</Label>
+            </div>
+
+            <div class="txt_field">
+
+           <input type='password' name='password' value='' required/>
+                <span> </span>
+                <Label>Password</Label>
+            </div>
+
+          <input name="submit" type="submit" value="submit"/>
+
+            <div class="signup">
+            Not signed up? <a th:href="@{/register}">Register</a>
+            </div>
+
+
+</form>
+</div>
 <div th:replace="fragments/scripts"></div>
 </body>
 </html>
