@@ -1,5 +1,6 @@
 package com.wilma.entity.positions;
 
+import com.wilma.entity.users.Partner;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +22,11 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-    //Partner
+
+    @ManyToOne
+    @JoinColumn(name = "partner_id")
+    private Partner partner;
+
     @Column(name = "start_date")
     private Date startDate;
 
