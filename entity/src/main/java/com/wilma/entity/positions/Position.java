@@ -37,5 +37,21 @@ public class Position {
     private String location;
     private String description;
     private boolean filled;
+
+    @Transient
+    private String type;
     //Category
+
+
+    public Position(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled) {
+        this.id = id;
+        this.partner = partner;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.period = period;
+        this.location = location;
+        this.description = description;
+        this.filled = filled;
+        this.type = this.getClass().getSimpleName();
+    }
 }
