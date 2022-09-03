@@ -3,12 +3,13 @@
 <head th:replace="fragments/head"></head>
 <link th:href="@{~/css/portal-styles.css}" rel="stylesheet" />
 <body onload="hidePositionsPendingTableIfEmpty()">
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+
     <div class="d-flex" id="wrapper">
         <!-- Sidebar Menu -->
         <div th:replace="fragments/navigation :: sidebar"></div>
         <div id="page-content-wrapper">
-            <!-- Top Navigation Bar -->
-            <div th:replace="fragments/navigation :: top-navigation"></div>
             <div class="container-fluid">
 
                 <!-- breadcrumb -->
