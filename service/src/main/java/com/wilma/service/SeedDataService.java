@@ -1,9 +1,9 @@
 
 package com.wilma.service;
 
-import com.wilma.entity.forum.users.RemoteClient;
-import com.wilma.entity.forum.users.Role;
-import com.wilma.entity.forum.users.UserAccount;
+import com.wilma.entity.users.RemoteClient;
+import com.wilma.entity.users.Role;
+import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.RemoteClientRepository;
 import com.wilma.repository.RoleRepository;
 import com.wilma.repository.UserAccountRepository;

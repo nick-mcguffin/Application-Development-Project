@@ -80,7 +80,7 @@ public class SecurityConfigPROD {
                 .antMatchers("/student/**").hasAnyRole("STUDENT", "ADMIN")
                 .antMatchers("/").permitAll().and()
 
-                .formLogin()//.loginPage("/login")
+                .formLogin().loginPage("/login")
                 .successHandler(authenticationSuccessHandler())
                 .and().exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
 

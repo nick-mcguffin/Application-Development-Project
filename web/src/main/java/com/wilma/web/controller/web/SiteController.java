@@ -38,7 +38,8 @@ public class SiteController {
     }
 
     @RequestMapping("/login")
-    public ResponseEntity<?> login(){
-        return ResponseEntity.ok("Login");
+    public String login() {
+        return "/Login";
     }
 }
+

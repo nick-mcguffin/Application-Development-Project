@@ -1,6 +1,6 @@
 package com.wilma.repository;
 
-import com.wilma.entity.forum.users.RemoteClient;
+import com.wilma.entity.users.RemoteClient;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
