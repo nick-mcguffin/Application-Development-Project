@@ -4,7 +4,7 @@
 
     <div class="w-50 mx-auto">
         <form
-            id="educator-form"
+            id="student-form"
             class="row g-3 border form-border mt-3"
             th:action="@{/register}"
             method="post">
@@ -14,8 +14,8 @@
             <input type="hidden" name="userType" value="STUDENT">
             <div class="col-12"></div>
             <div class="col-md-5 ms-5 m-3">
-                <label for="staffId" class="form-label">Username</label>
-                <input type="text" class="form-control" id="staffId" aria-describedby="staffId">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="username">
             </div>
             <div class="col-md-6"></div>
             <div class="col-5 ms-5 me-3">
@@ -55,8 +55,8 @@
                 </select>
             </div>
             <div class="col-md-2 ms-5 m-3">
-                <label for="staffId" class="form-label">CQU Student ID</label>
-                <input type="text" class="form-control" id="staffId" aria-describedby="staffId">
+                <label for="studentId" class="form-label">CQU Student ID</label>
+                <input type="text" class="form-control" id="studentId" aria-describedby="studentId">
             </div>
             <div class="form-group m-3 text-center">
                 <button type="submit" class="btn form-button">Register</button>
