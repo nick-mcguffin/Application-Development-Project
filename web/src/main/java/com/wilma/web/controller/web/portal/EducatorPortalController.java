@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -19,6 +20,17 @@ public class EducatorPortalController {
                 "menuElements", UserConfiguration.educatorMenuElements
         ));
         return "/educator/dashboard";
+    }
+
+    @GetMapping("/EducatorForum")
+    public String EducatorForum(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "EducatorForum",
+                "menuElements", UserConfiguration.educatorMenuElements
+
+
+        ));
+        return "/educator/EducatorForum";
     }
     /*
     Todo:
