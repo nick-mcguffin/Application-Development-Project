@@ -1,7 +1,8 @@
 
 package com.wilma.service.security;
 
-import com.wilma.entity.forum.users.UserAccount;
+import com.wilma.entity.users.UserAccount;
+import com.wilma.entity.users.Role;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
 
     /**
      * Gets the granted authorities for each role
-     * @return A collection of granted authorities according to each custom {@link com.wilma.entity.forum.users.Role}
+     * @return A collection of granted authorities according to each custom {@link Role}
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

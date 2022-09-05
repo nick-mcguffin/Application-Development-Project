@@ -1,0 +1,26 @@
+# This file is required by AWS code pipeline
+version: 0.2
+
+# Setup environment variables
+env:
+  variables:
+    spring.datasource.database.host: "aussie-db.cjdfjxus4vpw.ap-southeast-2.rds.amazonaws.com"
+    spring.datasource.database.port: "3306"
+    spring.datasource.database.name: "wilma_system_db"
+    spring.datasource.username: "wilma_db_user"
+    spring.datasource.password: "wilma_db_pa$$word"
+
+
+phases:
+  build:
+    commands:
+      - echo Entered the build phase...
+      - mvn clean package
+  post_build:
+    commands:
+      - echo Build completed successfully
+
+artifacts:
+  files:
+    - web\target\web-0.0.1.jar #Just the main driver module's jar file
+  discard-paths: yes

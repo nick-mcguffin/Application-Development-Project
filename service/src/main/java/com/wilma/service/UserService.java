@@ -1,6 +1,6 @@
 package com.wilma.service;
 
-import com.wilma.entity.forum.users.UserAccount;
+import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
