@@ -1,0 +1,26 @@
+.new-post-button {
+    color: whitesmoke !important;
+    background-color: #003057 !important;
+    margin-bottom: 0.75em;
+}
+.recent-posts {
+  border: solid 1px black;/* The box */
+  width: 60%;/* Just to illustrate a limited width box */
+  height: auto;/* Flexible depending on the number of recent posts */
+  padding: 5px;/* Consisten box padding */
+}
+.recent-posts > h2 {
+  font-size: 18px;/* Control the heading size */
+  margin-top: 0;/* Pull the heading up */
+}
+
+ .post-preview {
+   white-space: nowrap;/* Prevent the text going onto the next line */
+   overflow: hidden;/* Don't show any text outside of the box */
+   text-overflow: ellipsis;/* Show ... at the end */
+   list-style: disc inside;/* Restore bullet points */
+ }
+
+ .preview-list {
+   padding: 0;/* Pull the list to the left */
+ }
