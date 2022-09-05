@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+  <div id="page-content-wrapper">
+    <!-- Top Navigation Bar -->
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+    <div class="container-fluid">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        </ol>
+      </nav>
+
+      <div th:replace="fragments/forum :: create-post-button"></div>
+      <div th:replace="fragments/forum :: category-overview"></div>
+
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>
