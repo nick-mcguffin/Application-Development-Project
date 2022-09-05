@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -22,16 +21,15 @@ public class EducatorPortalController {
         return "/educator/dashboard";
     }
 
-    @GetMapping("/EducatorForum")
-    public String EducatorForum(Model model) {
+    @GetMapping("/forum")
+    public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "EducatorForum",
+                "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements
-
-
         ));
-        return "/educator/EducatorForum";
+        return "/educator/forum/overview";
     }
+
     /*
     Todo:
         - ADP-71: Jobs & Placements
