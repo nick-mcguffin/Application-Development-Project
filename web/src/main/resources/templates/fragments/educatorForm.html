@@ -1,6 +1,5 @@
 <!-- Educator Form -->
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="educatorForm">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">   
     
     <div class="w-50 mx-auto">
         <form
@@ -8,9 +7,11 @@
             class="row g-3 border form-border mt-3"
             th:action="@{/register}"
             method="post">
+
             <div class="form-icon center mt-3">
                 <span><i class="icon icon-user"></i></span>
             </div>
+
             <input type="hidden" name="userType" value="EDUCATOR">
             <div class="col-12"></div>
             <div class="col-md-4 ms-5 m-3">
@@ -32,7 +33,7 @@
             </div>
             <div class="col-md-4 m-3">
                 <label for="discipline" class="form-label">Discipline</label>
-                <select class="form-select" aria-label="Discipline">
+                <select class="form-select" aria-label="Discipline" id="discipline">
                     <option selected>Select...</option>
                     <option value="Software Development">Software Development</option>
                     <option value="Networking">Networking</option>
@@ -41,7 +42,7 @@
                 </select>
             </div>
             <div class="col-6 ms-5 me-3 mb-1">
-                <label for="email" class="form-label">E-mail</label>
+                <label for="emailAddress" class="form-label">E-mail</label>
                 <input type="email" class="form-control" id="emailAddress" aria-describedby="emailAddress">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>

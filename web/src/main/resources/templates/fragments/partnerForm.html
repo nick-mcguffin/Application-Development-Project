@@ -2,9 +2,9 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="partnerForm">
     <form
         id="partner-form"
-        class="w-50 mx-auto"
+        class="w-50 mx-auto pt-5"
         th:action="@{/register}"
-
+        th:object="${userDTO}"
         method="post"
         hidden>
 
@@ -26,7 +26,7 @@
 
     <div class="mb-3">
         <label for="emailAddress" class="form-label">Email Address</label>
-        <input type="email" class="form-control" id="emailAddress" aria-describedby="emailHelp">
+        <input type="email" class="form-control" id="emailAddress" aria-describedby="emailAddress">
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
     </div>
 
