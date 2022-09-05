@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/head"></head>
+<body>
+
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+<div>
+    <div class="w-25 mx-auto mt-3" style="position:relative">
+        <!-- Select the user type -->
+        <label for="userList" class="form-label mb-3 center">Select your account type from the following:</label>
+        <select class="form-select" id="userList" onchange="showFragment(this.value)">
+            <option th:each="opt : ${userOptions}"
+                    th:text="${opt}"
+                    th:value="${opt}">
+            </option>
+        </select>
+        <hr>
+    </div>
+</div>
+    <!-- Each of the 3 registration forms -->
+    <div th:replace="fragments/educatorForm"></div>
+    <div th:replace="fragments/partnerForm"></div>
+    <div th:replace="fragments/studentForm"></div>
+</body>
+<script>
+
+    //Show only the type passed, hide all else
+    function showFragment(userType) {
+        document.getElementById("educator-form").hidden = (userType != "Educator")
+        document.getElementById("partner-form").hidden  = (userType != "Partner")
+        document.getElementById("student-form").hidden  = (userType != "Student")
+    }
+
+</script>
+</html>

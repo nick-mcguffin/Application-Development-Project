@@ -1,6 +1,7 @@
 .nav-bar-style {
     background-color: #003057 !important;
     color: #FFFFFF !important;
+    position: relative;
 }
 
 .nav-bar-title {
