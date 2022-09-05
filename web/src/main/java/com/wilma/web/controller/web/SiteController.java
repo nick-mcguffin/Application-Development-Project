@@ -27,7 +27,7 @@ public class SiteController {
     public String register(Model model) {
         model.addAllAttributes(Map.of(
             "currentPage", "Register",
-                "userOptions", List.of("Educator", "Partner", "Student")));
+                "userOptions", List.of("Select...", "Educator", "Partner", "Student")));
         return "/register";
     }
 
