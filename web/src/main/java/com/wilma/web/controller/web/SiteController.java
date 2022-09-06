@@ -38,14 +38,11 @@ public class SiteController {
         return "/about";
     }
 
-    @RequestMapping("/about")
-    public ResponseEntity<?> about() {
-        return ResponseEntity.ok("About");
-    }
-
-    @RequestMapping("/contact")
-    public ResponseEntity<?> contact() {
-        return ResponseEntity.ok("Contact");
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Contact Us"));
+        return "/contact";
     }
 
     @RequestMapping("/login")
