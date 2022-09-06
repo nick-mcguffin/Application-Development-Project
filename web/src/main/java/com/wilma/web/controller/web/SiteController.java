@@ -31,6 +31,13 @@ public class SiteController {
         return "/register";
     }
 
+    @GetMapping("/about")
+    public String about(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "About Us"));
+        return "/about";
+    }
+
     @RequestMapping("/about")
     public ResponseEntity<?> about() {
         return ResponseEntity.ok("About");
