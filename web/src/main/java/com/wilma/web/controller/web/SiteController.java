@@ -36,10 +36,6 @@ public class SiteController {
     public ResponseEntity<?> contact(){
         return ResponseEntity.ok("Contact");
     }
-    @RequestMapping("/ForumCategories")
-    public String ForumCategories() {
-        return "Forum";
-    }
 
     @RequestMapping("/login")
     public String login() {
