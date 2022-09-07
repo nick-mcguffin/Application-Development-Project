@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.Period;
 import java.util.Date;
@@ -56,6 +57,24 @@ public class EducatorPortalController {
                 "menuElements", UserConfiguration.educatorMenuElements
         ));
         return "/educator/forum/overview";
+    }
+
+    @GetMapping("/forum-content")
+    public String forumContent(@RequestParam String type, Model model) {
+            model.addAllAttributes(Map.of(
+                            "currentPage", "forum",
+                            "menuElements", UserConfiguration.educatorMenuElements,
+                            "contentType", type));
+            return "/educator/forum/forum-content";
+    }
+
+    @GetMapping("/forum-thread")
+    public String forumThread(@RequestParam String category, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "category", category));
+        return "/educator/forum/forum-thread";
     }
 
     /*
