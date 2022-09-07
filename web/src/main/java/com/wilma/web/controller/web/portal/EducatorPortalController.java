@@ -80,8 +80,6 @@ public class EducatorPortalController {
     /*
     Todo:
         - ADP-74: Jobs & Placement Management
-        - ADP-72: Forum
-        - ADP-75: Forum Management
         - ADP-81: Expressions Of Interest
         - ADP-73: Profile
      */
