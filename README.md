@@ -1,5 +1,9 @@
 # Work Integrated Learning Management Application (WILMA)
 
+## MySQL Database & User
+- [create-db-and-user.sql](sql/create-db-and-user.sql)
+
+
 <table style="undefined;table-layout: fixed; width: 671px">
 <colgroup>
 <col style="width: 221px">
