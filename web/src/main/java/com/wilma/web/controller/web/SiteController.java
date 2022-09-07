@@ -46,8 +46,9 @@ public class SiteController {
     }
 
     @RequestMapping("/login")
-    public String login() {
-        return "/Login";
+    public String login(Model model) {
+        model.addAttribute("currentPage", "Login");
+        return "/login";
     }
 }
 
