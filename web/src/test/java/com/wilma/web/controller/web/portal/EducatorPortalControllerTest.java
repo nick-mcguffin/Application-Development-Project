@@ -14,6 +14,8 @@ class EducatorPortalControllerTest {
         assertEquals("/educator/dashboard", controller.dashboard(model), "Unexpected dashboard endpoint");
         assertEquals("/educator/marketplace", controller.marketplace(model), "Unexpected marketplace endpoint");
         assertEquals("/educator/forum/overview", controller.forumOverview(model), "Unexpected forum endpoint");
+        assertEquals("/educator/forum/forum-content", controller.forumContent("post", model), "Unexpected forum endpoint");
+        assertEquals("/educator/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
 //        assertEquals("/educator/expressions_of_interest", controller.expressionsOfInterest(model), "Unexpected expressions_of_interest endpoint");
 //        assertEquals("/educator/profile", controller.profile(model), "Unexpected profile endpoint");
     }
