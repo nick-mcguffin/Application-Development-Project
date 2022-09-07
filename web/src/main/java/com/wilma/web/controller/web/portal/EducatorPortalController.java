@@ -30,6 +30,14 @@ public class EducatorPortalController {
         return "/educator/dashboard";
     }
 
+    @GetMapping("/EducatorProfile")
+    public String EducatorProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "dashboard",
+                "menuElements", UserConfiguration.educatorMenuElements
+        ));
+        return "/educator/EducatorProfile";
+    }
     @GetMapping("/marketplace")
     public String marketplace(Model model) {   
         model.addAllAttributes(Map.of(
