@@ -1,5 +1,5 @@
 
-package com.wilma.entity.forum.users;
+package com.wilma.entity.users;
 
 import lombok.*;
 
