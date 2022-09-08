@@ -36,14 +36,14 @@ public class EducatorPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
-                    new Job(1, new Partner("Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                    new Job(2, new Partner("Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                    new Placement(3, new Partner("Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false)
+                    new Job(1, new Partner("Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                    new Job(2, new Partner("Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                    new Placement(3, new Partner("Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
                 ),
                 "pendingPositions", List.of(
-                    new Job(1, new Partner("Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                    new Job(2, new Partner("Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                    new Placement(3, new Partner("Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false)
+                    new Job(1, new Partner("Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                    new Job(2, new Partner("Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, false, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                    new Placement(3, new Partner("Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
                 )
         ));
         return "/educator/marketplace";
