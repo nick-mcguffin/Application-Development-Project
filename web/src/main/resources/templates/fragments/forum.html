@@ -11,32 +11,25 @@
 <!-- Forum category overview (home view) -->
 <div th:fragment="category-overview" xmlns:th="http://www.thymeleaf.org">
 
-    <div class="accordion" id="accordionExample">
+    <div class="accordion" id="categoryAccordion" th:each="category : ${categoryList}">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                        aria-expanded="true" aria-controls="collapseOne">
-                    General Discussion
+            <h2 class="accordion-header" th:id="|heading${category.id}|">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#collapse${category.id}"
+                        aria-expanded="true" th:aria-controls="|collapse${category.id}" th:text="${category.name}">
                 </button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
-                 data-bs-parent="#accordionExample">
+            <div th:id="|collapse${category.id}" class="accordion-collapse collapse show" th:aria-labelledby="|heading${category.id}|"
+                 data-bs-parent="#categoryAccordion">
                 <div class="accordion-body">
-                    <a class="view-category mx-auto" th:href="@{forum-thread?category=General%20Discussion}">View All<span class="material-symbols-outlined">open_in_new</span></a>
-                    <p>
-                        This is ugly as crap but some kind of description would go here
-                    </p>
+                    <a class="view-category mx-auto" th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
+                    <p th:text="${category.description}">Category Description</p>
 
+                    <!-- Iterate recent posts for the current category -->
                     <div class="recent-posts">
                         <h2>Recent Posts:</h2>
-                        <ul class="preview-list">
+                        <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
                             <li class="post-preview">
-                                <a href="#">This post title is fine because it's short</a>
-                            </li>
-                            <li class="post-preview">
-                                <a href="#">But this post title is excessively long and would extend beyond the bounds
-                                    of our "recent
-                                    posts" container</a>
+                                <a th:href="@{forum-thread?category={cat}(cat=${category.name})}" th:text="${post.title}">Post Title</a>
                             </li>
                         </ul>
                     </div>
@@ -45,38 +38,6 @@
             </div>
         </div>
 
-        <!-- Only here for demo purposes -->
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                        aria-expanded="true" aria-controls="collapseTwo">
-                    Resume Help Q&A
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
-                 data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    <p>
-                        This is ugly as crap but some kind of description would go here
-                    </p>
-
-                    <div class="recent-posts">
-                        <h2>Recent Posts:</h2>
-                        <ul class="preview-list">
-                            <li class="post-preview">
-                                <a href="#">This post title is fine because it's short</a>
-                            </li>
-                            <li class="post-preview">
-                                <a href="#">But this post title is excessively long and would extend beyond the bounds
-                                    of our "recent
-                                    posts" container</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -142,7 +103,7 @@
 <div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center" th:text="${category}">Category Title</h1>
-    <div class="accordion" id="categoryThread">
+    <div class="accordion" id="categoryThread" >
         <div class="accordion-item">
             <h2 class="accordion-header" id="categoryOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionComments" aria-expanded="true" aria-controls="accordionComments">

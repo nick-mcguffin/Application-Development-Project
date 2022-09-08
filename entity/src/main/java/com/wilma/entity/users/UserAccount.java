@@ -24,7 +24,7 @@ public class UserAccount {
     @Column(name = "id", nullable = false)
     private Integer userId;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
@@ -51,4 +51,7 @@ public class UserAccount {
             inverseJoinColumns = @JoinColumn(name = "roleId", referencedColumnName = "id"))
     private Set<Role> roles;
 
+    public UserAccount(String username) {
+        this.username = username;
+    }
 }
