@@ -4,6 +4,7 @@ package com.wilma.service;
 import com.wilma.entity.Category;
 import com.wilma.entity.Tag;
 import com.wilma.entity.forum.Post;
+import com.wilma.entity.forum.Reply;
 import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.RemoteClient;
 import com.wilma.entity.users.Role;
@@ -43,6 +44,8 @@ public class SeedDataService {
     @Autowired
     private PostRepository postRepository;
     @Autowired
+    private ReplyRepository replyRepository;
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
@@ -55,9 +58,19 @@ public class SeedDataService {
         initTags();
         initAuthors();
         initPosts();
-
+        initReplies();
     }
 
+    public void initReplies(){
+        //(Integer id, UserAccount author, Date timestamp, String body, Post post)
+        var google = userRepository.findByUsername("google");
+        var post = postRepository.findByTitleIgnoreCase("Working with Microsoft");
+        var reply1 = new Reply(null, google, new Date(), "Can we come work for you?", post);
+        if(!replyRepository.existsByUid(reply1.getUid())){
+            replyRepository.save(reply1);
+            System.out.println("Reply saved");
+        }
+    }
     public void initPosts(){
         var category1 = categoryRepository.findByNameIgnoreCase("Job FAQ");
         var category2 = categoryRepository.findByNameIgnoreCase("General Discussion");

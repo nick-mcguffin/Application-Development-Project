@@ -83,7 +83,9 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
-                "category", category));
+                "category", category,
+                "postsByCategory", forumService.getPostByCategoryName(category),
+                "repliesForPosts", forumService.getPostRepliesByCategory(category)));
         return "/educator/forum/forum-thread";
     }
 

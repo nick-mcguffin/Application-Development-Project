@@ -79,3 +79,9 @@ span.material-symbols-outlined {
 .hidden {
  display: none;
 }
+
+.reply-author {
+  font-size: 85%;
+  color: dimgrey;
+  font-style: italic;
+}

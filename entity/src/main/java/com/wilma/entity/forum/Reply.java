@@ -22,8 +22,8 @@ public class Reply extends ForumContent {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public Reply(Integer id, UserAccount author, Date timestamp, String content, Post post) {
-        super(id, author, timestamp, content);
+    public Reply(Integer id, UserAccount author, Date timestamp, String body, Post post) {
+        super(id, author, timestamp, body);
         this.post = post;
     }
 }
