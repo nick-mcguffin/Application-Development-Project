@@ -48,8 +48,8 @@
                 $("#pendingApprovalFilter").on("keyup", function () {
                     var value = $(this).val();
                     var table = document.getElementById("pendingPositionsData");
-                    var filteredData = filterPositions(value, pendingPositions);
-                    rebuildPositionsTable(filteredData, table);
+                    var filteredData = educatorFilterPositions(value, positions);
+                    rebuildEducatorPositionsTable(filteredData, table);
                 });
         </script>
     </div>
@@ -109,8 +109,8 @@
                 $("#approvedFilter").on("keyup", function () {
                     var value = $(this).val();
                     var table = document.getElementById("approvedPositionsData");
-                    var filteredData = filterPositions(value, positions);
-                    rebuildPositionsTable(filteredData, table);
+                    var filteredData = educatorFilterPositions(value, positions);
+                    rebuildEducatorPositionsTable(filteredData, table);
                 });
         </script>
     </div>
@@ -168,8 +168,8 @@
                 $("#partnerFilter").on("keyup", function () {
                     var value = $(this).val();
                     var table = document.getElementById("partnerPositionsData");
-                    var filteredData = filterPositions(value, positions);
-                    rebuildPositionsTable(filteredData, table);
+                    var filteredData = partnerFilterPositions(value, positions);
+                    rebuildPartnerPositionsTable(filteredData, table);
                 });
         </script>
     </div>
