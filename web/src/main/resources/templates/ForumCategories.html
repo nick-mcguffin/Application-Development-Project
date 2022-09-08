@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+  <div id="page-content-wrapper">
+    <!-- Top Navigation Bar -->
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+    <div class="container-fluid">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Forum_Categories</li>
+        </ol>
+      </nav>
+
+
+      <div class="container">
+        <div class="row">
+
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >General Discussion</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">this sites forum category ui sucks</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >Resume Q&A</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">Did you see this new function?</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >Software Development</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">Did you see this new function?</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >Network</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">Did you see this new function?</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >Business Analysis</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">Did you see this new function?</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+          <div class="card col-sm-12 col-md-4 text-center" style="width: 22rem;">
+            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                 alt="Jobs & Placements">
+            <div class="card-body" >
+              <h5 class="card-title" >Project Management</h5>
+              <p class="card-text"><div class="card" style="width: 18rem;">
+              <div class="card-header">
+                Recent Posts
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="https://www.w3schools.com">Did you see this new function?</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Woah this forum is cool</a></li>
+                <li class="list-group-item"><a href="https://www.w3schools.com">Testing 123 123</a></li>
+              </ul>
+            </div>
+              <div class="card-footer mx-auto justify-content-center">
+                <button type="button" class="btn btn-block btn-primary" style="width:100%">Go to Category</button>
+
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>
