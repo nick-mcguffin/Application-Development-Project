@@ -39,7 +39,7 @@
   display: none;
 }
 
-textarea {
+.user-input{
   border-radius: 5px;
   margin-left: calc(var(--bs-gutter-x) * .5);
   margin-right: calc(var(--bs-gutter-x) * .5);
@@ -84,4 +84,12 @@ span.material-symbols-outlined {
   font-size: 85%;
   color: dimgrey;
   font-style: italic;
+}
+
+.tag {
+  border: solid 1px grey;
+  border-radius: 10px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 10px;
+  background-color: gainsboro;
 }

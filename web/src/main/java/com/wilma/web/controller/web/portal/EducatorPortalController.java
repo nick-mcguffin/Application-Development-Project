@@ -3,24 +3,26 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.positions.Job;
-
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
+import com.wilma.service.forum.TagService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Controller
 @RequestMapping("/educator")
 public class EducatorPortalController {
@@ -29,6 +31,8 @@ public class EducatorPortalController {
     CategoryService categoryService;
     @Autowired
     ForumService forumService;
+    @Autowired
+    TagService tagService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -72,18 +76,35 @@ public class EducatorPortalController {
     @GetMapping("/forum-content")
     public String forumContent(@RequestParam String type, Model model) {
             model.addAllAttributes(Map.of(
-                            "currentPage", "forum",
-                            "menuElements", UserConfiguration.educatorMenuElements,
-                            "contentType", type));
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "availableCategories", categoryService.findAll(),
+                "availableTags", tagService.findAll(),
+                "contentType", type,
+                "post", new PostDTO()));
             return "/educator/forum/forum-content";
     }
+
+    @PostMapping("/create-post")
+    public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "availableCategories", categoryService.findAll(),
+                "availableTags", tagService.findAll(),
+                "post", postDTO));
+        var newPost = forumService.addPostFromDTO(postDTO);
+        log.info("Post created from DTO: "+ newPost);
+        return new RedirectView("/educator/forum");
+    }
+
 
     @GetMapping("/forum-thread")
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
-                "category", category,
+                "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
         return "/educator/forum/forum-thread";

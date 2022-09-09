@@ -76,6 +76,7 @@ public class SeedDataService {
         var category2 = categoryRepository.findByNameIgnoreCase("General Discussion");
         var tag1 = tagRepository.findByNameIgnoreCase("Remote Work");
         var tag2 = tagRepository.findByNameIgnoreCase("Java");
+        var tag3 = tagRepository.findByNameIgnoreCase("UI Design");
         var posts = List.of(
                 new Post(
                         null,
@@ -102,7 +103,7 @@ public class SeedDataService {
                         "Calling all Java developers",
                         "Google's annual \"Code Jam\" is quickly approaching, and we're handing out generous prize money 🤓",
                         category2,
-                        Set.of(tag2)
+                        Set.of(tag2, tag3)
                 )
         );
         posts.forEach(post -> {
