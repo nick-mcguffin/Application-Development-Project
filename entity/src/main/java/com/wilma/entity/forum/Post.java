@@ -16,7 +16,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "post")
 public class Post extends ForumContent {
 
     @Column(name = "title")
@@ -32,7 +31,7 @@ public class Post extends ForumContent {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> postTags = new LinkedHashSet<>();
 
-@OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private Set<Reply> replies = new LinkedHashSet<>();
 
     public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  Category category, Set<Tag> postTags) {

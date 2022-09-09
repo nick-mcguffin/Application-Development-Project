@@ -4,6 +4,7 @@ import com.wilma.config.web.UserConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
+import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Partner;
@@ -74,17 +75,33 @@ public class EducatorPortalController {
     }
 
     @GetMapping("/forum-content")
-    public String forumContent(@RequestParam String type, Model model) {
+    public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
             model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
-                "post", new PostDTO()));
+                "post", new PostDTO(),
+                "reply", new ReplyDTO()));
+            if(postId != null)
+                model.addAttribute("postId", postId);
             return "/educator/forum/forum-content";
     }
 
+    @PostMapping("/reply-to-post")
+        public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
+
+            model.addAllAttributes(Map.of(
+                    "currentPage", "forum",
+                    "menuElements", UserConfiguration.educatorMenuElements,
+                    "postId", postId,
+                    "reply", replyDTO));
+            var reply = forumService.addReplyFromDTO(replyDTO);
+            log.info("Reply added: "+ reply);
+
+            return new RedirectView("/educator/forum");
+        }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
         model.addAllAttributes(Map.of(

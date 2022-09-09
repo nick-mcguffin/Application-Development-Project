@@ -1,6 +1,7 @@
 package com.wilma.service.forum;
 
 import com.wilma.entity.dto.PostDTO;
+import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.forum.ForumContent;
 import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
@@ -65,5 +66,17 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
                 userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
         var post = new Post(null, currentUser, new Date(), postDTO.getTitle(), postDTO.getBody(), category, tags);
         return postRepository.save(post);
+    }
+
+    public Reply addReplyFromDTO(ReplyDTO replyDTO) {
+        var post = postRepository.findById(replyDTO.getPostId()).orElse(null);
+        var currentUser = activeProfile.equalsIgnoreCase("prod")?
+                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
+        var reply = new Reply(null, currentUser, new Date(), replyDTO.getBody(), post);
+        return replyRepository.save(reply);
+    }
+
+    public Post getPostById(Integer postId) {
+        return postRepository.findById(postId).orElse(null);
     }
 }

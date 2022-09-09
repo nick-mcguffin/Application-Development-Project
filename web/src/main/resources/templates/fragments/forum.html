@@ -2,7 +2,6 @@
 
 <!-- Create a new post button -->
 <div th:fragment="create-post-button" xmlns:th="http://www.thymeleaf.org">
-    <!-- Todo: Wire up new post button -->
     <a th:href="@{forum-content?type=post}" class="btn new-post-button">
         <span class="material-symbols-outlined">chat</span>
         <span>Post a New Question</span>
@@ -27,8 +26,6 @@
 
                     <!-- Iterate recent posts for the current category -->
                     <div class="recent-posts">
-                        <!-- Todo: Display message if no recent posts -->
-                        <!-- Todo: Limit the number of recent posts shown here -->
                         <h2>Recent Posts:</h2>
                         <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
                             <li class="post-preview">
@@ -70,7 +67,7 @@
                     <p th:text="${post.body}"></p>
                         <div class="row">
                             <!-- Todo: Implement post replies -->
-                            <a class="w-auto" th:href="@{forum-content?type=reply}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
+                            <a class="w-auto" th:href="@{forum-content?type=reply&postId={pid} (pid = ${post.id})}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
                             <a class="w-auto" th:href="@{delete-post/{postId}?category={cat} (postId = ${post.id}, cat = ${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
                             <div class="ml-3 w-auto">
                                 <b th:text="${post.author.username}"></b>
@@ -94,8 +91,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -152,10 +147,10 @@
 <div th:fragment="reply-form" th:class="${contentType == 'reply'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Reply</h1>
-    <form>
+    <form th:action="@{/educator/reply-to-post?type=reply&postId={pid} (pid=${postId})}" th:object="${reply}" method="post">
         <div class="row p-3 pt-0">
-            <label for="reply-content" class="form-label"><b>Replying to Tommy:</b> <i>[Post Title]</i></label>
-            <textarea class="post-content form-floating" id="reply-content" rows="5"></textarea>
+            <label for="reply-content" class="form-label"><b>Replying to ?:</b> <i>[Post Title]</i></label>
+            <textarea class="post-content form-floating" id="reply-content" rows="5" th:field="*{body}"></textarea>
         </div>
 
         <div class="form-group mb-3 text-center">
