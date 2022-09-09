@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+
+  <div id="page-content-wrapper">
+
+    <div class="container-fluid">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        </ol>
+      </nav>
+      <div class="container d-flex justify-content-center">
+        <div class="card " style="width: 100rem;" >
+          <div class="card-body ">
+            <!-- Dropzone -->
+
+            <div class="w-50 mx-auto pt-5">
+              <h1>File Upload</h1>
+
+              <div id="dropzone">
+                <form action="#" class="dropzone needsclick" id="drop-form">
+                  <div class="dz-message needsclick">
+                    <button type="button" class="dz-button">Drop files here or click to upload.</button>
+                    <br />
+                  </div>
+                </form>
+                <button onClick="window.location.reload();">Done</button>
+              </div>
+
+              <small class="text-center">Maximum file size: 10MB</small>
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+            <link href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" rel="stylesheet" />
+
+            <script>
+        Dropzone.autoDiscover = false;
+
+        $("#drop-form").dropzone({
+            success: function (file, response) {
+                console.log(file.filename + " uploaded successfully");
+            },
+        });
+    </script>
+
+            <!-- Dropzone -->
+
+
+            <!-- file table-->
+            <div class="row table-container">
+              <table class="table table-sm  table-striped table-hover">
+                <thead>
+                <tr>
+                  <th>FileName</th>
+                  <th>FileType</th>
+                </tr>
+                </thead>
+                <thead>
+                <tr th:each="Resume : ${studentResumes}">
+                  <td><span th:text="${Resume.name}"> name </span></td>
+                  <td><span th:text="${Resume.type}"> type </span></td>
+                  <td style="display: flex;">
+                    <div class="mx-auto">
+                      <button type="button" class="btn btn-default btn-lg">
+                        <span class="material-symbols-rounded btn-download" aria-hidden="true">Download</span>
+                      </button>
+                      <button type="button" class="btn btn-default btn-lg">
+                        <span class="material-symbols-rounded btn-delete" aria-hidden="true">Delete</span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>
