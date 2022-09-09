@@ -91,7 +91,6 @@ public class EducatorPortalController {
 
     @PostMapping("/reply-to-post")
         public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
-
             model.addAllAttributes(Map.of(
                     "currentPage", "forum",
                     "menuElements", UserConfiguration.educatorMenuElements,
@@ -99,8 +98,7 @@ public class EducatorPortalController {
                     "reply", replyDTO));
             var reply = forumService.addReplyFromDTO(replyDTO);
             log.info("Reply added: "+ reply);
-
-            return new RedirectView("/educator/forum");
+            return new RedirectView("/educator/forum-thread?category="+ reply.getPost().getCategory().getName());
         }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
