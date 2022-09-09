@@ -77,7 +77,7 @@
 
                     </div>
                     <!-- Replies -->
-                    <div  th:each="reply : ${repliesForPosts}">
+                    <div  th:each="reply : ${repliesForPosts}" th:if="${reply.post.id == post.id}">
                         <div class="reply">
                             <p th:text="${reply.body}">Reply Body</p>
                             <div class="ml-3 w-auto">
