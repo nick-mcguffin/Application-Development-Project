@@ -63,6 +63,9 @@
             <div th:id="|post${post.id}Comments|" class="accordion-collapse collapse show" th:aria-labelledby="|post${post.id}|"
                  data-bs-parent="#categoryThread">
                 <div class="accordion-body">
+                    <div>
+                        <small th:each="tag : ${post.postTags}" class="tag" th:text="${tag.name}"></small>
+                    </div>
                     <div class="subtitle">
                     <p th:text="${post.body}"></p>
                         <div class="row">
@@ -100,34 +103,42 @@
 <div th:fragment="post-form" th:class="${contentType == 'post'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Post</h1>
-    <form>
+    <form th:action="@{/educator/create-post}" th:object="${post}" method="post">
         <script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
         <link th:href="@{~/css/forum.css}" rel="stylesheet"/>
 
         <div class="row p-3 pb-0">
             <div class="col-6">
                 <label for="categoryOptions" class="form-label">Category</label>
-                <select class="select-box" id="categoryOptions">
-                    <option value="Category 1">Category 1</option>
-                    <option value="Category 2">Category 2</option>
-                    <option value="Category 3">Category 3</option>
+                <select class="select-box" id="categoryOptions" th:field="*{category}">
+                    <option
+                            th:each="category : ${availableCategories}"
+                            th:value="${category.name}"
+                            th:text="${category.name}">
+                    </option>
                 </select>
             </div>
 
             <div class="col-6">
                 <label for="tag-multi-select" class="form-label">Tags</label>
-                <select class="select-box" id="tag-multi-select" multiple multiselect-search="true"
-                        multiselect-select-all="true">
-                    <option value="Tag 1">Tag 1</option>
-                    <option value="Tag 2">Tag 2</option>
-                    <option value="Tag 3">Tag 3</option>
+                <select class="select-box" id="tag-multi-select" multiple multiselect-search="true" multiselect-select-all="true" th:field="*{tags}">
+                    <option
+                            th:each="tag : ${availableTags}"
+                            th:value="${tag.id}"
+                            th:text="${tag.name}">
+                    </option>
                 </select>
             </div>
         </div>
 
         <div class="row p-3 pt-0">
+            <label for="post-title" class="form-label">Title</label>
+            <input class="form-floating user-input" id="post-title"  th:field="*{title}">
+        </div>
+
+        <div class="row p-3 pt-0">
             <label for="post-content" class="form-label">Content</label>
-            <textarea class="post-content form-floating" id="post-content" rows="5"></textarea>
+            <textarea class="form-floating user-input" id="post-content" rows="5" th:field="*{body}"></textarea>
         </div>
 
         <div class="form-group mb-3 text-center">
