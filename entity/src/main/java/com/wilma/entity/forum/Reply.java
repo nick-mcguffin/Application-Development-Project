@@ -3,10 +3,7 @@ package com.wilma.entity.forum;
 import com.wilma.entity.users.UserAccount;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -19,7 +16,6 @@ import java.util.Date;
 public class Reply extends ForumContent {
 
     @ManyToOne
-    @JoinColumn(name = "post_id")
     private Post post;
 
     public Reply(Integer id, UserAccount author, Date timestamp, String body, Post post) {

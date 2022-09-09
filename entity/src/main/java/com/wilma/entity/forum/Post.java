@@ -32,6 +32,9 @@ public class Post extends ForumContent {
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> postTags = new LinkedHashSet<>();
 
+@OneToMany(orphanRemoval = true, cascade = CascadeType.PERSIST, mappedBy = "post")
+    private Set<Reply> replies = new LinkedHashSet<>();
+
     public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  Category category, Set<Tag> postTags) {
         super(id, author, timestamp, body);
         this.title = title;
