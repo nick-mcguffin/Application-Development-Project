@@ -21,12 +21,12 @@ public class PartnerPortalController {
         - ADP-82: Expressions Of Interest
      */
 
-    @GetMapping("/partnerProfile")
+    @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Profile",
                 "menuElements", UserConfiguration.partnerMenuElements
         ));
-        return "/partner/partnerProfile";
+        return "/partner/profile";
     }
 }
