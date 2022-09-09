@@ -89,6 +89,18 @@ public class EducatorPortalController {
         return "/educator/forum/forum-thread";
     }
 
+    @GetMapping("/delete-post/{postId}")
+    public RedirectView deleteForumPost(@PathVariable Integer postId, @RequestParam String category, Model model){
+        forumService.deleteById(postId);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "categoryName", category,
+                "postsByCategory", forumService.getPostByCategoryName(category),
+                "repliesForPosts", forumService.getPostRepliesByCategory(category)));
+        return new RedirectView("/educator/forum-thread?category=" + category);
+    }
+
     /*
     Todo:
         - ADP-74: Jobs & Placement Management
