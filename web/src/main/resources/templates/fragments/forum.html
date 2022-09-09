@@ -47,8 +47,11 @@
 <!-- Category thread is shown when a user explores a forum category, it shows all the posts (and their replies) that have the chosen category -->
 <div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
 
-    <h1 class="text-center" th:text="${category}">Category Title</h1>
-    <!-- Todo: Display message if no pasts in category -->
+    <h1 class="text-center" th:text="${categoryName}">Category Title</h1>
+
+    <div class="pt-5 text-center text-muted" th:if="${#lists.isEmpty(postsByCategory)}">
+        <h2>Oops... It appears there are no posts to display ＞﹏＜</h2>
+    </div>
     <div class="accordion" id="categoryThread" th:each=" post : ${postsByCategory}">
         <!-- Category Thread -->
         <div class="accordion-item">
@@ -64,7 +67,8 @@
                     <p th:text="${post.body}"></p>
                         <div class="row">
                             <!-- Todo: Implement post replies -->
-                            <a class="reply-link w-auto" th:href="@{forum-content?type=reply}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
+                            <a class="w-auto" th:href="@{forum-content?type=reply}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
+                            <a class="w-auto" th:href="@{delete-post/{postId}?category={cat} (postId = ${post.id}, cat = ${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
                             <div class="ml-3 w-auto">
                                 <b th:text="${post.author.username}"></b>
                                 <small th:text="| - ${#dates.format(post.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
