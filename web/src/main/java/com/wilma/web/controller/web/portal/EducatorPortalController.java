@@ -91,24 +91,34 @@ public class EducatorPortalController {
 
     @PostMapping("/reply-to-post")
         public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
+        var reply = forumService.addReplyFromDTO(replyDTO);
+        var category = reply.getPost().getCategory().getName();
             model.addAllAttributes(Map.of(
                     "currentPage", "forum",
                     "menuElements", UserConfiguration.educatorMenuElements,
                     "postId", postId,
+                    "categoryName", category,
+                    "postsByCategory", forumService.getPostByCategoryName(category),
+                    "repliesForPosts", forumService.getPostRepliesByCategory(category),
                     "reply", replyDTO));
-            var reply = forumService.addReplyFromDTO(replyDTO);
+
             log.info("Reply added: "+ reply);
             return new RedirectView("/educator/forum-thread?category="+ reply.getPost().getCategory().getName());
         }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
+        var newPost = forumService.addPostFromDTO(postDTO);
+        var category = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
+                "categoryName", category,
+                "postsByCategory", forumService.getPostByCategoryName(category),
+                "repliesForPosts", forumService.getPostRepliesByCategory(category),
                 "post", postDTO));
-        var newPost = forumService.addPostFromDTO(postDTO);
+
         log.info("Post created from DTO: "+ newPost);
         return new RedirectView("/educator/forum");
     }
