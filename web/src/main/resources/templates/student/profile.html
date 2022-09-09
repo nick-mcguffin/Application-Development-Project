@@ -27,20 +27,13 @@
           <div class="card-body">
             <div class="container ">
               <div class="row no-gutters d-flex justify-content-center ">
-             <!-- profile picture-->
+                <!-- profile picture-->
                 <div class="col-md-auto ">
                   <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded">
                 </div> <!-- profile information-->
                 <div class="col-sm-6">
                   <div class="container ">
-                    <div class="row border-bottom">
-                      <div class="col-4">
-                        <p>Name: </p>
-                      </div>
-                      <div class="col-5">
-                        <p >Tony The Immortal</p>
-                      </div>
-                    </div>
+                    <div th:replace="fragments/profileFragment"></div>
                     <div class="row border-bottom">
                       <div class="col-4">
                         <p>Discipline: </p>
@@ -49,23 +42,7 @@
                         <p>Networking</p>
                       </div>
                     </div>
-                    <div class="row border-bottom">
-                      <div class="col-4">
-                        <p>Phone Number: </p>
-                      </div>
-                      <div class="col-5">
-                        <p>12311412421</p>
-                      </div>
-                    </div>
 
-                    <div class="row border-bottom">
-                      <div class="col-4">
-                        <p>Email Address: </p>
-                      </div>
-                      <div class="col-5">
-                        <p >Tony@hotmail.com</p>
-                      </div>
-                    </div>
                     <div class="row border-bottom">
                       <div class="col-4">
                         <p>CQU Student ID: </p>

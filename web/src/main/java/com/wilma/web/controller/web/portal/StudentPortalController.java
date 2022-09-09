@@ -20,12 +20,12 @@ public class StudentPortalController {
         - ADP-69: Profile
      */
 
-    @GetMapping("/studentProfile")
+    @GetMapping("/profile")
     public String studentProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "profile",
                 "menuElements", UserConfiguration.studentMenuElements
         ));
-        return "/student/studentProfile";
+        return "/student/profile";
     }
 }
