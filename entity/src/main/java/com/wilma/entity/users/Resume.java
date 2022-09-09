@@ -4,6 +4,8 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
+
 
 @Getter
 @Setter
@@ -18,12 +20,13 @@ public class Resume {
     private String name;
     private String type;
 
+    private Date uploadDate;
     public Resume() {
     }
-    public Resume(String name, String type) {
+    public Resume(String name, String type, Date uploadDate) {
         this.name = name;
         this.type = type;
-
+        this.uploadDate = uploadDate;
     }
     public String getId() {
         return id;
@@ -41,4 +44,10 @@ public class Resume {
         this.type = type;
     }
 
+    public Date getUploadDate() {
+        return uploadDate;
+    }
+    public void setUploadDate(Date uploadDate) {
+        this.uploadDate = uploadDate;
+    }
 }

@@ -16,7 +16,7 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+          <li class="breadcrumb-item active" aria-current="page">resume management</li>
         </ol>
       </nav>
       <div class="container d-flex justify-content-center">
@@ -64,12 +64,14 @@
                 <tr>
                   <th>FileName</th>
                   <th>FileType</th>
+                  <th>Upload Date</th>
                 </tr>
                 </thead>
                 <thead>
                 <tr th:each="Resume : ${studentResumes}">
                   <td><span th:text="${Resume.name}"> name </span></td>
                   <td><span th:text="${Resume.type}"> type </span></td>
+                  <td th:text="${#dates.format(Resume.uploadDate, 'dd/MM/yyyy')}"></td>
                   <td style="display: flex;">
                     <div class="mx-auto">
                       <button type="button" class="btn btn-default btn-lg">

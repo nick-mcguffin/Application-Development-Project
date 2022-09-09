@@ -21,16 +21,17 @@ public class StudentPortalController {
         - ADP-68: Resume Management
         - ADP-69: Profile
      */
-    @GetMapping("/resumeManagement")
+    @GetMapping("/resume_management")
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Resume Management",
                 "menuElements", UserConfiguration.studentMenuElements,
                 "studentResumes", List.of(
-                        new Resume("Resume 1", "pdf"), (new Resume("Resume 2", "pdf"))
-                        ,(new Resume("Resume 3", "pdf")),(new Resume("Resume 4", "pdf"))
-                )
+                new Resume("Resume 1", "pdf", new java.util.Date()),new Resume("Resume 2", "pdf", new java.util.Date()),
+                        new Resume("Resume 3", "pdf", new java.util.Date()),
+                        new Resume("Resume 4", "pdf", new java.util.Date()))
+
         ));
-        return "/student/resumeManagement";
+        return "/student/resume_management";
     }
 }
