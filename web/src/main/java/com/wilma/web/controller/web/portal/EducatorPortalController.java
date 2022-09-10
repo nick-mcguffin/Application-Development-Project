@@ -103,7 +103,7 @@ public class EducatorPortalController {
                     "reply", replyDTO));
 
             log.info("Reply added: "+ reply);
-            return new RedirectView("/educator/forum-thread?category="+ reply.getPost().getCategory().getName());
+            return new RedirectView("/educator/forum-thread?category="+ category);
         }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
