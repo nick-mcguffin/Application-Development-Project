@@ -50,5 +50,7 @@ public class SiteController {
         model.addAttribute("currentPage", "Login");
         return "/login";
     }
+
+
 }
 
