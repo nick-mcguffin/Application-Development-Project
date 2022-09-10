@@ -14,9 +14,9 @@ import java.util.Date;
 @Table(name = "files")
 public class Resume {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Integer id;
     private String name;
     private String type;
 
