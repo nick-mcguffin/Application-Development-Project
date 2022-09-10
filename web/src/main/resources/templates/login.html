@@ -7,7 +7,7 @@
 <div th:replace="fragments/navigation :: top-navigation"></div>
 
 <div class="container">
-    <h1>Login</h1>
+    <h1 class="form-style">Login</h1>
 
 <form name='f' action="login" method='POST'>
 
@@ -26,7 +26,7 @@
                 <Label>Password</Label>
             </div>
 
-          <input name="submit" type="submit" value="submit"/>
+          <input name="submit" type="submit" value="Submit"/>
 
             <div class="signup">
             Not signed up? <a th:href="@{/register}">Register</a>
