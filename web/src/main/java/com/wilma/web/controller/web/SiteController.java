@@ -31,18 +31,24 @@ public class SiteController {
         return "/register";
     }
 
-    @RequestMapping("/about")
-    public ResponseEntity<?> about() {
-        return ResponseEntity.ok("About");
+    @GetMapping("/about")
+    public String about(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "About Us"));
+        return "/about";
     }
 
-    @RequestMapping("/contact")
-    public ResponseEntity<?> contact() {
-        return ResponseEntity.ok("Contact");
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Contact Us"));
+        return "/contact";
     }
 
     @RequestMapping("/login")
-    public ResponseEntity<?> login() {
-        return ResponseEntity.ok("Login");
+    public String login(Model model) {
+        model.addAttribute("currentPage", "Login");
+        return "/login";
     }
 }
+

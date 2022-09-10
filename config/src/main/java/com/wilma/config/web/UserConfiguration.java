@@ -22,6 +22,7 @@ public class UserConfiguration {
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
             new SidebarMenuElement("marketplace", "marketplace", "house", "Jobs & Placements"),
             new SidebarMenuElement("forum", "forum", "forum", "Q&A Forum"),
+            new SidebarMenuElement("expressions_of_interest", "expressions_of_interest", "file_present", "Expressions Of Interest"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
     //Todo
