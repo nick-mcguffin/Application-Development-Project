@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<link th:href="@{~/css/portal-styles.css}" rel="stylesheet" />
+<body onload="hidePositionsPendingTableIfEmpty()">
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Marketplace</li>
+        </ol>
+      </nav>
+
+      <h1 class="text-center m-3">Jobs & Placements</h1>
+
+      <div th:replace="fragments/marketplace-tables :: pending-approval"></div>
+
+      <div th:replace="fragments/marketplace-tables :: partner"></div>
+
+      <div class="d-grid col-md-3 gap-2 mx-auto">
+        <a class="btn btn-primary" th:href="@{~/partner/placement}">Create New Placement</a>
+        <a class="btn btn-primary" th:href="@{~/partner/expressions_of_interest}">View Expressions Of Interest</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+
+</body>
+
+</html>

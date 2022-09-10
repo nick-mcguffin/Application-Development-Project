@@ -1,0 +1,55 @@
+.form-border {
+    border-color: #003057 !important;
+    border-radius: 10px;
+}
+
+.form-button {
+    background-color: #003057 !important;
+    border-radius: 10px;
+    color: #FFFFFF;
+}
+.form-style:focus {
+    border-color: #003057 !important;
+    color: #003057 !important;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.registration-form {
+    position: absolute;
+}
+
+.text-style {
+    color: #003057;
+}
+.header-style {
+    color: #003057;
+    font-style: bold;
+}
+
+.icon-size {
+    height: 25px;
+    width: 25px;
+}
+
+.form-icon {
+    text-align: center;
+    background-color: #003057;
+    border-radius: 50%;
+    color: white;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    line-height: 100px;
+}
+
+#form-container {
+    width: 100%;
+    text-align: center;
+}
+#form {
+    display: inline-block;
+}
