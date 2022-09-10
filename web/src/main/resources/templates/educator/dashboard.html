@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar Menu -->
+    <div th:replace="fragments/navigation :: sidebar"></div>
+    <div id="page-content-wrapper">
+        <!-- Top Navigation Bar -->
+        <div th:replace="fragments/navigation :: top-navigation"></div>
+        <div class="container-fluid">
+            <!-- breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
+
+            <div class="row">
+                <div class="card col-sm-12 col-md-4" style="width: 18rem;">
+                    <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+                        alt="Jobs & Placements">
+                    <div class="card-body">
+                        <h5 class="card-title">Jobs & Placements</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                        <p class="card-text">View and manage jobs and placements</p>
+                        <a th:href="@{marketplace}" class="btn btn-primary">Browse</a>
+                    </div>
+                </div>
+                <div class="card col-sm-12 col-md-4" style="width: 18rem;">
+                    <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/Q&A.jpg}"
+                        alt="Q&A Forum">
+                    <div class="card-body">
+                        <h5 class="card-title">Q&A Forum</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                        <p class="card-text">View and manage forum post and replies</p>
+                        <a th:href="@{forum}" class="btn btn-primary">Browse</a>
+                    </div>
+                </div>
+
+                <div class="card col-sm-12 col-md-4" style="width: 18rem;">
+                    <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/EOI.jpg}"
+                        alt="Expressions of Interest">
+                    <div class="card-body">
+                        <h5 class="card-title">Expressions of Interest</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                        <p class="card-text">Receive and release placement expressions of interest</p>
+                        <a th:href="@{expressions_of_interest}" class="btn btn-primary">Browse</a>
+                    </div>
+                </div>
+                <div class="card col-sm-12 col-md-4" style="width: 18rem;">
+                    <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/profile.jpg}"
+                        alt="Profile">
+                    <div class="card-body">
+                        <h5 class="card-title">Profile</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
+                        <p class="card-text">View and manage your personal profile</p>
+                        <a th:href="@{profile}" class="btn btn-primary">Manage</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

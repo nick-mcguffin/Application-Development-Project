@@ -3,6 +3,7 @@
 /repository/target/
 /service/target/
 /web/target/
+/config/target/
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

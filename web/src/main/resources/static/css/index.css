@@ -1,0 +1,26 @@
+.sign-up-text {
+    font-family: "Fira Sans";
+    font-style: italic;
+    font-size: 20px;
+}
+
+.sign-up-button {
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    border-radius: 10px;
+    background-color: #003057 !important;
+    font-style: bold;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+}
+
+.size {
+    height: 70%;
+    width: 50%;
+}

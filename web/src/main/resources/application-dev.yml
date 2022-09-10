@@ -1,13 +1,9 @@
-### H2 ###
-# This profile is for development purposes and uses the embedded H2 database
-
-server:
-  port: 8080
+# Development profile using H2 database
 
 spring:
 
   profiles:
-    profile-name: H2
+    profile-name: DEV
 
   h2:
     console:

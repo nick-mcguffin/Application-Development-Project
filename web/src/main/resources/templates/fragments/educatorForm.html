@@ -1,0 +1,66 @@
+<!-- Educator Form -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="educatorForm">
+
+    <div class="w-50 mx-auto">
+        <form
+                id="educator-form"
+                class="row g-3 border form-border mt-3"
+                th:action="@{/register}"
+                method="post">
+            <div class="form-icon center mt-3">
+                <span><i class="icon icon-user"></i></span>
+            </div>
+            <input type="hidden" name="userType" value="EDUCATOR">
+            <div class="col-12"></div>
+            <div class="col-md-5 ms-5 m-3">
+                <label for="educatorUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="educatorUsername" aria-describedby="educatorUsername">
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-5 ms-5 me-3">
+                <label for="educatorEmail" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="educatorEmail" aria-describedby="educatorEmail">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="col-5 ms-5 m-3">
+                <label for="educatorPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="educatorPassword" aria-describedby="educatorPassword">
+                <small id="passwordHelp" class="form-text text-muted">
+                    Must be 8-20 characters long.
+                </small>
+            </div>
+            <div class="col-md-5 ms-5 m-3">
+                <label for="educatorFirstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="educatorFirstName" aria-describedby="educatorFirstName">
+            </div>
+
+            <div class="col-md-5 ms-5 m-3">
+                <label for="educatorLastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="educatorLastName" aria-describedby="educatorLastName">
+            </div>
+            <div class="col-md-3 ms-5 m-3">
+                <label for="educatorPhone" class="form-label">Contact Number</label>
+                <input type="text" class="form-control" id="educatorPhone" aria-describedby="educatorPhone">
+            </div>
+
+            <div class="col-md-4 ms-5 m-3">
+                <label for="educatorDiscipline" class="form-label">Discipline</label>
+                <select class="form-select" id="educatorDiscipline" aria-label="educatorDiscipline">
+                    <option selected>Select...</option>
+                    <option value="Software Development">Software Development</option>
+                    <option value="Networking">Networking</option>
+                    <option value="Business Analysis">Business Analysis</option>
+                    <option value="Project Management">Project Management</option>
+                </select>
+            </div>
+            <div class="col-md-2 ms-5 m-3">
+                <label for="staffId" class="form-label">CQU Educator ID</label>
+                <input type="text" class="form-control" id="staffId" aria-describedby="staffId">
+            </div>
+            <div class="form-group mb-3 text-center">
+                <button type="submit" class="btn form-button">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="m-3"></div>
+</div>
