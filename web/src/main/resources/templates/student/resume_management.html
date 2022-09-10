@@ -16,12 +16,11 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
-          <li class="breadcrumb-item active" aria-current="page">resume management</li>
+          <li class="breadcrumb-item active" aria-current="page">Resume Management</li>
         </ol>
       </nav>
-      <div class="container d-flex justify-content-center">
-        <div class="card " style="width: 100rem;" >
-          <div class="card-body ">
+      <div class="container ">
+        <div class="row">
             <!-- Dropzone -->
 
             <div class="w-50 mx-auto pt-5">
@@ -58,13 +57,15 @@
 
 
             <!-- file table-->
+          <div class="row">
             <div class="row table-container">
               <table class="table table-sm  table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>FileName</th>
-                  <th>FileType</th>
+                  <th>File Name</th>
+                  <th>File Type</th>
                   <th>Upload Date</th>
+                  <th>Download/Delete</th>
                 </tr>
                 </thead>
                 <thead>
@@ -73,14 +74,12 @@
                   <td><span th:text="${Resume.type}"> type </span></td>
                   <td th:text="${#dates.format(Resume.uploadDate, 'dd/MM/yyyy')}"></td>
                   <td style="display: flex;">
-                    <div class="mx-auto">
                       <button type="button" class="btn btn-default btn-lg">
                         <span class="material-symbols-rounded btn-download" aria-hidden="true">Download</span>
                       </button>
                       <button type="button" class="btn btn-default btn-lg">
                         <span class="material-symbols-rounded btn-delete" aria-hidden="true">Delete</span>
                       </button>
-                    </div>
                   </td>
                 </tr>
               </table>
@@ -91,7 +90,5 @@
     </div>
   </div>
 </div>
-
-
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.wilma.entity.users;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,7 +10,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @Entity
-@Table(name = "files")
+@Table(name = "Resume")
 public class Resume {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,7 +27,7 @@ public class Resume {
         this.type = type;
         this.uploadDate = uploadDate;
     }
-    public String getId() {
+    public Integer getId() {
         return id;
     }
     public String getName() {
