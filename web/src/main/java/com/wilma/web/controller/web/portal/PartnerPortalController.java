@@ -42,6 +42,16 @@ public class PartnerPortalController {
         ));
         return "/partner/marketplace";
     }
+
+    @GetMapping("/new-position")
+    public String newPosition (Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "positionOptions", List.of("Select...", "Job", "Placement" )
+        ));
+        return "/partner/new-position";
+    }
     /*
     Todo:
         - ADP-77: Jobs & Placements
