@@ -38,7 +38,7 @@
 </div>
 
 <!-- Form for creating a new job -->
-<div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org" id="job-form">
   <div th:replace="fragments/position-forms  :: position-form"></div>
   <form>
     <div class="row p-3 pt-0">
@@ -61,7 +61,11 @@
   </form>
 </div>
 
-<div th:fragment="placement-form" xmlns:th="http://www.thymeleaf.org">
-  Hi, I'm the placement form!
+<!-- Form for creating a new placement -->
+<div th:fragment="placement-form" xmlns:th="http://www.thymeleaf.org" id="placement-form">
+  <form>
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
 </div>
 
