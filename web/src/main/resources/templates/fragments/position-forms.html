@@ -1,0 +1,67 @@
+<!-- Form for creating a new placement -->
+<div th:fragment="position-form" xmlns:th="http://www.thymeleaf.org">
+  <form>
+    <div class="row p-3 pt-0">
+      <label for="position-start-date" class="form-label">Start Date</label>
+      <input class="form-floating user-input" id="position-start-date">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="position-end-date" class="form-label">End Date</label>
+      <input class="form-floating user-input" id="position-end-date">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="position-period" class="form-label">Period</label>
+      <input class="form-floating user-input" id="position-period">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="position-location" class="form-label">Location</label>
+      <input class="form-floating user-input" id="position-location">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="position-description" class="form-label">Description</label>
+      <textarea class="form-floating user-input" id="position-description" rows="5"></textarea>
+    </div>
+  </form>
+</div>
+
+<div th:fragment="submit-cancel" xmlns:th="http://www.thymeleaf.org">
+  <form>
+    <div class="form-group mb-3 text-center">
+      <button type="submit" class="btn form-button btn-success">Submit</button>
+      <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="" />
+    </div>
+  </form>
+</div>
+
+<!-- Form for creating a new job -->
+<div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="fragments/position-forms  :: position-form"></div>
+  <form>
+    <div class="row p-3 pt-0">
+      <label for="job-pay-rate" class="form-label">Pay Rate</label>
+      <input class="form-floating user-input" id="job-pay-rate">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="job-pay-type" class="form-label">Pay Type</label>
+      <input class="form-floating user-input" id="job-pay-type">
+    </div>
+
+    <div class="row p-3 pt-0">
+      <label for="job-pay-frequency" class="form-label">Pay Frequency</label>
+      <input class="form-floating user-input" id="job-pay-frequency">
+    </div>
+
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+
+  </form>
+</div>
+
+<div th:fragment="placement-form" xmlns:th="http://www.thymeleaf.org">
+  Hi, I'm the placement form!
+</div>
+
