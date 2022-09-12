@@ -55,11 +55,11 @@ public class PartnerPortalController {
     }
 
     @GetMapping("/edit-position")
-    public String newPosition (Model model, @RequestParam String positionType) {
+    public String newPosition (Model model, @RequestParam String type) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "positionType", positionType
+                "positionType", type
         ));
         return "/partner/edit-position";
     }
