@@ -31,8 +31,8 @@
             </select>
 
             <!-- New position forms -->
-            <div th:replace="fragments/position-forms  :: job-form"></div>
-            <div th:replace="fragments/position-forms  :: placement-form"></div>
+            <div th:replace="fragments/position-forms  :: new-job-form"></div>
+            <div th:replace="fragments/position-forms  :: new-placement-form"></div>
         </div>
     </div>
 </div>
@@ -41,8 +41,8 @@
 
     //Show only the type passed, hide all else
     function showFragment(positionType) {
-        document.getElementById("job-form").hidden = (positionType != "Job")
-        document.getElementById("placement-form").hidden = (positionType != "Placement")
+        document.getElementById("new-job-form").hidden = (positionType != "Job")
+        document.getElementById("new-placement-form").hidden = (positionType != "Placement")
     }
 
 </script>
