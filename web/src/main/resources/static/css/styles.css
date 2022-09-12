@@ -2,6 +2,10 @@
 
 /* We need to replace this with our own */
 
+.hidden {
+    display: none;
+}
+
 .card{
     margin: 10px;
 }
