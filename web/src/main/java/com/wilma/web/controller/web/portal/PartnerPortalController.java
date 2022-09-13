@@ -103,15 +103,15 @@ public class PartnerPortalController {
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
         var newPost = forumService.addPostFromDTO(postDTO);
-        var category = newPost.getCategory().getName();
+        var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
-                "categoryName", category,
-                "postsByCategory", forumService.getPostByCategoryName(category),
-                "repliesForPosts", forumService.getPostRepliesByCategory(category),
+                "categoryName", categoryName,
+                "postsByCategory", forumService.getPostByCategoryName(categoryName),
+                "repliesForPosts", forumService.getPostRepliesByCategory(categoryName),
                 "post", postDTO));
 
         log.info("Post created from DTO: "+ newPost);
