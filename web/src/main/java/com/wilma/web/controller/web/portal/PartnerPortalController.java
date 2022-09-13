@@ -15,8 +15,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
+
 
 import java.time.Period;
 import java.util.Date;
@@ -57,6 +60,26 @@ public class PartnerPortalController {
         ));
         return "/partner/marketplace";
     }
+
+
+    @GetMapping("/new-position")
+    public String newPosition (Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "positionOptions", List.of("Select...", "Job", "Placement" )
+        ));
+        return "/partner/new-position";
+    }
+
+    @GetMapping("/edit-position")
+    public String newPosition (Model model, @RequestParam String type) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "positionType", type
+        ));
+        return "/partner/edit-position";
 
     @GetMapping("/forum")
     public String forumOverview(Model model) {
@@ -128,10 +151,12 @@ public class PartnerPortalController {
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
         return "/partner/forum/forum-thread";
+
     }
 
     /*
     Todo:
+        - ADP-78: Forum
         - ADP-77: Jobs & Placements
         - ADP-79: Job & Placement Management
         - ADP-80: Profile

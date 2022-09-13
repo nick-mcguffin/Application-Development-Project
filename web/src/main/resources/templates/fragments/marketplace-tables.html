@@ -152,7 +152,8 @@
                 <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td style="display: flex;">
                     <div class="mx-auto">
-                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                        <!-- link passes position type as a request param to dynamically load the edit page -->
+                        <a th:href="@{'/partner/edit-position?type=' + ${pos.type}}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                         <span class="material-symbols-rounded btn-delete">delete</span>
                     </div>
                 </td>
