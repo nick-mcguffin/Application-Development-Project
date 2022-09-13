@@ -3,6 +3,7 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -12,7 +13,7 @@ import org.springframework.ui.ConcurrentModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class EducatorPortalControllerTest {
+class StudentPortalControllerTest {
 
     @Mock
     private ConcurrentModel model;
@@ -23,42 +24,40 @@ class EducatorPortalControllerTest {
     @Mock
     private TagService tagService;
     @InjectMocks
-    private EducatorPortalController controller;
+    private StudentPortalController controller;
 
+    @Disabled
     @Test
     void dashboard() {
-        assertEquals("/educator/dashboard", controller.dashboard(model), "Unexpected dashboard endpoint");
+//        assertEquals("/partner/dashboard", controller.dashboard(model), "Unexpected dashboard endpoint");
     }
 
+    @Disabled
     @Test
     void marketplace() {
-        assertEquals("/educator/marketplace", controller.marketplace(model), "Unexpected marketplace endpoint");
+//        assertEquals("/partner/marketplace", controller.marketplace(model), "Unexpected marketplace endpoint");
     }
 
     @Test
     void forum() {
-        assertEquals("/educator/forum/overview", controller.forumOverview(model), "Unexpected forum endpoint");
+        assertEquals("/student/forum/overview", controller.forumOverview(model), "Unexpected forum endpoint");
     }
 
     @Test
     void forumContent() {
-        assertEquals("/educator/forum/forum-content", controller.forumContent("post", model, 32), "Unexpected forum endpoint");
+        assertEquals("/student/forum/forum-content", controller.forumContent("post", model, 32), "Unexpected forum endpoint");
     }
 
     @Test
     void replyToPost() {
     }
-    
+
     @Test
     void createPost() {
     }
 
     @Test
     void forumThread() {
-        assertEquals("/educator/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
-    }
-
-    @Test
-    void deletePost() {
+        assertEquals("/student/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
     }
 }
