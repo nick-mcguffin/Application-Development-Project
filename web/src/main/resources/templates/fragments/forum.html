@@ -68,7 +68,7 @@
                         <div class="row">
                             <!-- Todo: Implement post replies -->
                             <a class="w-auto" th:href="@{forum-content?type=reply&postId={pid} (pid=${post.id})}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
-                            <a class="w-auto" th:href="@{delete-post/{postId}?category={cat} (postId=${post.id}, cat=${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
+                            <a class="w-auto" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{delete-post/{postId}?category={cat} (postId=${post.id}, cat=${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
                             <div class="ml-3 w-auto">
                                 <b th:text="${post.author.username}"></b>
                                 <small th:text="| - ${#dates.format(post.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
@@ -98,7 +98,7 @@
 <div th:fragment="post-form" th:class="${contentType == 'post'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Post</h1>
-    <form th:action="@{/educator/create-post}" th:object="${post}" method="post">
+    <form th:action="@{create-post}" th:object="${post}" method="post">
         <script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
         <link th:href="@{~/css/forum.css}" rel="stylesheet"/>
 
@@ -147,7 +147,7 @@
 <div th:fragment="reply-form" th:class="${contentType == 'reply'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Reply</h1>
-    <form th:action="@{/educator/reply-to-post?type=reply&postId={pid}( pid=${postId} )}" th:object="${reply}" method="post">
+    <form th:action="@{reply-to-post?type=reply&postId={pid}( pid=${postId} )}" th:object="${reply}" method="post">
         <div class="row p-3 pt-0">
             <label for="reply-content" class="form-label"><b>Reply</b></label>
             <textarea class="post-content form-floating" id="reply-content" rows="5" th:field="*{body}"></textarea>
