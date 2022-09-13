@@ -1,0 +1,38 @@
+<!-- =================================================================================
+  This page is populated with posts and their replies when and shown to a user
+  who clicks on a forum category (for example 'General Discussion' or 'Resume Help')
+  ================================================================================= -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<link th:href="@{~/css/forum.css}" rel="stylesheet" />
+
+<body>
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+
+  <div id="page-content-wrapper">
+
+    <div class="container-fluid">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item"><a th:href="@{forum}">Forum</a></li>
+          <li class="breadcrumb-item active" aria-current="page" th:text="${categoryName}"></li>
+        </ol>
+      </nav>
+
+      <p th:text="${contentType}"></p>
+      <div th:replace="fragments/forum :: category-thread"></div>
+
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>
