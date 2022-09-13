@@ -58,7 +58,4 @@ class PartnerPortalControllerTest {
         assertEquals("/partner/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
     }
 
-    @Test
-    void deletePost() {
-    }
 }

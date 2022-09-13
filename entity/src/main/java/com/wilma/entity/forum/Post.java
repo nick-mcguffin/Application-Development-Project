@@ -1,6 +1,5 @@
 package com.wilma.entity.forum;
 
-import com.wilma.entity.Category;
 import com.wilma.entity.Tag;
 import com.wilma.entity.users.UserAccount;
 import lombok.Getter;
@@ -24,7 +23,7 @@ public class Post extends ForumContent {
 
     @OneToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private ForumCategory category;
 
     @ManyToMany
     @JoinTable(
@@ -36,7 +35,7 @@ public class Post extends ForumContent {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private Set<Reply> replies = new LinkedHashSet<>();
 
-    public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  Category category, Set<Tag> tags) {
+    public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  ForumCategory category, Set<Tag> tags) {
         super(id, author, timestamp, body);
         this.title = title;
         this.category = category;

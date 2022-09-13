@@ -1,8 +1,8 @@
 
 package com.wilma.service;
 
-import com.wilma.entity.Category;
 import com.wilma.entity.Tag;
+import com.wilma.entity.forum.ForumCategory;
 import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
 import com.wilma.entity.users.Partner;
@@ -148,14 +148,14 @@ public class SeedDataService {
 
     public void initCategories(){
         var categories = List.of(
-                new Category(null, "General Discussion", "Anything goes"),
-                new Category(null, "Resume Q&A", "Help with your resume"),
-                new Category(null, "Placement FAQ", "Frequently asked questions about placements"),
-                new Category(null, "Job FAQ", "Frequently asked questions about jobs"),
-                new Category(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host")        );
-        categories.forEach(category -> {
-            if(!categoryRepository.existsByName(category.getName())){
-                categoryRepository.save(category);
+                new ForumCategory(null, "General Discussion", "Anything goes"),
+                new ForumCategory(null, "Resume Q&A", "Help with your resume"),
+                new ForumCategory(null, "Placement FAQ", "Frequently asked questions about placements"),
+                new ForumCategory(null, "Job FAQ", "Frequently asked questions about jobs"),
+                new ForumCategory(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host")        );
+        categories.forEach(forumCategory -> {
+            if(!categoryRepository.existsByName(forumCategory.getName())){
+                categoryRepository.save(forumCategory);
             }
         });
     }

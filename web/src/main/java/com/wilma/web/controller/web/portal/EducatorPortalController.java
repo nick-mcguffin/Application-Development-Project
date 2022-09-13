@@ -92,31 +92,31 @@ public class EducatorPortalController {
     @PostMapping("/reply-to-post")
         public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
         var reply = forumService.addReplyFromDTO(replyDTO);
-        var category = reply.getPost().getCategory().getName();
+        var categoryName = reply.getPost().getCategory().getName();
             model.addAllAttributes(Map.of(
                     "currentPage", "forum",
                     "menuElements", UserConfiguration.educatorMenuElements,
                     "postId", postId,
-                    "categoryName", category,
-                    "postsByCategory", forumService.getPostByCategoryName(category),
-                    "repliesForPosts", forumService.getPostRepliesByCategory(category),
+                    "categoryName", categoryName,
+                    "postsByCategory", forumService.getPostByCategoryName(categoryName),
+                    "repliesForPosts", forumService.getPostRepliesByCategory(categoryName),
                     "reply", replyDTO));
 
             log.info("Reply added: "+ reply);
-            return new RedirectView("/educator/forum-thread?category="+ category);
+            return new RedirectView("/educator/forum-thread?category="+ categoryName);
         }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
         var newPost = forumService.addPostFromDTO(postDTO);
-        var category = newPost.getCategory().getName();
+        var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
-                "categoryName", category,
-                "postsByCategory", forumService.getPostByCategoryName(category),
-                "repliesForPosts", forumService.getPostRepliesByCategory(category),
+                "categoryName", categoryName,
+                "postsByCategory", forumService.getPostByCategoryName(categoryName),
+                "repliesForPosts", forumService.getPostRepliesByCategory(categoryName),
                 "post", postDTO));
 
         log.info("Post created from DTO: "+ newPost);
