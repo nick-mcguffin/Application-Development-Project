@@ -61,7 +61,7 @@
                  data-bs-parent="#categoryThread">
                 <div class="accordion-body">
                     <div>
-                        <small th:each="tag : ${post.postTags}" class="tag" th:text="${tag.name}"></small>
+                        <small th:each="tag : ${post.tags}" class="tag" th:text="${tag.name}"></small>
                     </div>
                     <div class="subtitle">
                     <p th:text="${post.body}"></p>

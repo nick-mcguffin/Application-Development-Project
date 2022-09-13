@@ -14,7 +14,7 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "placement")
+@Table(name = "placements")
 public class Placement extends Position {
 
     private boolean completed;
