@@ -13,6 +13,7 @@ import com.wilma.repository.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@Profile("dev")//Only run in dev profile
 @Service
 public class SeedDataService {
 
