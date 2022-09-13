@@ -1,0 +1,38 @@
+<!-- =================================================================================
+  This page is populated with either a "create/edit post" or "create a new reply" form
+  depending on both the link clicked, and the supplied query parameters
+  ================================================================================= -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<link th:href="@{~/css/forum.css}" rel="stylesheet" />
+<body>
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="d-flex" id="wrapper">
+
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+
+  <div id="page-content-wrapper">
+
+    <div class="container-fluid">
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item"><a th:href="@{forum}">Forum</a></li>
+          <li class="breadcrumb-item active" aria-current="page" th:text="${contentType}"></li>
+        </ol>
+      </nav>
+
+      <!-- Form fragments displayed or hidden based on the requested content type -->
+      <div th:replace="fragments/forum :: post-form"></div>
+      <div th:replace="fragments/forum :: reply-form"></div>
+
+    </div>
+  </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

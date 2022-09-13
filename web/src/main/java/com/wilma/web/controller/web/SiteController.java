@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -22,24 +23,34 @@ public class SiteController {
         return "/index";
     }
 
-    @RequestMapping("/register")
-    public ResponseEntity<?> register(){
-        return ResponseEntity.ok("Register");
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Register",
+                "userOptions", List.of("Select...", "Educator", "Partner", "Student")));
+        return "/register";
     }
 
-    @RequestMapping("/about")
-    public ResponseEntity<?> about(){
-        return ResponseEntity.ok("About");
+    @GetMapping("/about")
+    public String about(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "About Us"));
+        return "/about";
     }
 
-    @RequestMapping("/contact")
-    public ResponseEntity<?> contact(){
-        return ResponseEntity.ok("Contact");
+    @GetMapping("/contact")
+    public String contact(Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Contact Us"));
+        return "/contact";
     }
 
     @RequestMapping("/login")
-    public String login() {
-        return "/Login";
+    public String login(Model model) {
+        model.addAttribute("currentPage", "Login");
+        return "/login";
     }
+
+
 }
 
