@@ -1,0 +1,40 @@
+<!-- Partner Form -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="partnerForm">
+    <form
+        id="partner-form"
+        class="w-50 mx-auto pt-5"
+        th:action="@{/register}"
+        th:object="${userDTO}"
+        method="post"
+        hidden>
+
+    <input type="hidden" name="userType" value="PARTNER">
+    <div class="mb-3">
+        <label for="businessName" class="form-label">Name</label>
+        <input type="text" class="form-control" id="businessName" aria-describedby="businessName">
+    </div>
+
+    <div class="mb-3">
+        <label for="ABN" class="form-label">ABN</label>
+        <input type="text" class="form-control" id="ABN" aria-describedby="ABN">
+    </div>
+
+    <div class="mb-3">
+        <label for="contactPerson" class="form-label">Contact Person</label>
+        <input type="text" class="form-control" id="contactPerson" aria-describedby="contactPerson">
+    </div>
+
+    <div class="mb-3">
+        <label for="partnerEmail" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="partnerEmail" aria-describedby="partnerEmail">
+        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    </div>
+
+    <div class="mb-3">
+        <label for="partnerPhone" class="form-label">Phone</label>
+        <input type="text" class="form-control" id="partnerPhone" aria-describedby="partnerPhone">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>

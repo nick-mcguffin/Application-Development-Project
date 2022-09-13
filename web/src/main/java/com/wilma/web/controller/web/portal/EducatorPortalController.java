@@ -6,6 +6,7 @@ import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
+
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
@@ -22,7 +23,6 @@ import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 @Slf4j
 @Controller
 @RequestMapping("/educator")
@@ -50,14 +50,14 @@ public class EducatorPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false)
+                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
                 ),
                 "pendingPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false)
+                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
                 )
         ));
         return "/educator/marketplace";

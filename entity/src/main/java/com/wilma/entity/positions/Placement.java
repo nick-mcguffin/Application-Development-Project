@@ -19,8 +19,8 @@ public class Placement extends Position {
 
     private boolean completed;
 
-    public Placement(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean completed) {
-        super(id, partner, startDate, endDate, period, location, description, filled);
+    public Placement(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved, boolean completed) {
+        super(id, partner, startDate, endDate, period, location, description, filled, approved);
         this.completed = completed;
     }
 }

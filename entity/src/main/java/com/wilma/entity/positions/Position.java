@@ -38,12 +38,14 @@ public class Position {
     private String description;
     private boolean filled;
 
+    private boolean approved;
+
     @Transient
     private String type;
     //Category
 
 
-    public Position(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled) {
+    public Position(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved) {
         this.id = id;
         this.partner = partner;
         this.startDate = startDate;
@@ -52,6 +54,7 @@ public class Position {
         this.location = location;
         this.description = description;
         this.filled = filled;
+        this.approved = approved;
         this.type = this.getClass().getSimpleName();
     }
 }
