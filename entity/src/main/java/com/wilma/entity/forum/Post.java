@@ -1,6 +1,5 @@
 package com.wilma.entity.forum;
 
-import com.wilma.entity.Category;
 import com.wilma.entity.Tag;
 import com.wilma.entity.users.UserAccount;
 import lombok.Getter;
@@ -15,28 +14,39 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "posts")
 @Entity
-@Table(name = "post")
 public class Post extends ForumContent {
 
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "category_id")
-    private Category category;
+    private ForumCategory category;
 
     @ManyToMany
-    @JoinTable(name = "post_tags",
+    @JoinTable(
+            name = "post_tags",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> postTags = new LinkedHashSet<>();
+    private Set<Tag> tags = new LinkedHashSet<>();
 
-    public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  Category category, Set<Tag> postTags) {
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Set<Reply> replies = new LinkedHashSet<>();
+
+    public Post(Integer id, UserAccount author, Date timestamp, String title, String body,  ForumCategory category, Set<Tag> tags) {
         super(id, author, timestamp, body);
         this.title = title;
         this.category = category;
-        this.postTags = postTags;
+        this.tags = tags;
     }
 
+    private boolean addReply(Reply reply){
+        return replies.add(reply);
+    }
+
+    private boolean removeReply(Reply reply){
+        return replies.remove(reply);
+    }
 }

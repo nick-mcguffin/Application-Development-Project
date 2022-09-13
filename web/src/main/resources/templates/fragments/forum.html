@@ -29,7 +29,7 @@
                         <h2>Recent Posts:</h2>
                         <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
                             <li class="post-preview">
-                                <a th:href="@{forum-thread?category={cat}(cat=${category.name})}" th:text="${post.title}">Post Title</a>
+                                <a th:href="|@{forum-thread?category={cat}(cat=${category.name})}#post${post.id}|" th:text="${post.title}">Post Title</a>
                             </li>
                         </ul>
                     </div>
@@ -41,43 +41,104 @@
     </div>
 </div>
 
+<!-- Category thread is shown when a user explores a forum category, it shows all the posts (and their replies) that have the chosen category -->
+<div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
+
+    <h1 class="text-center" th:text="${categoryName}">Category Title</h1>
+
+    <div class="pt-5 text-center text-muted" th:if="${#lists.isEmpty(postsByCategory)}">
+        <h2>Oops... It appears there are no posts to display ＞﹏＜</h2>
+    </div>
+    <div class="accordion" id="categoryThread" th:each=" post : ${postsByCategory}">
+        <!-- Category Thread -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" th:id="|post${post.id}|">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#post${post.id}Comments|" aria-expanded="true" th:aria-controls="|post${post.id}Comments|" th:text="${post.title}">
+                    Post Title
+                </button>
+            </h2>
+            <div th:id="|post${post.id}Comments|" class="accordion-collapse collapse show" th:aria-labelledby="|post${post.id}|"
+                 data-bs-parent="#categoryThread">
+                <div class="accordion-body">
+                    <div>
+                        <small th:each="tag : ${post.tags}" class="tag" th:text="${tag.name}"></small>
+                    </div>
+                    <div class="subtitle">
+                    <p th:text="${post.body}"></p>
+                        <div class="row">
+                            <!-- Todo: Implement post replies -->
+                            <a class="w-auto" th:href="@{forum-content?type=reply&postId={pid} (pid=${post.id})}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
+                            <a class="w-auto" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{delete-post/{postId}?category={cat} (postId=${post.id}, cat=${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
+                            <div class="ml-3 w-auto">
+                                <b th:text="${post.author.username}"></b>
+                                <small th:text="| - ${#dates.format(post.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Replies -->
+                    <div  th:each="reply : ${repliesForPosts}" th:if="${reply.post.id == post.id}">
+                        <div class="reply">
+                            <p th:text="${reply.body}">Reply Body</p>
+                            <div class="ml-3 w-auto">
+                                <b th:text="${reply.author.username}"></b>
+                                <small th:text="| - ${#dates.format(reply.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Form for creating a new forum post -->
 <div th:fragment="post-form" th:class="${contentType == 'post'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Post</h1>
-    <form>
+    <form th:action="@{create-post}" th:object="${post}" method="post">
         <script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
         <link th:href="@{~/css/forum.css}" rel="stylesheet"/>
 
         <div class="row p-3 pb-0">
             <div class="col-6">
                 <label for="categoryOptions" class="form-label">Category</label>
-                <select class="select-box" id="categoryOptions">
-                    <option value="Category 1">Category 1</option>
-                    <option value="Category 2">Category 2</option>
-                    <option value="Category 3">Category 3</option>
+                <select class="select-box" id="categoryOptions" th:field="*{category}">
+                    <option
+                            th:each="category : ${availableCategories}"
+                            th:value="${category.name}"
+                            th:text="${category.name}">
+                    </option>
                 </select>
             </div>
 
             <div class="col-6">
                 <label for="tag-multi-select" class="form-label">Tags</label>
-                <select class="select-box" id="tag-multi-select" multiple multiselect-search="true"
-                        multiselect-select-all="true">
-                    <option value="Tag 1">Tag 1</option>
-                    <option value="Tag 2">Tag 2</option>
-                    <option value="Tag 3">Tag 3</option>
+                <select class="select-box" id="tag-multi-select" multiple multiselect-search="true" multiselect-select-all="true" th:field="*{tags}">
+                    <option
+                            th:each="tag : ${availableTags}"
+                            th:value="${tag.id}"
+                            th:text="${tag.name}">
+                    </option>
                 </select>
             </div>
         </div>
 
         <div class="row p-3 pt-0">
+            <label for="post-title" class="form-label">Title</label>
+            <input class="form-floating user-input" id="post-title"  th:field="*{title}">
+        </div>
+
+        <div class="row p-3 pt-0">
             <label for="post-content" class="form-label">Content</label>
-            <textarea class="post-content form-floating" id="post-content" rows="5"></textarea>
+            <textarea class="form-floating user-input" id="post-content" rows="5" th:field="*{body}"></textarea>
         </div>
 
         <div class="form-group mb-3 text-center">
             <button type="submit" class="btn form-button btn-success">Post</button>
-            <button type="reset" class="btn form-button btn-danger">Cancel</button>
+            <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
         </div>
     </form>
 </div>
@@ -86,79 +147,15 @@
 <div th:fragment="reply-form" th:class="${contentType == 'reply'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
     <h1 class="text-center">Reply</h1>
-    <form>
+    <form th:action="@{reply-to-post?type=reply&postId={pid}( pid=${postId} )}" th:object="${reply}" method="post">
         <div class="row p-3 pt-0">
-            <label for="reply-content" class="form-label"><b>Replying to Tommy:</b> <i>[Post Title]</i></label>
-            <textarea class="post-content form-floating" id="reply-content" rows="5"></textarea>
+            <label for="reply-content" class="form-label"><b>Reply</b></label>
+            <textarea class="post-content form-floating" id="reply-content" rows="5" th:field="*{body}"></textarea>
         </div>
 
         <div class="form-group mb-3 text-center">
             <button type="submit" class="btn form-button btn-success">Reply</button>
-            <button type="reset" class="btn form-button btn-danger">Cancel</button>
+            <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
         </div>
     </form>
 </div>
-
-<!-- Category thread is shown when a user explores a forum category, it shows all the posts (and their replies) that have the chosen category -->
-<div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
-
-    <h1 class="text-center" th:text="${category}">Category Title</h1>
-    <div class="accordion" id="categoryThread" >
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="categoryOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionComments" aria-expanded="true" aria-controls="accordionComments">
-                    Post Title
-                </button>
-            </h2>
-            <div id="accordionComments" class="accordion-collapse collapse show" aria-labelledby="categoryOne"
-                 data-bs-parent="#categoryThread">
-                <div class="accordion-body">
-                    <div class="subtitle">
-                        The post body information<br/>
-                        <small>Date & time - <b>Tommy</b></small><br/>
-                        <a class="reply-link" th:href="@{forum-content?type=reply}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
-                    </div>
-                    <!-- Comments -->
-                    <div class="reply">
-                        Reply 1
-                        <br/><small>Date & time - <b>Chad</b></small>
-                    </div>
-                    <div class="reply">
-                        Reply 2
-                        <br/><small>Date & time - <b>Dave</b></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="categoryTwo">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#accordionComments2" aria-expanded="true" aria-controls="accordionComments2">
-                    Post Title
-                </button>
-            </h2>
-            <div id="accordionComments2" class="accordion-collapse collapse show" aria-labelledby="categoryTwo"
-                 data-bs-parent="#categoryThread">
-                <div class="accordion-body">
-                    <div class="subtitle">
-                        The post body information<br/>
-                        <small>Date & time - <b>Tommy</b></small><br/>
-                        <a class="reply-link" th:href="@{forum-content?type=reply}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
-                    </div>
-                    <!-- Comments -->
-                    <div class="reply">
-                        Reply 1
-                        <br/><small>Date & time - <b>Chad</b></small>
-                    </div>
-                    <div class="reply">
-                        Reply 2
-                        <br/><small>Date & time - <b>Dave</b></small>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-

@@ -21,10 +21,7 @@ public class Partner extends UserAccount {
     @Column(name = "Business_name")
     private String businessName;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-    @JoinTable(name = "partner_positions",
-            joinColumns = @JoinColumn(name = "partner_id"),
-            inverseJoinColumns = @JoinColumn(name = "position_id"))
+    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL)
     private Set<Position> positions = new LinkedHashSet<>();
 
     public Partner(Integer userId, String username, String password, String email, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName) {

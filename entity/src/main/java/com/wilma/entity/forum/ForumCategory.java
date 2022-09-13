@@ -1,4 +1,4 @@
-package com.wilma.entity;
+package com.wilma.entity.forum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +12,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "category")
-public class Category {
+@Table(name = "forum_categories")
+public class ForumCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

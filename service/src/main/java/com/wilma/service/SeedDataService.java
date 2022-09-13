@@ -1,9 +1,10 @@
 
 package com.wilma.service;
 
-import com.wilma.entity.Category;
 import com.wilma.entity.Tag;
+import com.wilma.entity.forum.ForumCategory;
 import com.wilma.entity.forum.Post;
+import com.wilma.entity.forum.Reply;
 import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.RemoteClient;
 import com.wilma.entity.users.Role;
@@ -12,6 +13,7 @@ import com.wilma.repository.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,7 @@ import java.util.Set;
  */
 @Getter
 @Setter
+@Profile("dev")//Only run in dev profile
 @Service
 public class SeedDataService {
 
@@ -43,6 +46,8 @@ public class SeedDataService {
     @Autowired
     private PostRepository postRepository;
     @Autowired
+    private ReplyRepository replyRepository;
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
 
@@ -55,14 +60,24 @@ public class SeedDataService {
         initTags();
         initAuthors();
         initPosts();
-
+        initReplies();
     }
 
+    public void initReplies(){
+        //(Integer id, UserAccount author, Date timestamp, String body, Post post)
+        var google = userRepository.findByUsername("google");
+        var post = postRepository.findByTitleIgnoreCase("Working with Microsoft");
+        var reply1 = new Reply(null, google, new Date(), "Can we come work for you?", post);
+        if(!replyRepository.existsByUid(reply1.getUid())){
+            replyRepository.save(reply1);
+        }
+    }
     public void initPosts(){
         var category1 = categoryRepository.findByNameIgnoreCase("Job FAQ");
         var category2 = categoryRepository.findByNameIgnoreCase("General Discussion");
         var tag1 = tagRepository.findByNameIgnoreCase("Remote Work");
         var tag2 = tagRepository.findByNameIgnoreCase("Java");
+        var tag3 = tagRepository.findByNameIgnoreCase("UI Design");
         var posts = List.of(
                 new Post(
                         null,
@@ -89,7 +104,7 @@ public class SeedDataService {
                         "Calling all Java developers",
                         "Google's annual \"Code Jam\" is quickly approaching, and we're handing out generous prize money 🤓",
                         category2,
-                        Set.of(tag2)
+                        Set.of(tag2, tag3)
                 )
         );
         posts.forEach(post -> {
@@ -133,14 +148,14 @@ public class SeedDataService {
 
     public void initCategories(){
         var categories = List.of(
-                new Category(null, "General Discussion", "Anything goes"),
-                new Category(null, "Resume Q&A", "Help with your resume"),
-                new Category(null, "Placement FAQ", "Frequently asked questions about placements"),
-                new Category(null, "Job FAQ", "Frequently asked questions about jobs"),
-                new Category(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host")        );
-        categories.forEach(category -> {
-            if(!categoryRepository.existsByName(category.getName())){
-                categoryRepository.save(category);
+                new ForumCategory(null, "General Discussion", "Anything goes"),
+                new ForumCategory(null, "Resume Q&A", "Help with your resume"),
+                new ForumCategory(null, "Placement FAQ", "Frequently asked questions about placements"),
+                new ForumCategory(null, "Job FAQ", "Frequently asked questions about jobs"),
+                new ForumCategory(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host")        );
+        categories.forEach(forumCategory -> {
+            if(!categoryRepository.existsByName(forumCategory.getName())){
+                categoryRepository.save(forumCategory);
             }
         });
     }
