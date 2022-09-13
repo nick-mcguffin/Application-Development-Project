@@ -68,7 +68,6 @@ public class SeedDataService {
         var reply1 = new Reply(null, google, new Date(), "Can we come work for you?", post);
         if(!replyRepository.existsByUid(reply1.getUid())){
             replyRepository.save(reply1);
-            System.out.println("Reply saved");
         }
     }
     public void initPosts(){

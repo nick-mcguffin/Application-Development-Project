@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "position")
+@Table(name = "positions")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Position {
     @Id
