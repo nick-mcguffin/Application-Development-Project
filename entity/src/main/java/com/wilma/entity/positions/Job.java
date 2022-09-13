@@ -29,8 +29,8 @@ public class Job extends Position {
     @Column(name = "pay_frequency")
     private Frequency payFrequency;
 
-    public Job(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, double payRate, PayType payType, Frequency payFrequency) {
-        super(id, partner, startDate, endDate, period, location, description, filled);
+    public Job(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved, double payRate, PayType payType, Frequency payFrequency) {
+        super(id, partner, startDate, endDate, period, location, description, filled, approved);
         this.payRate = payRate;
         this.payType = payType;
         this.payFrequency = payFrequency;
