@@ -36,6 +36,7 @@ public class PartnerPortalController {
     @Autowired
     TagService tagService;
 
+    //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
@@ -44,7 +45,9 @@ public class PartnerPortalController {
         ));
         return "/partner/dashboard";
     }
+    //endregion
 
+    //region Marketplace
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
@@ -58,7 +61,6 @@ public class PartnerPortalController {
         ));
         return "/partner/marketplace";
     }
-
 
     @GetMapping("/new-position")
     public String newPosition (Model model) {
@@ -79,7 +81,9 @@ public class PartnerPortalController {
         ));
         return "/partner/edit-position";
     }
+    //endregion
 
+    //region Forum
     @GetMapping("/forum")
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
@@ -122,6 +126,7 @@ public class PartnerPortalController {
         log.info("Reply added: "+ reply);
         return new RedirectView("/partner/forum-thread?category="+ category);
     }
+
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
         var newPost = forumService.addPostFromDTO(postDTO);
@@ -140,7 +145,6 @@ public class PartnerPortalController {
         return new RedirectView("/partner/forum");
     }
 
-
     @GetMapping("/forum-thread")
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
@@ -152,13 +156,14 @@ public class PartnerPortalController {
         return "/partner/forum/forum-thread";
 
     }
+    //endregion
 
-    /*
-    Todo:
-        - ADP-78: Forum
-        - ADP-77: Jobs & Placements
-        - ADP-79: Job & Placement Management
-        - ADP-80: Profile
-        - ADP-82: Expressions Of Interest
-     */
+    //region Todo: Profile
+    //Add endpoint for profile page
+    //endregion
+
+    //region Todo: Expressions of interest
+    //Add expressions of interest endpoint
+    //endregion
+
 }
