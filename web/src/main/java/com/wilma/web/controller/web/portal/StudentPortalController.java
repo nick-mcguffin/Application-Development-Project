@@ -1,8 +1,14 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserConfiguration;
+import com.wilma.entity.Frequency;
+import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
+import com.wilma.entity.positions.Job;
+import com.wilma.entity.positions.Placement;
+import com.wilma.entity.users.Partner;
+import com.wilma.entity.users.Resume;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
@@ -13,6 +19,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.Period;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,8 +36,32 @@ public class StudentPortalController {
     @Autowired
     TagService tagService;
 
-    //region Todo: Dashboard
-    //Add endpoint for student dashboard
+    //region Dashboard
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "dashboard",
+                "menuElements", UserConfiguration.studentMenuElements
+        ));
+        return "/student/dashboard";
+    }
+    //endregion
+
+    //region Jobs & placements (marketplace)
+    @GetMapping("/marketplace")
+    public String marketplace(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.studentMenuElements,
+                "approvedPositions", List.of(
+                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
+                )
+
+        ));
+        return "/student/marketplace";
+    }
     //endregion
 
     //region Forum
@@ -36,7 +69,7 @@ public class StudentPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -47,7 +80,7 @@ public class StudentPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -64,7 +97,7 @@ public class StudentPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -80,7 +113,7 @@ public class StudentPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -96,7 +129,7 @@ public class StudentPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -104,16 +137,31 @@ public class StudentPortalController {
     }
     //endregion
 
-    //region Todo: Jobs & placements (marketplace)
-    //Add endpoint/s for marketplace
+    //region Resume management
+    @GetMapping("/resume-management")
+    public String resumeManagement(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Resume Management",
+                "menuElements", UserConfiguration.studentMenuElements,
+                "studentResumes", List.of(
+                new Resume("Resume 1", "pdf", new java.util.Date()),new Resume("Resume 2", "pdf", new java.util.Date()),
+                        new Resume("Resume 3", "pdf", new java.util.Date()),
+                        new Resume("Resume 4", "pdf", new java.util.Date()))
+
+        ));
+        return "/student/resume-management";
+    }
     //endregion
 
-    //region Todo: Resume management
-    //Add endpoint/s for resume management
-    //endregion
-
-    //region Todo: Profile
-    //Add endpoint/s for profile page
+    //region Profile
+    @GetMapping("/profile")
+    public String studentProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "profile",
+                "menuElements", UserConfiguration.studentMenuElements
+        ));
+        return "/student/profile";
+    }
     //endregion
 
 }

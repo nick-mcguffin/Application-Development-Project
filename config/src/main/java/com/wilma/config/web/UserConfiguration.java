@@ -14,23 +14,23 @@ public class UserConfiguration {
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
             new SidebarMenuElement("marketplace", "marketplace", "business_center", "Jobs & Placements"),
             new SidebarMenuElement("forum", "forum", "forum", "Q&A Forum"),
-            new SidebarMenuElement("expressions_of_interest", "expressions_of_interest", "file_present", "Expressions Of Interest"),
+            new SidebarMenuElement("expressions-of-interest", "expressions-of-interest", "file_present", "Expressions Of Interest"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
     //Todo
     public final static List<SidebarMenuElement> partnerMenuElements = List.of(
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
-            new SidebarMenuElement("marketplace", "marketplace", "house", "Jobs & Placements"),
+            new SidebarMenuElement("marketplace", "marketplace", "business_center", "Jobs & Placements"),
             new SidebarMenuElement("forum", "forum", "forum", "Q&A Forum"),
-            new SidebarMenuElement("expressions_of_interest", "expressions_of_interest", "file_present", "Expressions Of Interest"),
+            new SidebarMenuElement("expressions-of-interest", "expressions-of-interest", "file_present", "Expressions Of Interest"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
     //Todo
     public final static List<SidebarMenuElement> studentMenuElements = List.of(
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
-            new SidebarMenuElement("marketplace", "marketplace", "house", "Jobs & Placements"),
+            new SidebarMenuElement("marketplace", "marketplace", "business_center", "Jobs & Placements"),
             new SidebarMenuElement("forum", "forum", "forum", "Q&A Forum"),
-            new SidebarMenuElement("resume_management", "resume_management", "contact_page", "Resume Management"),
+            new SidebarMenuElement("resume-management", "resume-management", "contact_page", "Resume Management"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
 

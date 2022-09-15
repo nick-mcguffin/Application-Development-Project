@@ -3,6 +3,7 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
@@ -88,7 +89,7 @@ public class PartnerPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -99,7 +100,7 @@ public class PartnerPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -116,7 +117,7 @@ public class PartnerPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -133,7 +134,7 @@ public class PartnerPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -149,7 +150,7 @@ public class PartnerPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -158,12 +159,33 @@ public class PartnerPortalController {
     }
     //endregion
 
-    //region Todo: Profile
-    //Add endpoint for profile page
+    //region Expressions of interest
+    @GetMapping("/expressions-of-interest")
+    public String expressionsOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserConfiguration.partnerMenuElements,
+
+                "pendingPartnerExpressionsOfInterest", List.of(
+                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                )
+        ));
+        return "/partner/expressions-of-interest";
+    }
     //endregion
 
-    //region Todo: Expressions of interest
-    //Add expressions of interest endpoint
+    //region Profile
+    @GetMapping("/profile")
+    public String partnerProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserConfiguration.partnerMenuElements
+        ));
+        return "/partner/profile";
+    }
     //endregion
 
 }

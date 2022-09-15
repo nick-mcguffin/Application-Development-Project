@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head"></head>
-
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="w-50 mx-auto">
     <body class="bg-dark bg-opacity-10">
-        <div th:replace="fragments/navigation :: top-navigation"></div>
         <div class="container py-5">
             <div class="row h-100 align-items-center py-5 form container">
                 <div class="col-lg-6">
                     <h1 class="display-4 header-style center">Contact Us</h1>
-                    <p class="center"><br>Contact the team for help with any enquiries. Fill in the enquiry form or use our details below to get in touch.</p>
+                    <p class="center"><br>Contact the team for help with any enquiries. </p>
                     <hr>
                     <span class="center"><img src="assets/icons/telephone.svg" class="icon-size"/></span>
                     <p class="center">0494 644 648</p>
@@ -20,4 +20,5 @@
             </div>
         </div>      
     </body>
+</div>
 </html>
