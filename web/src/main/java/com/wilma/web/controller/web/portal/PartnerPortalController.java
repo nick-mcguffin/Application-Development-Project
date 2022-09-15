@@ -181,7 +181,7 @@ public class PartnerPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+"currentPage", "profile",
                 "menuElements", UserConfiguration.partnerMenuElements
         ));
         return "/partner/profile";
