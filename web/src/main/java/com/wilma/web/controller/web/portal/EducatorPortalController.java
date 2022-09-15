@@ -182,7 +182,7 @@ public class EducatorPortalController {
     @GetMapping("/profile")
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+"currentPage", "profile",
                 "menuElements", UserConfiguration.educatorMenuElements
         ));
         return "/educator/profile";
