@@ -158,8 +158,15 @@ public class PartnerPortalController {
     }
     //endregion
 
-    //region Todo: Profile
-    //Add endpoint for profile page
+    //region Profile
+    @GetMapping("/profile")
+    public String partnerProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserConfiguration.partnerMenuElements
+        ));
+        return "/partner/profile";
+    }
     //endregion
 
     //region Todo: Expressions of interest
