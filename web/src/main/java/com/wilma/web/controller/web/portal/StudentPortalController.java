@@ -27,8 +27,15 @@ public class StudentPortalController {
     @Autowired
     TagService tagService;
 
-    //region Todo: Dashboard
-    //Add endpoint for student dashboard
+    //region Dashboard
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "dashboard",
+                "menuElements", UserConfiguration.studentMenuElements
+        ));
+        return "/student/dashboard";
+    }
     //endregion
 
     //region Forum
@@ -108,12 +115,19 @@ public class StudentPortalController {
     //Add endpoint/s for marketplace
     //endregion
 
-    //region Todo: Resume management
-    //Add endpoint/s for resume management
-    //endregion
+    //region Resume management
+    @GetMapping("/resume_management")
+    public String resumeManagement(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Resume Management",
+                "menuElements", UserConfiguration.studentMenuElements,
+                "studentResumes", List.of(
+                new Resume("Resume 1", "pdf", new java.util.Date()),new Resume("Resume 2", "pdf", new java.util.Date()),
+                        new Resume("Resume 3", "pdf", new java.util.Date()),
+                        new Resume("Resume 4", "pdf", new java.util.Date()))
 
-    //region Todo: Profile
-    //Add endpoint/s for profile page
+        ));
+        return "/student/resume_management";
+    }
     //endregion
-
 }

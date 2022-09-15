@@ -1,10 +1,10 @@
 
-<!-- Jobs & Placements that are still pending approval -->
+<!-- Expressions of Interest that are still pending approval (Educator) -->
 <div th:fragment="pending-approval" id="pending-approval" xmlns:th="http://www.thymeleaf.org">
     
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Approval</h1></div>
-        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Applications</h1></div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Applications..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
     
@@ -13,7 +13,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Type</th>
                     <th>Provider</th>
                     <th>Start Date</th>
                     <th>End Date</th>
@@ -24,16 +23,15 @@
             <tbody id="pendingPositionsData">
                 <tr th:each="pos : ${pendingPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
-                    <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-approve">Done</span>
-                            <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
-                            <span class="material-symbols-rounded btn-delete">Delete</span>
+                            <span class="material-symbols-rounded btn-approve">done</span>
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
                         </div>
                     </td>
                 </tr>
@@ -58,15 +56,15 @@
 </div>
 
 
-<!-- Current (approved) Jobs & Placements -->
+<!-- Current (approved) Expressions of Interest (Educator) -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Current</h1>
+            <h1 class="table-heading">Approved Applications</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Applications..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -75,7 +73,6 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Type</th>
                     <th>Provider</th>
                     <th>Start Date</th>
                     <th>End Date</th>
@@ -86,7 +83,6 @@
             <tbody id="approvedPositionsData">
                 <tr th:each="pos : ${approvedPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
-                    <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
@@ -117,7 +113,7 @@
 
 </div>
 
-<!-- Partner Jobs & Placements -->
+<!-- Partner Expressions of Interest -->
 <div th:fragment="partner" id="partner" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -134,7 +130,6 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Type</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Description</th>
@@ -145,15 +140,13 @@
             <tbody id="partnerPositionsData">
             <tr th:each="pos : ${partnerPositions}">
                 <th scope="row" th:text="${pos.id}"></th>
-                <td th:text="${pos.type}">Job</td>
                 <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                 <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${pos.description}">Just a one month job</td>
                 <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td style="display: flex;">
                     <div class="mx-auto">
-                        <!-- link passes position type as a request param to dynamically load the edit page -->
-                        <a th:href="@{'/partner/edit-position?type=' + ${pos.type}}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
                         <span class="material-symbols-rounded btn-delete">delete</span>
                     </div>
                 </td>

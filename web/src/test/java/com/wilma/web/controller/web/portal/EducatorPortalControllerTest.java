@@ -56,9 +56,13 @@ class EducatorPortalControllerTest {
     @Test
     void forumThread() {
         assertEquals("/educator/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
+        assertEquals("/educator/expressions-of-interest", controller.expressionsOfInterest(model), "Unexpected expressions of interest endpoint");
+//        assertEquals("/educator/profile", controller.profile(model), "Unexpected profile endpoint");
+
     }
 
     @Test
     void deletePost() {
+
     }
 }
