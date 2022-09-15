@@ -132,4 +132,15 @@ public class StudentPortalController {
         return "/student/resume_management";
     }
     //endregion
+
+    //region Profile
+    @GetMapping("/profile")
+    public String studentProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "profile",
+                "menuElements", UserConfiguration.studentMenuElements
+        ));
+        return "/student/profile";
+    }
+    //endregion
 }
