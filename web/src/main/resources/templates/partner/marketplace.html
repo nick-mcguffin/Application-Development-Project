@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"></head>
 <link th:href="@{~/css/portal-styles.css}" rel="stylesheet" />
-<body onload="hidePositionsPendingTableIfEmpty()">
+<body>
 <!-- Top Navigation Bar -->
 <div th:replace="fragments/navigation :: top-navigation"></div>
 
@@ -21,8 +21,6 @@
       </nav>
 
       <h1 class="text-center m-3">Jobs & Placements</h1>
-
-      <div th:replace="fragments/marketplace-tables :: pending-approval"></div>
 
       <div th:replace="fragments/marketplace-tables :: partner"></div>
 
