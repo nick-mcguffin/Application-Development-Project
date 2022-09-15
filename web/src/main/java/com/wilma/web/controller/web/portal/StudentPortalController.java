@@ -27,6 +27,11 @@ public class StudentPortalController {
     @Autowired
     TagService tagService;
 
+    //region Todo: Dashboard
+    //Add endpoint for student dashboard
+    //endregion
+
+    //region Forum
     @GetMapping("/forum")
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
@@ -97,12 +102,18 @@ public class StudentPortalController {
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
         return "/student/forum/forum-thread";
     }
+    //endregion
 
-    /*
-    Todo:
-        - ADP-65: Dashboard
-        - ADP-66: Jobs & Placements
-        - ADP-68: Resume Management
-        - ADP-69: Profile
-     */
+    //region Todo: Jobs & placements (marketplace)
+    //Add endpoint/s for marketplace
+    //endregion
+
+    //region Todo: Resume management
+    //Add endpoint/s for resume management
+    //endregion
+
+    //region Todo: Profile
+    //Add endpoint/s for profile page
+    //endregion
+
 }

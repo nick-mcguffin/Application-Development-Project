@@ -35,6 +35,7 @@ public class EducatorPortalController {
     @Autowired
     TagService tagService;
 
+    //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
@@ -43,7 +44,9 @@ public class EducatorPortalController {
         ));
         return "/educator/dashboard";
     }
+    //endregion
 
+    //region Jobs & placements (marketplace)
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
@@ -63,6 +66,10 @@ public class EducatorPortalController {
         return "/educator/marketplace";
     }
 
+    //Todo: Marketplace implementation
+    //endregion
+
+    //region Forum
     @GetMapping("/forum")
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
@@ -146,11 +153,14 @@ public class EducatorPortalController {
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
         return new RedirectView("/educator/forum-thread?category=" + category);
     }
+    //endregion
 
-    /*
-    Todo:
-        - ADP-74: Jobs & Placement Management
-        - ADP-81: Expressions Of Interest
-        - ADP-73: Profile
-     */
+    //region Todo: Profile
+    //Add endpoint for profile page
+    //endregion
+
+    //region Todo: Expressions of interest
+    //Add expressions of interest endpoint
+    //endregion
+
 }
