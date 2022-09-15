@@ -88,7 +88,7 @@ public class PartnerPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -99,7 +99,7 @@ public class PartnerPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -116,7 +116,7 @@ public class PartnerPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -133,7 +133,7 @@ public class PartnerPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -149,7 +149,7 @@ public class PartnerPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
