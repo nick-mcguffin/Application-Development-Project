@@ -1,0 +1,161 @@
+<!-- Forum Fragments -->
+
+<!-- Create a new post button -->
+<div th:fragment="create-post-button" xmlns:th="http://www.thymeleaf.org">
+    <a th:href="@{forum-content?type=post}" class="btn new-post-button">
+        <span class="material-symbols-outlined">chat</span>
+        <span>Post a New Question</span>
+    </a>
+</div>
+
+<!-- Forum category overview (home view) -->
+<div th:fragment="category-overview" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="accordion" id="categoryAccordion" th:each="category : ${categoryList}">
+        <div class="accordion-item">
+            <h2 class="accordion-header" th:id="|heading${category.id}|">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#collapse${category.id}"
+                        aria-expanded="true" th:aria-controls="|collapse${category.id}" th:text="${category.name}">
+                </button>
+            </h2>
+            <div th:id="|collapse${category.id}" class="accordion-collapse collapse show" th:aria-labelledby="|heading${category.id}|"
+                 data-bs-parent="#categoryAccordion">
+                <div class="accordion-body">
+                    <a class="view-category mx-auto" th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
+                    <p th:text="${category.description}">Category Description</p>
+
+                    <!-- Iterate recent posts for the current category -->
+                    <div class="recent-posts">
+                        <h2>Recent Posts:</h2>
+                        <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
+                            <li class="post-preview">
+                                <a th:href="|@{forum-thread?category={cat}(cat=${category.name})}#post${post.id}|" th:text="${post.title}">Post Title</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Category thread is shown when a user explores a forum category, it shows all the posts (and their replies) that have the chosen category -->
+<div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
+
+    <h1 class="text-center" th:text="${categoryName}">Category Title</h1>
+
+    <div class="pt-5 text-center text-muted" th:if="${#lists.isEmpty(postsByCategory)}">
+        <h2>Oops... It appears there are no posts to display ＞﹏＜</h2>
+    </div>
+    <div class="accordion" id="categoryThread" th:each=" post : ${postsByCategory}">
+        <!-- Category Thread -->
+        <div class="accordion-item">
+            <h2 class="accordion-header" th:id="|post${post.id}|">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#post${post.id}Comments|" aria-expanded="true" th:aria-controls="|post${post.id}Comments|" th:text="${post.title}">
+                    Post Title
+                </button>
+            </h2>
+            <div th:id="|post${post.id}Comments|" class="accordion-collapse collapse show" th:aria-labelledby="|post${post.id}|"
+                 data-bs-parent="#categoryThread">
+                <div class="accordion-body">
+                    <div>
+                        <small th:each="tag : ${post.tags}" class="tag" th:text="${tag.name}"></small>
+                    </div>
+                    <div class="subtitle">
+                    <p th:text="${post.body}"></p>
+                        <div class="row">
+                            <!-- Todo: Implement post replies -->
+                            <a class="w-auto" th:href="@{forum-content?type=reply&postId={pid} (pid=${post.id})}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
+                            <a class="w-auto" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{delete-post/{postId}?category={cat} (postId=${post.id}, cat=${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
+                            <div class="ml-3 w-auto">
+                                <b th:text="${post.author.username}"></b>
+                                <small th:text="| - ${#dates.format(post.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Replies -->
+                    <div  th:each="reply : ${repliesForPosts}" th:if="${reply.post.id == post.id}">
+                        <div class="reply">
+                            <p th:text="${reply.body}">Reply Body</p>
+                            <div class="ml-3 w-auto">
+                                <b th:text="${reply.author.username}"></b>
+                                <small th:text="| - ${#dates.format(reply.timestamp, 'dd/MM/yyyy h:mm a')}|"></small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Form for creating a new forum post -->
+<div th:fragment="post-form" th:class="${contentType == 'post'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
+
+    <h1 class="text-center">Post</h1>
+    <form th:action="@{create-post}" th:object="${post}" method="post">
+        <script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
+        <link th:href="@{~/css/forum.css}" rel="stylesheet"/>
+
+        <div class="row p-3 pb-0">
+            <div class="col-6">
+                <label for="categoryOptions" class="form-label">Category</label>
+                <select class="select-box" id="categoryOptions" th:field="*{category}">
+                    <option
+                            th:each="category : ${availableCategories}"
+                            th:value="${category.name}"
+                            th:text="${category.name}">
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-6">
+                <label for="tag-multi-select" class="form-label">Tags</label>
+                <select class="select-box" id="tag-multi-select" multiple multiselect-search="true" multiselect-select-all="true" th:field="*{tags}">
+                    <option
+                            th:each="tag : ${availableTags}"
+                            th:value="${tag.id}"
+                            th:text="${tag.name}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row p-3 pt-0">
+            <label for="post-title" class="form-label">Title</label>
+            <input class="form-floating user-input" id="post-title"  th:field="*{title}">
+        </div>
+
+        <div class="row p-3 pt-0">
+            <label for="post-content" class="form-label">Content</label>
+            <textarea class="form-floating user-input" id="post-content" rows="5" th:field="*{body}"></textarea>
+        </div>
+
+        <div class="form-group mb-3 text-center">
+            <button type="submit" class="btn form-button btn-success">Post</button>
+            <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
+        </div>
+    </form>
+</div>
+
+<!-- Form for creating a new reply -->
+<div th:fragment="reply-form" th:class="${contentType == 'reply'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
+
+    <h1 class="text-center">Reply</h1>
+    <form th:action="@{reply-to-post?type=reply&postId={pid}( pid=${postId} )}" th:object="${reply}" method="post">
+        <div class="row p-3 pt-0">
+            <label for="reply-content" class="form-label"><b>Reply</b></label>
+            <textarea class="post-content form-floating" id="reply-content" rows="5" th:field="*{body}"></textarea>
+        </div>
+
+        <div class="form-group mb-3 text-center">
+            <button type="submit" class="btn form-button btn-success">Reply</button>
+            <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
+        </div>
+    </form>
+</div>

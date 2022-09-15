@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head"></head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
-<body onload="showFragment(null)">
+<body onload="showFragment(null)" class="bg-dark bg-opacity-10">
 
     <div th:replace="fragments/navigation :: top-navigation"></div>
 <div>
@@ -24,13 +24,11 @@
     <div th:replace="fragments/studentForm"></div>
 </body>
 <script>
-
     //Show only the type passed, hide all else
     function showFragment(userType) {
         document.getElementById("educator-form").hidden = (userType != "Educator")
         document.getElementById("partner-form").hidden  = (userType != "Partner")
         document.getElementById("student-form").hidden  = (userType != "Student")
     }
-
 </script>
 </html>

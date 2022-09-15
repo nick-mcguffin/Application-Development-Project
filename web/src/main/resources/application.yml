@@ -9,6 +9,14 @@ spring:
   profiles:
     active: dev # Set this as either dev or prod
 
+  mail:
+    # Credentials for the sendinblue smtp service
+    site-email: projectwilma@mail.com
+    host: smtp-relay.sendinblue.com
+    port: 587
+    username: projectwilma@mail.com
+    password: njYDR2S9ZCQKIkf5
+
 api:
   v1.context-path: /api/v1
   v2.context-path: /api/v2

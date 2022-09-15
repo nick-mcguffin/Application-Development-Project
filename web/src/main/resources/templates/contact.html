@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head"></head>
-
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="w-50 mx-auto">
     <body class="bg-dark bg-opacity-10">
-        <div th:replace="fragments/navigation :: top-navigation"></div>
         <div class="container py-5">
             <div class="row h-100 align-items-center py-5 form container">
                 <div class="col-lg-6">
@@ -20,4 +20,5 @@
             </div>
         </div>      
     </body>
+</div>
 </html>

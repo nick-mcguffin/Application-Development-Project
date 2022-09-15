@@ -15,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "position")
+@Table(name = "positions")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Position {
     @Id
@@ -42,7 +42,6 @@ public class Position {
 
     @Transient
     private String type;
-    //Category
 
 
     public Position(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved) {

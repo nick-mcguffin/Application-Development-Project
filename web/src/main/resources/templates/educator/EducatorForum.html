@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<div class="d-flex" id="wrapper">
+    <!-- Sidebar Menu -->
+    <div th:replace="fragments/navigation :: sidebar"></div>
+    <div id="page-content-wrapper">
+        <!-- Top Navigation Bar -->
+        <div th:replace="fragments/navigation :: top-navigation"></div>
+        <div class="container-fluid">
+            <!-- breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                </ol>
+            </nav>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header text-white"   style = "background-color: #003057;">
+                                <h2>General Discussion</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque condimentum libero malesuada, euismod elit eu, tempus urna.
+                                            Nulla suscipit metus nec aliquam bibendum. Ut feugiat enim justo,
+                                            et tempor sapien tincidunt nec. Nunc semper sapien sit amet maximus faucibus.
+                                            Proin ultricies commodo eros,
+                                            in volutpat turpis tristique vitae.</p>
+                                        <button class="btn btn-primary">Add New Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-sm table-bordered table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>Topic</th>
+                                <th>Replies</th>
+                                <th>Latest Reply</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="post : ${posts}">
+                                <td th:text="${post.topic}"></td>
+                                <td th:text="${post.replies.size()}"></td>
+                                <td th:text="${post.latestReply}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

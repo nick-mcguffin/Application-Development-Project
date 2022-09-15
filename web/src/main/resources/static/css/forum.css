@@ -1,0 +1,87 @@
+.new-post-button {
+  color: whitesmoke !important;
+  background-color: #003057 !important;
+  margin-bottom: 0.75em;
+}
+
+.recent-posts {
+  border: solid 1px black;
+  width: 60%;
+  height: auto;
+  padding: 5px;
+}
+
+.recent-posts>h2 {
+  font-size: 18px;
+  margin-top: 0;
+}
+
+.post-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  list-style: disc inside;
+}
+
+.preview-list {
+  padding: 0;
+}
+
+.select-box, div.multiselect-dropdown {
+  margin-bottom: 20px;
+  width: 100%;
+  border-radius: 5px;
+  min-height: 2rem;
+  border: solid 1px #202124;
+}
+
+.multiselect-dropdown span.placeholder {
+  display: none;
+}
+
+.user-input{
+  border-radius: 5px;
+  margin-left: calc(var(--bs-gutter-x) * .5);
+  margin-right: calc(var(--bs-gutter-x) * .5);
+  width: -webkit-fill-available !important;
+}
+
+.subtitle {
+    color: grey;
+}
+
+.subtitle > small {
+  font-style: italic;
+}
+
+.reply {
+  color: darkslategrey;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  min-height: 50px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.reply > small {
+  color: grey;
+  font-style: italic;
+}
+
+.hidden {
+ display: none;
+}
+
+.reply-author {
+  font-size: 85%;
+  color: dimgrey;
+  font-style: italic;
+}
+
+.tag {
+  border: solid 1px grey;
+  border-radius: 10px;
+  padding: 3px 10px 3px 10px;
+  margin-right: 10px;
+  background-color: gainsboro;
+}

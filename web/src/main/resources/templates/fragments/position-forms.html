@@ -1,0 +1,128 @@
+<!-- Fields for creating a new placement -->
+<div th:fragment="position-form" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <label for="position-start-date" class="form-label">Start Date</label>
+    <input class="form-floating user-input" id="position-start-date">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="position-end-date" class="form-label">End Date</label>
+    <input class="form-floating user-input" id="position-end-date">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="position-period" class="form-label">Period</label>
+    <input class="form-floating user-input" id="position-period">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="position-location" class="form-label">Location</label>
+    <input class="form-floating user-input" id="position-location">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="position-description" class="form-label">Description</label>
+    <textarea class="form-floating user-input" id="position-description" rows="5"></textarea>
+  </div>
+</div>
+
+<!-- Fields for creating a new job -->
+<div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <label for="job-pay-rate" class="form-label">Pay Rate</label>
+    <input class="form-floating user-input" id="job-pay-rate">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="job-pay-type" class="form-label">Pay Type</label>
+    <input class="form-floating user-input" id="job-pay-type">
+  </div>
+
+  <div class="row p-3 pt-0">
+    <label for="job-pay-frequency" class="form-label">Pay Frequency</label>
+    <input class="form-floating user-input" id="job-pay-frequency">
+  </div>
+</div>
+
+<!-- fields for editing position -->
+<div th:fragment="edit-position-fields" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <div class="form-group col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="filledCheck">
+        <label class="form-check-label" for="filledCheck">
+          Filled
+        </label>
+      </div>
+    </div>
+    <div class="form-group col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="approvedCheck">
+        <label class="form-check-label" for="approvedCheck">
+          Approved
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- fields for editing placement -->
+<div th:fragment="edit-placement-field" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <div class="form-group col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="completedCheck">
+        <label class="form-check-label" for="completedCheck">
+          Completed
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- submit/cancel buttons -->
+<div th:fragment="submit-cancel" xmlns:th="http://www.thymeleaf.org">
+  <form>
+    <div class="form-group mb-3 text-center">
+      <button type="submit" class="btn form-button btn-success">Submit</button>
+      <a class="btn form-button btn-danger" th:href="@{/partner/marketplace}">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<!-- Form for creating a new job -->
+<div th:fragment="new-job-form" xmlns:th="http://www.thymeleaf.org" id="new-job-form">
+  <form>
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: job-form"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for creating a new placement -->
+<div th:fragment="new-placement-form" xmlns:th="http://www.thymeleaf.org" id="new-placement-form">
+  <form>
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing job -->
+<div th:fragment="edit-job-form" th:class="${positionType == 'Job'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
+  <form>
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: job-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing a placement -->
+<div th:fragment="edit-placement-form" th:class="${positionType == 'Placement'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-placement-form">
+  <form>
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: edit-placement-field"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
