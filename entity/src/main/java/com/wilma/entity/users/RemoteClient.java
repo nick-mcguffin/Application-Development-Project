@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "remote_client")
+@Table(name = "remote_clients")
 @NoArgsConstructor
 public class RemoteClient {
     @Id

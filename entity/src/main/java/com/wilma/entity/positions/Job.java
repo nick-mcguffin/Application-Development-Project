@@ -17,7 +17,7 @@ import java.util.Date;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name = "job")
+@Table(name = "jobs")
 public class Job extends Position {
 
     @Column(name = "pay_rate")

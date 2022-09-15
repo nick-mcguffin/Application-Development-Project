@@ -12,7 +12,7 @@ import org.springframework.ui.ConcurrentModel;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-class EducatorPortalControllerTest {
+class PartnerPortalControllerTest {
 
     @Mock
     private ConcurrentModel model;
@@ -23,26 +23,26 @@ class EducatorPortalControllerTest {
     @Mock
     private TagService tagService;
     @InjectMocks
-    private EducatorPortalController controller;
+    private PartnerPortalController controller;
 
     @Test
     void dashboard() {
-        assertEquals("/educator/dashboard", controller.dashboard(model), "Unexpected dashboard endpoint");
+        assertEquals("/partner/dashboard", controller.dashboard(model), "Unexpected dashboard endpoint");
     }
 
     @Test
     void marketplace() {
-        assertEquals("/educator/marketplace", controller.marketplace(model), "Unexpected marketplace endpoint");
+        assertEquals("/partner/marketplace", controller.marketplace(model), "Unexpected marketplace endpoint");
     }
 
     @Test
     void forum() {
-        assertEquals("/educator/forum/overview", controller.forumOverview(model), "Unexpected forum endpoint");
+        assertEquals("/partner/forum/overview", controller.forumOverview(model), "Unexpected forum endpoint");
     }
 
     @Test
     void forumContent() {
-        assertEquals("/educator/forum/forum-content", controller.forumContent("post", model, 32), "Unexpected forum endpoint");
+        assertEquals("/partner/forum/forum-content", controller.forumContent("post", model, 32), "Unexpected forum endpoint");
     }
 
     @Test
@@ -55,14 +55,7 @@ class EducatorPortalControllerTest {
 
     @Test
     void forumThread() {
-        assertEquals("/educator/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
-        assertEquals("/educator/expressions-of-interest", controller.expressionsOfInterest(model), "Unexpected expressions of interest endpoint");
-//        assertEquals("/educator/profile", controller.profile(model), "Unexpected profile endpoint");
-
+        assertEquals("/partner/forum/forum-thread", controller.forumThread("post", model), "Unexpected forum endpoint");
     }
 
-    @Test
-    void deletePost() {
-
-    }
 }
