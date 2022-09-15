@@ -48,17 +48,6 @@ public class EducatorPortalController {
     }
     //endregion
 
-    //region Profile
-    @GetMapping("/profile")
-    public String EducatorProfile(Model model) {
-        model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
-                "menuElements", UserConfiguration.educatorMenuElements
-        ));
-        return "/educator/profile";
-    }
-    //endregion
-
     //region Jobs & placements (marketplace)
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
@@ -80,27 +69,6 @@ public class EducatorPortalController {
     }
     //endregion
 
-    @GetMapping("/expressions-of-interest")
-    public String expressionsOfInterest(Model model) {
-        model.addAllAttributes(Map.of(
-                "currentPage", "Expressions Of Interest",
-                "menuElements", UserConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                ),
-                "pendingPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                )
-        ));
-        return "/educator/expressions-of-interest";
-    }
-
     //region Forum
     @GetMapping("/forum")
     public String forumOverview(Model model) {
@@ -115,7 +83,7 @@ public class EducatorPortalController {
 
     @GetMapping("/forum-content")
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
-            model.addAllAttributes(Map.of(
+        model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
@@ -123,27 +91,27 @@ public class EducatorPortalController {
                 "contentType", type,
                 "post", new PostDTO(),
                 "reply", new ReplyDTO()));
-            if(postId != null)
-                model.addAttribute("postId", postId);
-            return "/educator/forum/forum-content";
+        if(postId != null)
+            model.addAttribute("postId", postId);
+        return "/educator/forum/forum-content";
     }
 
     @PostMapping("/reply-to-post")
-        public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
+    public RedirectView replyToPost(@ModelAttribute ReplyDTO replyDTO, @RequestParam Integer postId, Model model){
         var reply = forumService.addReplyFromDTO(replyDTO);
         var categoryName = reply.getPost().getCategory().getName();
-            model.addAllAttributes(Map.of(
-                    "currentPage", "forum",
-                    "menuElements", UserConfiguration.educatorMenuElements,
-                    "postId", postId,
-                    "categoryName", categoryName,
-                    "postsByCategory", forumService.getPostByCategoryName(categoryName),
-                    "repliesForPosts", forumService.getPostRepliesByCategory(categoryName),
-                    "reply", replyDTO));
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "postId", postId,
+                "categoryName", categoryName,
+                "postsByCategory", forumService.getPostByCategoryName(categoryName),
+                "repliesForPosts", forumService.getPostRepliesByCategory(categoryName),
+                "reply", replyDTO));
 
-            log.info("Reply added: "+ reply);
-            return new RedirectView("/educator/forum-thread?category="+ categoryName);
-        }
+        log.info("Reply added: "+ reply);
+        return new RedirectView("/educator/forum-thread?category="+ categoryName);
+    }
     @PostMapping("/create-post")
     public RedirectView createPost(@ModelAttribute PostDTO postDTO, Model model){
         var newPost = forumService.addPostFromDTO(postDTO);
@@ -187,10 +155,38 @@ public class EducatorPortalController {
     }
     //endregion
 
+    //region Expressions of interest
+    @GetMapping("/expressions-of-interest")
+    public String expressionsOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserConfiguration.educatorMenuElements,
+                "approvedPositions", List.of(
+                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                ),
+                "pendingPositions", List.of(
+                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                )
+        ));
+        return "/educator/expressions-of-interest";
+    }
+    //endregion
 
-
-    //region Todo: Expressions of interest
-    //Add expressions of interest endpoint
+    //region Profile
+    @GetMapping("/profile")
+    public String EducatorProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserConfiguration.educatorMenuElements
+        ));
+        return "/educator/profile";
+    }
     //endregion
 
 }

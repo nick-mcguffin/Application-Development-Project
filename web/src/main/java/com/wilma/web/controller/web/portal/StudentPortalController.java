@@ -1,33 +1,26 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserConfiguration;
+import com.wilma.entity.Frequency;
+import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
+import com.wilma.entity.positions.Job;
+import com.wilma.entity.positions.Placement;
+import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.Resume;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.wilma.config.web.UserConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
-import com.wilma.entity.users.Partner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.Period;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +44,23 @@ public class StudentPortalController {
                 "menuElements", UserConfiguration.studentMenuElements
         ));
         return "/student/dashboard";
+    }
+    //endregion
+
+    //region Jobs & placements (marketplace)
+    @GetMapping("/marketplace")
+    public String marketplace(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.studentMenuElements,
+                "approvedPositions", List.of(
+                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
+                )
+
+        ));
+        return "/student/marketplace";
     }
     //endregion
 
@@ -127,10 +137,6 @@ public class StudentPortalController {
     }
     //endregion
 
-    //region Todo: Jobs & placements (marketplace)
-    //Add endpoint/s for marketplace
-    //endregion
-
     //region Resume management
     @GetMapping("/resume-management")
     public String resumeManagement(Model model) {
@@ -157,26 +163,5 @@ public class StudentPortalController {
         return "/student/profile";
     }
     //endregion
-    /*
-    Todo:
-        - ADP-65: Dashboard
-        - ADP-66: Jobs & Placements
-        - ADP-67: Forum
-        - ADP-68: Resume Management
-        - ADP-69: Profile
-     */
-    @GetMapping("/marketplace")
-    public String marketplace(Model model) {
-        model.addAllAttributes(Map.of(
-                "currentPage", "marketplace",
-                "menuElements", UserConfiguration.studentMenuElements,
-                "approvedPositions", List.of(
-                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
-                )
 
-        ));
-        return "/student/marketplace";
-    }
 }

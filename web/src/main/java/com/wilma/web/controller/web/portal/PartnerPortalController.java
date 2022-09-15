@@ -159,17 +159,6 @@ public class PartnerPortalController {
     }
     //endregion
 
-    //region Profile
-    @GetMapping("/profile")
-    public String partnerProfile(Model model) {
-        model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
-                "menuElements", UserConfiguration.partnerMenuElements
-        ));
-        return "/partner/profile";
-    }
-    //endregion
-
     //region Expressions of interest
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
@@ -187,4 +176,16 @@ public class PartnerPortalController {
         return "/partner/expressions-of-interest";
     }
     //endregion
+
+    //region Profile
+    @GetMapping("/profile")
+    public String partnerProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserConfiguration.partnerMenuElements
+        ));
+        return "/partner/profile";
+    }
+    //endregion
+
 }
