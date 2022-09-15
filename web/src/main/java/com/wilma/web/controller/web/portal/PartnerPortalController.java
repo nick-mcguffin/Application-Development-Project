@@ -163,7 +163,7 @@ public class PartnerPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Expressions Of Interest",
+"currentPage", "expressions-of-interest",
                 "menuElements", UserConfiguration.partnerMenuElements,
 
                 "pendingPartnerExpressionsOfInterest", List.of(
