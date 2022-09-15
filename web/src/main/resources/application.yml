@@ -20,3 +20,7 @@ spring:
 api:
   v1.context-path: /api/v1
   v2.context-path: /api/v2
+
+server:
+  ssl:
+    enabled-protocols: TLSv1.2, TLSv1.3
