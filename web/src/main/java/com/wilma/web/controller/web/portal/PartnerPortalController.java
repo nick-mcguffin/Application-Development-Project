@@ -3,6 +3,7 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Partner;
@@ -42,12 +43,27 @@ public class PartnerPortalController {
         ));
         return "/partner/marketplace";
     }
+
+    @GetMapping("/expressions-of-interest")
+    public String expressionsOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                
+                "pendingPartnerExpressionsOfInterest", List.of(
+                        new ExpressionOfInterest(1, new Partner("Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                        new ExpressionOfInterest(2, new Partner("Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                        new ExpressionOfInterest(3, new Partner("Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                        new ExpressionOfInterest(4, new Partner("Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                )
+        ));
+        return "/partner/expressions-of-interest";
+    }
     /*
     Todo:
         - ADP-77: Jobs & Placements
         - ADP-78: Forum
         - ADP-79: Job & Placement Management
         - ADP-80: Profile
-        - ADP-82: Expressions Of Interest
      */
 }

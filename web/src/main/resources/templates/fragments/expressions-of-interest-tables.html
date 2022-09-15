@@ -114,14 +114,14 @@
 </div>
 
 <!-- Partner Expressions of Interest -->
-<div th:fragment="partner" id="partner" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="partnerExpressionsOfInterest" id="partner" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Your Jobs & Placements</h1>
+            <h1 class="table-heading">Your Expressions of Interest</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -130,7 +130,6 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Type</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Description</th>
@@ -138,13 +137,13 @@
                 <th class="text-center">Manage</th>
             </tr>
             </thead>
-            <tbody id="partnerPositionsData">
-            <tr th:each="pos : ${partnerPositions}">
-                <th scope="row" th:text="${pos.id}"></th>
-                <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                <td th:text="${pos.description}">Just a one month job</td>
-                <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
+            <tbody id="partnerExpressionsOfInterestData">
+            <tr th:each="eoi : ${pendingPartnerExpressionsOfInterest}">
+                <th scope="row" th:text="${eoi.id}"></th>
+                <td th:text="${#dates.format(eoi.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                <td th:text="${#dates.format(eoi.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                <td th:text="${eoi.description}">Just a one month job</td>
+                <td th:text="${eoi.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td style="display: flex;">
                     <div class="mx-auto">
                         <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
