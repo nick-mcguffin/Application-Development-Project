@@ -118,7 +118,7 @@ public class StudentPortalController {
     //endregion
 
     //region Resume management
-    @GetMapping("/resume_management")
+    @GetMapping("/resume-management")
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Resume Management",
@@ -129,7 +129,7 @@ public class StudentPortalController {
                         new Resume("Resume 4", "pdf", new java.util.Date()))
 
         ));
-        return "/student/resume_management";
+        return "/student/resume-management";
     }
     //endregion
 
