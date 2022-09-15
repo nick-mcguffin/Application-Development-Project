@@ -159,7 +159,7 @@ public class EducatorPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Expressions Of Interest",
+"currentPage", "expressions-of-interest",
                 "menuElements", UserConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
                         new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
