@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<body>
+<!-- Top Navigation Bar -->
+<div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="d-flex" id="wrapper">
+
+    <!-- Sidebar Menu -->
+    <div th:replace="fragments/navigation :: sidebar"></div>
+
+    <div id="page-content-wrapper">
+
+        <div class="container-fluid">
+            <!-- breadcrumb -->
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Profile</li>
+                </ol>
+            </nav>
+        </div>
+        <!-- Page Content -->
+        <div class="container ">
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="card text-center  "  style="width: 88rem;">
+                    <div class="card-body">
+                        <div class="container ">
+                            <div class="row no-gutters d-flex justify-content-center ">
+                                <!-- Profile Picture -->
+                                <div class="col-md-auto ">
+                                    <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded">
+                                </div> <!-- Profile information -->
+                                <div class="col-sm-6">
+                                    <div class="container ">
+                                        <div th:replace="fragments/profileFragment"></div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4">
+                                                <p>Discipline: </p>
+                                            </div>
+                                            <div class="col-5">
+                                                <p>Networking</p>
+                                            </div>
+                                        </div>
+                                        <div class="row border-bottom">
+                                            <div class="col-4">
+                                                <p>CQU Educator ID: </p>
+                                            </div>
+                                            <div class="col-5">
+                                                <p>s12311412421</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Profile Bio -->
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="button" class="btn btn-primary">Edit Bio</button>
+                            </div>
+                            <div class="row no-gutters d-flex justify-content-center ">
+                                <div class="col-sm-9 ">
+                                    <div class="card" style="width: 58rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Bio</h5>
+                                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla bibendum justo ut imperdiet lacinia.
+                                                Vestibulum dictum pretium dui nec auctor. Duis scelerisque, erat vitae luctus aliquam, dolor enim
+                                                placerat purus, eget commodo metus tellus posuere magna. Nulla vehicula, elit id dapibus gravida,
+                                                lectus justo suscipit lorem, eu finibus odio nulla accumsan lacus. Phasellus enim ex, tincidunt eu
+                                                lacinia in, gravida a arcu. Suspendisse potenti. Sed feugiat pulvinar ex sed egestas.
+                                                Aenean eget erat justo. Maecenas placerat auctor finibus. Aliquam lorem ex, malesuada id massa eu,
+                                                tincidunt gravida mi. In dapibus sed quam in porta. Sed vehicula vehicula quam ac posuere. Sed id
+                                                volutpat nibh. Fusce nec malesuada lacus. Sed sed turpis sed orci aliquam pharetra. Praesent at iaculis
+                                                metus. Maecenas venenatis, nunc venenatis dignissim feugiat, nulla urna vestibulum felis, eget cursus neque
+                                                mi in diam. Suspendisse et scelerisque ante, in ultricies erat. Nulla facilisi. Donec gravida elementum
+                                                dui a fringilla. Vestibulum ultricies nulla vitae turpis ornare dapibus. Etiam iaculis molestie dapibus.
+                                                Praesent ac ipsum eget felis sodales laoreet a non nunc.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/scripts"></div>
+</body>
+</html>

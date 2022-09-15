@@ -48,6 +48,17 @@ public class EducatorPortalController {
     }
     //endregion
 
+    //region Profile
+    @GetMapping("/profile")
+    public String EducatorProfile(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserConfiguration.educatorMenuElements
+        ));
+        return "/educator/profile";
+    }
+    //endregion
+
     //region Jobs & placements (marketplace)
     @GetMapping("/marketplace")
     public String marketplace(Model model) {
@@ -177,9 +188,7 @@ public class EducatorPortalController {
     }
     //endregion
 
-    //region Todo: Profile
-    //Add endpoint for profile page
-    //endregion
+
 
     //region Todo: Expressions of interest
     //Add expressions of interest endpoint
