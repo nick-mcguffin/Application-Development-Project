@@ -78,6 +78,8 @@ public class EducatorPortalController {
         ));
         return "/educator/marketplace";
     }
+    //endregion
+
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
@@ -98,9 +100,6 @@ public class EducatorPortalController {
         ));
         return "/educator/expressions-of-interest";
     }
-
-    //Todo: Marketplace implementation
-    //endregion
 
     //region Forum
     @GetMapping("/forum")

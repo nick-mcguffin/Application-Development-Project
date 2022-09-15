@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @Entity
@@ -38,7 +39,7 @@ public class ExpressionOfInterest {
 
     @Column(name = "start_date")
     private Date startDate;
-    
+
     @Column(name = "end_date")
     private Date endDate;
 
@@ -48,7 +49,6 @@ public class ExpressionOfInterest {
 
     private boolean filled;
     private boolean approved;
-
 
     @Transient
     private String type;
@@ -66,5 +66,4 @@ public class ExpressionOfInterest {
         this.approved = approved;
         this.type = this.getClass().getSimpleName();
     }
-
 }

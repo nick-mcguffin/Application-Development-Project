@@ -1,6 +1,8 @@
 .form-border {
     border-color: #003057 !important;
+    border-style: solid;
     border-radius: 10px;
+    border-width: 1px;
 }
 
 .form-button {
