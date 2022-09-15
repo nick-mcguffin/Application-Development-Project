@@ -141,7 +141,7 @@ public class StudentPortalController {
     @GetMapping("/resume-management")
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Resume Management",
+"currentPage", "resume-management",
                 "menuElements", UserConfiguration.studentMenuElements,
                 "studentResumes", List.of(
                 new Resume("Resume 1", "pdf", new java.util.Date()),new Resume("Resume 2", "pdf", new java.util.Date()),
