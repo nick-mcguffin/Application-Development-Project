@@ -53,13 +53,34 @@ public class StudentPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.studentMenuElements,
+                "job", new Job(),
+                "placement", new Placement(),
                 "approvedPositions", List.of(
-                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
-                )
+                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false)
+                ))
+        );
+        return "/student/marketplace";
+    }
 
-        ));
+    @GetMapping("/marketplace-details")
+    public String marketplaceDetails(Model model, @RequestParam String type, @RequestParam int id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.studentMenuElements,
+
+                "type", type,//Either 'job' or 'position' to indicate the position type
+
+                //Examples of what you will have with using live data
+                //"placement", positionService.findPlacementById(id),
+                //"job", positionService.findJobById(id),
+
+                //Dummy data
+                "placement", new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false),
+                "job", id == 1? new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY) :
+                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY)
+                ));
         return "/student/marketplace";
     }
     //endregion

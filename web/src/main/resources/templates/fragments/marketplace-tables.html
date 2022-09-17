@@ -152,8 +152,11 @@
                 <td th:text="${pos.description}">Just a one month job</td>
                 <td style="display: flex;">
                     <div class="mx-auto">
-                        <span th:if="${pos.type == 'Placement'}" class='btn btn-primary'>View Placement</span>
-                        <span th:if="${pos.type == 'Job'}" class='btn btn-primary'>View Job</span>
+                        <!-- Pass the position type and id in the link so the details can be displayed -->
+                        <a th:if="${pos.type == 'Placement'}" class='btn btn-primary'
+                              th:href="@{marketplace-details?type=placement&id={posId} (posId=${pos.id})}">View Placement</a>
+                        <a th:if="${pos.type == 'Job'}" class='btn btn-primary'
+                              th:href="@{marketplace-details?type=job&id={posId} (posId=${pos.id})}">View Job</a>
                     </div>
                 </td>
             </tr>
