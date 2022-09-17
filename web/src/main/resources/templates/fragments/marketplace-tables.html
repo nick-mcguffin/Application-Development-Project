@@ -124,7 +124,8 @@
             <h1 class="table-heading">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="approvedStudentFilter" type="text" name="keyword"
+                   placeholder="Filter Positions..."/></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -141,7 +142,7 @@
                 <th class="text-center">View Job & Placement Details</th>
             </tr>
             </thead>
-            <tbody id="approvedPositionsData">
+            <tbody id="approvedStudentPositionsData">
             <tr th:each="pos : ${approvedPositions}">
                 <th scope="row" th:text="${pos.id}"></th>
                 <td th:text="${pos.type}">Job</td>
@@ -149,7 +150,6 @@
                 <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                 <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${pos.description}">Just a one month job</td>
-                <button class="btn btn-outline-secondary" id="sidebarToggle">Menu</button>
                 <td style="display: flex;">
                     <div class="mx-auto">
                         <span th:if="${pos.type == 'Placement'}" class='btn btn-primary'>View Placement</span>
@@ -165,12 +165,13 @@
             var positions =
                 /*[[${approvedPositions}]]*/
                 /*]]>*/
-                $("#approvedFilter").on("keyup", function () {
+                $("#approvedStudentFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("approvedPositionsData");
+                    var table = document.getElementById("approvedStudentPositionsData");
                     var filteredData = educatorFilterPositions(value, positions);
                     rebuildEducatorPositionsTable(filteredData, table);
                 });
+
         </script>
     </div>
 
@@ -231,6 +232,7 @@
                     var filteredData = partnerFilterPositions(value, positions);
                     rebuildPartnerPositionsTable(filteredData, table);
                 });
+
         </script>
     </div>
 
@@ -244,7 +246,8 @@
             <h1 class="table-heading">Pending Expressions of Interest</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="partnerPendingFilter" type="text" name="keyword"
+                   placeholder="Filter Positions..."/></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -261,7 +264,7 @@
                 <th class="text-center">Manage</th>
             </tr>
             </thead>
-            <tbody id="partnerPositionsData">
+            <tbody id="partnerPendingPositionsData">
             <tr th:each="pos : ${partnerPositions}">
                 <th scope="row" th:text="${pos.id}"></th>
                 <td th:text="${pos.type}">Job</td>
@@ -284,11 +287,13 @@
             var positions =
                 /*[[${partnerPositions}]]*/
                 /*]]>*/
-                $("#partnerFilter").on("keyup", function () {
+                $("#partnerPendingFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("partnerPositionsData");
+                    var table = document.getElementById("partnerPendingPositionsData");
                     var filteredData = partnerFilterPositions(value, positions);
                     rebuildPartnerPositionsTable(filteredData, table);
                 });
+
         </script>
     </div>
+</div>
