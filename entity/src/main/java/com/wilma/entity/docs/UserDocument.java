@@ -15,8 +15,8 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "documents")
-public class Document implements Serializable {
+@Table(name = "user_documents")
+public class UserDocument implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)

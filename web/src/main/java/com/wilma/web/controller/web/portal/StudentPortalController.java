@@ -1,7 +1,7 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.DocumentConfig;
-import com.wilma.config.web.UserConfiguration;
+import com.wilma.config.web.UserDocumentConfiguration;
+import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
@@ -48,14 +48,14 @@ public class StudentPortalController {
     @Autowired
     DocumentService documentService;
     @Autowired
-    DocumentConfig documentConfig;
+    UserDocumentConfiguration userDocumentConfiguration;
 
     //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.studentMenuElements
+                "menuElements", UserPortalConfiguration.studentMenuElements
         ));
         return "/student/dashboard";
     }
@@ -66,7 +66,7 @@ public class StudentPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "approvedPositions", List.of(
                         new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
                         new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
@@ -83,7 +83,7 @@ public class StudentPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -94,7 +94,7 @@ public class StudentPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -111,7 +111,7 @@ public class StudentPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -127,7 +127,7 @@ public class StudentPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -143,7 +143,7 @@ public class StudentPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.studentMenuElements,
+                "menuElements", UserPortalConfiguration.studentMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -156,8 +156,8 @@ public class StudentPortalController {
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Resume Management",
-                "menuElements", UserConfiguration.studentMenuElements,
-                "sizeLimit", documentConfig.getUploadSizeLimit(),
+                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "sizeLimit", userDocumentConfiguration.getUploadSizeLimit(),
                 "documents", documentService.findAllForUser()
         ));
         return "/student/resume-management";
@@ -170,8 +170,10 @@ public class StudentPortalController {
             return "redirect:/student/resume-management";
         }
         var savedFile = documentService.uploadFile(file);
-        log.info(savedFile.getFilename() +" saved by client with IP = "+ request.getRemoteAddr());
-        redirectAttributes.addFlashAttribute("message","You successfully uploaded " + savedFile.getFilename());
+        if(savedFile != null){
+            log.info(savedFile.getFilename() +" saved by client with IP = "+ request.getRemoteAddr());
+            redirectAttributes.addFlashAttribute("message","You successfully uploaded " + savedFile.getFilename());
+        }
         return "redirect:/student/resume-management";
     }
 
@@ -180,7 +182,7 @@ public class StudentPortalController {
         var file = documentService.findById(documentId);
         log.info(file.getFilename() +" opened by client with IP = "+ request.getRemoteAddr());
         return ResponseEntity.ok()
-                .header("Content-type", documentConfig.getMediaType(file.getFilename()))
+                .header("Content-type", userDocumentConfiguration.getMediaType(file.getFilename()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"".concat(file.getFilename()).concat("\""))
                 .body(Files.readAllBytes(Path.of(file.getFilepath())));
     }
@@ -196,7 +198,7 @@ public class StudentPortalController {
     }
 
     @GetMapping("/delete")
-    public String deleteMessage(@RequestParam Integer documentId, HttpServletRequest request){
+    public String deleteDocument(@RequestParam Integer documentId, HttpServletRequest request){
         var file = documentService.findById(documentId);
         log.info(file.getFilename() +" deleted by client with IP = "+ request.getRemoteAddr());
         documentService.deleteFile(file);
@@ -209,7 +211,7 @@ public class StudentPortalController {
     public String studentProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "profile",
-                "menuElements", UserConfiguration.studentMenuElements
+                "menuElements", UserPortalConfiguration.studentMenuElements
         ));
         return "/student/profile";
     }

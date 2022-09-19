@@ -1,8 +1,8 @@
 package com.wilma.service.docs;
 
-import com.wilma.entity.docs.Document;
+import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.users.UserAccount;
-import com.wilma.repository.DocumentRepository;
+import com.wilma.repository.UserDocumentRepository;
 import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import lombok.Getter;
@@ -26,10 +26,10 @@ import java.util.Objects;
 @Getter
 @Setter
 @Service
-public class DocumentService extends CrudOpsImpl<Document, Integer, DocumentRepository> {
+public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocumentRepository> {
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private UserDocumentRepository userDocumentRepository;
     @Autowired
     private UserService userService;
     @Value("${spring.profiles.active}")
@@ -45,8 +45,8 @@ public class DocumentService extends CrudOpsImpl<Document, Integer, DocumentRepo
      * Find all documents for a given user
      * @return A list of documents
      */
-    public List<Document> findAllForUser() {
-        return documentRepository.findAllByUser(this.getCurrentUser());
+    public List<UserDocument> findAllForUser() {
+        return userDocumentRepository.findAllByUser(this.getCurrentUser());
     }
 
     /**
@@ -55,19 +55,19 @@ public class DocumentService extends CrudOpsImpl<Document, Integer, DocumentRepo
      * @return The uploaded file
      * @throws IOException File input output exceptions
      */
-    public Document uploadFile(MultipartFile file) throws IOException {
+    public UserDocument uploadFile(MultipartFile file) throws IOException {
         byte[] bytes = file.getBytes();
         Path path = Paths.get(uploadPath.concat(Objects.requireNonNull(file.getOriginalFilename())));
         Files.write(path, bytes);
-        return add(new Document(null, new Date(), file.getOriginalFilename(), path.toString(), this.getCurrentUser()));
+        return add(new UserDocument(null, new Date(), file.getOriginalFilename(), path.toString(), this.getCurrentUser()));
     }
 
     /**
      * Delete the given document/file
      * @param file The file to be deleted
      */
-    public void deleteFile(Document file) {
-        documentRepository.delete(file);
+    public void deleteFile(UserDocument file) {
+        userDocumentRepository.delete(file);
     }
 
     /**

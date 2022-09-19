@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Configuration
-public class DocumentConfig {
+public class UserDocumentConfiguration {
 
     @Value("${spring.http.multipart.upload-path}")
     private String uploadPath;
@@ -21,11 +21,19 @@ public class DocumentConfig {
     private String uploadSizeLimit;
     public static Map<String, String> mimeMap = new LinkedHashMap<>();
 
+    /**
+     * Get the matching media type for a file based on its file extension
+     * @param filename The fully qualified filename
+     * @return A string version of the file media type based on its extension
+     */
     public String getMediaType(String filename){
         var extension = filename.substring(filename.lastIndexOf('.') + 1);
         return mimeMap.getOrDefault(extension, "application/octet-stream");
     }
 
+    /**
+     * Sets up the system to match media types to files
+     */
     @PostConstruct
     public void loadMimeMap(){
         //MS Office

@@ -1,7 +1,7 @@
 
 package com.wilma.entity.users;
 
-import com.wilma.entity.docs.Document;
+import com.wilma.entity.docs.UserDocument;
 import lombok.*;
 
 import javax.persistence.*;
@@ -57,7 +57,7 @@ public class UserAccount {
 
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private Collection<Document> documents = new LinkedList<>();
+    private Collection<UserDocument> userDocuments = new LinkedList<>();
 
     public UserAccount(String username) {
         this.username = username;

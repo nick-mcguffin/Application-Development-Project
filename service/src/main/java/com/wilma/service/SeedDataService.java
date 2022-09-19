@@ -2,7 +2,7 @@
 package com.wilma.service;
 
 import com.wilma.entity.Tag;
-import com.wilma.entity.docs.Document;
+import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.forum.ForumCategory;
 import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
@@ -52,7 +52,7 @@ public class SeedDataService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
-    private DocumentRepository documentRepository;
+    private UserDocumentRepository userDocumentRepository;
     @Value("${spring.http.multipart.upload-path}")
     private String uploadPath;
 
@@ -72,13 +72,13 @@ public class SeedDataService {
     public void initDocuments(){
         var student = userRepository.findByUsername("student");
         var docs = List.of(
-            new Document(null, new Date(), "resume1.docx", uploadPath + "resume1.docx", student),
-            new Document(null, new Date(), "resume2.docx", uploadPath + "resume2.docx", student),
-            new Document(null, new Date(), "cover-letter-1.pdf",uploadPath + "cover-letter-1.pdf", student)
+            new UserDocument(null, new Date(), "resume1.docx", uploadPath + "resume1.docx", student),
+            new UserDocument(null, new Date(), "resume2.docx", uploadPath + "resume2.docx", student),
+            new UserDocument(null, new Date(), "cover-letter-1.pdf",uploadPath + "cover-letter-1.pdf", student)
         );
         docs.forEach(document -> {
-            if(! documentRepository.existsByFilepath(document.getFilepath())){
-                documentRepository.save(document);
+            if(! userDocumentRepository.existsByFilepath(document.getFilepath())){
+                userDocumentRepository.save(document);
             }
         });
 
