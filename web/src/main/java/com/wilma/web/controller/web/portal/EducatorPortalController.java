@@ -1,6 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.UserConfiguration;
+import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.positions.ExpressionOfInterest;
@@ -42,7 +42,7 @@ public class EducatorPortalController {
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "menuElements", UserPortalConfiguration.educatorMenuElements
         ));
         return "/educator/dashboard";
     }
@@ -53,7 +53,7 @@ public class EducatorPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
                         new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
                         new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
@@ -74,7 +74,7 @@ public class EducatorPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -85,7 +85,7 @@ public class EducatorPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -102,7 +102,7 @@ public class EducatorPortalController {
         var categoryName = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "postId", postId,
                 "categoryName", categoryName,
                 "postsByCategory", forumService.getPostByCategoryName(categoryName),
@@ -118,7 +118,7 @@ public class EducatorPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -135,7 +135,7 @@ public class EducatorPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -147,7 +147,7 @@ public class EducatorPortalController {
         forumService.deleteById(postId);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -159,8 +159,8 @@ public class EducatorPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
                         new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
                         new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
@@ -182,8 +182,8 @@ public class EducatorPortalController {
     @GetMapping("/profile")
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "profile",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.educatorMenuElements
         ));
         return "/educator/profile";
     }

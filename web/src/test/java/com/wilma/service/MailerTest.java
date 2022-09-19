@@ -1,6 +1,8 @@
-package com.wilma.service.mail;
+package com.wilma.service;
 
+import com.wilma.service.mail.Mailer;
 import com.wilma.web.App;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +17,7 @@ class MailerTest {
     @Autowired
     Mailer mailer;
 
+    @Disabled
     @Test
     void sendEmailToSingleRecipient() {
         var to = "example@example.com";
@@ -23,6 +26,7 @@ class MailerTest {
         assertNotNull(mailer.sendEmail(to, subject, text));
     }
 
+    @Disabled
     @Test
     void sendEmailToMultipleRecipients() {
         var to = new String[]{"example@example.com", "example@example.net", "example@example.org", "example@example.edu"};
@@ -31,21 +35,23 @@ class MailerTest {
         assertNotNull(mailer.sendEmail(to, subject, text));
     }
 
+    @Disabled
     @Test
     void sendEmailWithAttachmentsToSingleRecipient() {
         var to = "example@example.com";
         var subject = "Test Email";
         var text = "This is an automated test email from WILMA with an attachment";
-        var attachments = Map.of("test-email.png", "src/test/resources/test-images/test-email.png");
+        var attachments = Map.of("willy-wonka.png", "src/test/resources/willy-wonka.png");
         assertNotNull(mailer.sendEmailWithAttachments(to, subject, text, attachments));
     }
 
+    @Disabled
     @Test
     void sendEmailWithAttachmentsToMultipleRecipients() {
         var to = new String[]{"example@example.com", "example@example.net", "example@example.org", "example@example.edu"};
         var subject = "Test Email";
         var text = "This is an automated test email from WILMA with an attachment";
-        var attachments = Map.of("test-email.png", "src/test/resources/test-images/test-email.png");
+        var attachments = Map.of("willy-wonka.png", "src/test/resources/test-images/willy-wonka.png");
         assertNotNull(mailer.sendEmailWithAttachments(to, subject, text, attachments));
     }
 }

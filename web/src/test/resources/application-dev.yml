@@ -5,6 +5,11 @@ spring:
   profiles:
     profile-name: DEV
 
+  security:
+    user:
+      name: educator
+      password: educator
+
   h2:
     console:
       enabled: true
@@ -25,3 +30,13 @@ spring:
     password:
     url: jdbc:h2:mem:test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driverClassName: org.h2.Driver
+  http:
+    multipart:
+      upload-path: web/src/main/resources/uploads/
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 10MB
+      max-file-size: 10MB
+      max-request-size: 10MB

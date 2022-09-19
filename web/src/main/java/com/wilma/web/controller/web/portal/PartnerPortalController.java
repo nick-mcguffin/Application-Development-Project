@@ -1,6 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.UserConfiguration;
+import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.positions.ExpressionOfInterest;
@@ -42,7 +42,7 @@ public class PartnerPortalController {
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.partnerMenuElements
+                "menuElements", UserPortalConfiguration.partnerMenuElements
         ));
         return "/partner/dashboard";
     }
@@ -53,7 +53,7 @@ public class PartnerPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerPositions", List.of(
                         new Job(1, new Partner("Warlock Digital", "Warlock Digital"), new Date(), new Date(), Period.of(0,6,0), "Geraldton", "Build Android version of Ill Technique App", false, false, 36.50, PayType.WAGE, Frequency.WEEKLY),
                         new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,0,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
@@ -67,7 +67,7 @@ public class PartnerPortalController {
     public String newPosition (Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "positionOptions", List.of("Select...", "Job", "Placement" )
         ));
         return "/partner/new-position";
@@ -77,7 +77,7 @@ public class PartnerPortalController {
     public String newPosition (Model model, @RequestParam String type) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "positionType", type
         ));
         return "/partner/edit-position";
@@ -89,7 +89,7 @@ public class PartnerPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -100,7 +100,7 @@ public class PartnerPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -117,7 +117,7 @@ public class PartnerPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -134,7 +134,7 @@ public class PartnerPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -150,7 +150,7 @@ public class PartnerPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -163,8 +163,8 @@ public class PartnerPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
 
                 "pendingPartnerExpressionsOfInterest", List.of(
                         new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
@@ -181,8 +181,8 @@ public class PartnerPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "profile",
-                "menuElements", UserConfiguration.partnerMenuElements
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.partnerMenuElements
         ));
         return "/partner/profile";
     }
