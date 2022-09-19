@@ -22,10 +22,12 @@
     
                     <h1 class="text-center m-3">Expressions of Interest</h1>
     
-                    <div th:replace="fragments/expressions-of-interest-tables :: pending-approval"></div>
-    
-                    <div th:replace="fragments/expressions-of-interest-tables :: approved"></div>
-                    
+                    <div th:replace="fragments/expressions-of-interest-tables :: pending-expressions-of-interest"></div>
+                    <br>
+                    <h1 class="text-center m-3">Requests To Supply</h1>
+                    <div th:replace="fragments/expressions-of-interest-tables :: pending-requests-to-supply"></div>
+                    <br>
+                    <div th:replace="fragments/expressions-of-interest-tables :: accepted-requests-to-supply"></div>
                 </div>
             </div>
         </div>
