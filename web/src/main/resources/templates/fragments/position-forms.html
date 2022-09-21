@@ -1,13 +1,13 @@
-<!-- Fields for creating a new placement -->
+<!-- Fields for creating a new position -->
 <div th:fragment="position-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="position-start-date" class="form-label">Start Date</label>
-    <input class="form-floating user-input" id="position-start-date" th:field="*{startDate}">
+    <input type="date" class="form-floating user-input" id="position-start-date" th:field="*{startDate}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-end-date" class="form-label">End Date</label>
-    <input class="form-floating user-input" id="position-end-date" th:field="*{endDate}">
+    <input type="date" class="form-floating user-input" id="position-end-date" th:field="*{endDate}">
   </div>
 
   <div class="row p-3 pt-0">
