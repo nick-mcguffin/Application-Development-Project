@@ -1,17 +1,15 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.Resume;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.Period;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +31,8 @@ public class StudentPortalController {
     ForumService forumService;
     @Autowired
     TagService tagService;
+    @Autowired
+    PositionService positionService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -55,12 +53,8 @@ public class StudentPortalController {
                 "menuElements", UserConfiguration.studentMenuElements,
                 "job", new Job(),
                 "placement", new Placement(),
-                "approvedPositions", List.of(
-                        new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false)
-                ))
-        );
+                "approvedPositions", positionService.findAll()
+        ));
         return "/student/marketplace";
     }
 
@@ -69,17 +63,8 @@ public class StudentPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.studentMenuElements,
-
-                "type", type,//Either 'job' or 'position' to indicate the position type
-
-                //Examples of what you will have with using live data
-                //"placement", positionService.findPlacementById(id),
-                //"job", positionService.findJobById(id),
-
-                //Dummy data
-                "placement", new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false),
-                "job", id == 1? new Job(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY) :
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY)
+                "type", type,
+                "position", positionService.findById(id)
                 ));
         return "/student/marketplace";
     }
