@@ -40,7 +40,6 @@ public class Position {
 
     private boolean approved;
 
-    @Transient
     private String type;
 
 
