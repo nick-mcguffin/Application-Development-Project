@@ -22,15 +22,17 @@
 
       <h1 class="text-center m-3">Jobs & Placements</h1>
 
-      <div th:replace="fragments/marketplace-tables :: partner"></div>
+      <div th:replace="fragments/marketplace-tables :: partner-jobs"></div>
+
+      <div th:replace="fragments/marketplace-tables :: partner-placements"></div>
+
+      <div th:replace="fragments/marketplace-tables :: partner-expression-of-interest"></div>
 
       <div class="d-grid col-md-3 gap-2 mx-auto">
         <a class="btn btn-primary" th:href="@{~/partner/new-position?type=placement}">Create New Placement</a>
         <a class="btn btn-primary" th:href="@{~/partner/new-position?type=job}">Create New Job</a>
         <a class="btn btn-primary" th:href="@{~/partner/expressions-of-interest}">View Expressions Of Interest</a>
       </div>
-
-      <div th:replace="fragments/marketplace-tables :: partner-expression-of-interest"></div>
 
     </div>
   </div>
