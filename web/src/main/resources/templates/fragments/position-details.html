@@ -65,29 +65,7 @@
         </div>
     </div>
 
-    <hr/>
-    <h2 class="text-center fst-italic fw-semibold text-muted">Want to Apply?</h2>
-    <form class="form-group row py-3">
-        <div class="col-lg-3"></div>
-        <div class="col-lg-6">
-            <label for="file-multi-select" class="col-lg-1 col-form-label pr-0 text-end">Files</label>
-            <select name="Shiatsu" class="select-box col-lg-3" id="file-multi-select" multiple multiselect-search="true"
-                    multiselect-select-all="true">
-                <option value="1" >Resume #1</option>
-                <option value="2">Resume #2</option>
-                <option value="3">Cover letter #1</option>
-            </select>
-        </div>
-        <div class="col-lg-3"></div>
-        <div class="row col-lg-12 text-center">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-primary w-auto mx-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Apply
-            </button>
-        </div>
-    </form>
-
-
+    <div th:replace="fragments/position-details :: application-form"></div>
 </div>
 
 <!-- ================ Placement View ================ -->
@@ -95,5 +73,49 @@
 
     <!-- Placement form to go here -->
     <h1 th:text="|Placement #${position.id}|">Placement</h1>
+
+    <div th:replace="fragments/position-details :: application-form"></div>
+</div>
+
+<!-- ================ Application Form ================ -->
+<div th:fragment="application-form" xmlns:th="http://www.thymeleaf.org">
+    <hr/>
+    <h2 class="text-center fst-italic fw-semibold text-muted">Want to Apply?</h2>
+
+    <form  id="application-form" class="form-group row py-3" th:action="@{apply}" th:object="${application}" method="post">
+
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-6">
+            <input type="hidden" name="positionId" th:value="${position.id}">
+            <label for="file-multi-select" class="col-form-label pr-0">Select the files to attach</label>
+            <select name="userDocs" class="select-box col-lg-3" id="file-multi-select"
+                    multiple multiselect-search="true"
+                    multiselect-select-all="true"
+                    th:field="*{fileIds}">
+                <option
+                        th:each="file : ${studentFiles}"
+                        th:value="${file.id}"
+                        th:text="${file.filename}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group row pb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <label for="jobDescription" class="col-form-label pr-0">Message</label>
+                <textarea rows="5" class="form-control" id="applicationMessage" th:field="*{message}" placeholder="Write a brief message to be sent with your application"></textarea>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+
+        <div class="col-lg-3"></div>
+
+        <div class="row col-lg-12 text-center">
+            <button type="submit" class="btn btn-primary w-auto mx-auto">Apply</button>
+        </div>
+
+    </form>
 
 </div>
