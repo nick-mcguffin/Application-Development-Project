@@ -59,13 +59,7 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "partnerPositions", List.of(
-                        new Job(1, new Partner("Warlock Digital", "Warlock Digital"), new Date(), new Date(), Period.of(0,6,0), "Geraldton", "Build Android version of Ill Technique App", false, false, 36.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,0,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-
-                ),
-                "job", new JobDTO()
+                "partnerJobs", positionService.getJobs()
         ));
         return "/partner/marketplace";
     }
