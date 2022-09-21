@@ -2,27 +2,27 @@
 <div th:fragment="position-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="position-start-date" class="form-label">Start Date</label>
-    <input class="form-floating user-input" id="position-start-date">
+    <input class="form-floating user-input" id="position-start-date" th:field="*{startDate}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-end-date" class="form-label">End Date</label>
-    <input class="form-floating user-input" id="position-end-date">
+    <input class="form-floating user-input" id="position-end-date" th:field="*{endDate}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-period" class="form-label">Period</label>
-    <input class="form-floating user-input" id="position-period">
+    <input class="form-floating user-input" id="position-period" th:field="*{period}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-location" class="form-label">Location</label>
-    <input class="form-floating user-input" id="position-location">
+    <input class="form-floating user-input" id="position-location" th:field="*{location}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-description" class="form-label">Description</label>
-    <textarea class="form-floating user-input" id="position-description" rows="5"></textarea>
+    <textarea class="form-floating user-input" id="position-description" rows="5" th:field="*{description}"></textarea>
   </div>
 </div>
 
@@ -30,17 +30,17 @@
 <div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="job-pay-rate" class="form-label">Pay Rate</label>
-    <input class="form-floating user-input" id="job-pay-rate">
+    <input class="form-floating user-input" id="job-pay-rate" th:field="*{payRate}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="job-pay-type" class="form-label">Pay Type</label>
-    <input class="form-floating user-input" id="job-pay-type">
+    <input class="form-floating user-input" id="job-pay-type" th:field="*{payType}">
   </div>
 
   <div class="row p-3 pt-0">
     <label for="job-pay-frequency" class="form-label">Pay Frequency</label>
-    <input class="form-floating user-input" id="job-pay-frequency">
+    <input class="form-floating user-input" id="job-pay-frequency" th:field="*{payFrequency}">
   </div>
 </div>
 
@@ -90,7 +90,7 @@
 
 <!-- Form for creating a new job -->
 <div th:fragment="new-job-form" xmlns:th="http://www.thymeleaf.org" id="new-job-form">
-  <form>
+  <form th:action="@{create-job}" th:object="${job}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>

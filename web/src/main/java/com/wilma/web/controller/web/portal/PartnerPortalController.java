@@ -92,17 +92,17 @@ public class PartnerPortalController {
         return "/partner/edit-position";
     }
 
-//    @PostMapping("/create-job")
-//    public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
-//        var newJob = positionService.addJobFromDTO(jobDTO);
-//        model.addAllAttributes(Map.of(
-//                "currentPage", "forum",
-//                "menuElements", UserConfiguration.partnerMenuElements,
-//                "job", jobDTO));
-//
-//        log.info("Job created from DTO: "+ newJob);
-//        return new RedirectView("/partner/marketplace");
-//    }
+    @PostMapping("/create-job")
+    public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
+        var newJob = positionService.addJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "job", jobDTO));
+
+        log.info("Job created from DTO: "+ newJob);
+        return new RedirectView("/partner/marketplace");
+    }
     //endregion
 
     //region Forum
