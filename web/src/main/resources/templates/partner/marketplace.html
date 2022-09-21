@@ -25,8 +25,8 @@
       <div th:replace="fragments/marketplace-tables :: partner"></div>
 
       <div class="d-grid col-md-3 gap-2 mx-auto">
-        <a class="btn btn-primary" th:href="@{~/partner/new-placement}">Create New Placement</a>
-        <a class="btn btn-primary" th:href="@{~/partner/new-job}">Create New Job</a>
+        <a class="btn btn-primary" th:href="@{~/partner/new-position?type=placement}">Create New Placement</a>
+        <a class="btn btn-primary" th:href="@{~/partner/new-position?type=job}">Create New Job</a>
         <a class="btn btn-primary" th:href="@{~/partner/expressions-of-interest}">View Expressions Of Interest</a>
       </div>
 

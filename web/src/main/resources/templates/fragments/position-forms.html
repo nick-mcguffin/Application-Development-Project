@@ -82,12 +82,10 @@
 
 <!-- submit/cancel buttons -->
 <div th:fragment="submit-cancel" xmlns:th="http://www.thymeleaf.org">
-  <form>
     <div class="form-group mb-3 text-center">
       <button type="submit" class="btn form-button btn-success">Submit</button>
       <a class="btn form-button btn-danger" th:href="@{/partner/marketplace}">Cancel</a>
     </div>
-  </form>
 </div>
 
 <!-- Form for creating a new job -->
@@ -108,7 +106,7 @@
 </div>
 
 <!-- Form for editing job -->
-<div th:fragment="edit-job-form" th:class="${positionType == 'Job'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
+<div th:fragment="edit-job-form" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
   <form>
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
@@ -118,7 +116,7 @@
 </div>
 
 <!-- Form for editing a placement -->
-<div th:fragment="edit-placement-form" th:class="${positionType == 'Placement'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-placement-form">
+<div th:fragment="edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="edit-placement-form">
   <form>
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
