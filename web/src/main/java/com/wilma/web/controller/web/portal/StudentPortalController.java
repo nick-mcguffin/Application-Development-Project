@@ -1,5 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
+import com.wilma.config.web.UserConfiguration;
 import com.wilma.config.web.UserDocumentConfiguration;
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
@@ -8,11 +9,13 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.users.Resume;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,13 +52,15 @@ public class StudentPortalController {
     DocumentService documentService;
     @Autowired
     UserDocumentConfiguration userDocumentConfiguration;
+    @Autowired
+    PositionService positionService;
 
     //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserPortalConfiguration.studentMenuElements
+                "menuElements", UserConfiguration.studentMenuElements
         ));
         return "/student/dashboard";
     }
@@ -73,7 +78,22 @@ public class StudentPortalController {
                         new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false, false)
                 )
 
+                "menuElements", UserConfiguration.studentMenuElements,
+                "job", new Job(),
+                "placement", new Placement(),
+                "approvedPositions", positionService.findAll()
         ));
+        return "/student/marketplace";
+    }
+
+    @GetMapping("/marketplace-details")
+    public String marketplaceDetails(Model model, @RequestParam String type, @RequestParam int id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserConfiguration.studentMenuElements,
+                "type", type,
+                "position", positionService.findById(id)
+                ));
         return "/student/marketplace";
     }
     //endregion
@@ -83,7 +103,7 @@ public class StudentPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -94,7 +114,7 @@ public class StudentPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -111,7 +131,7 @@ public class StudentPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -127,7 +147,7 @@ public class StudentPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -143,7 +163,7 @@ public class StudentPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "menuElements", UserConfiguration.studentMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -211,7 +231,7 @@ public class StudentPortalController {
     public String studentProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "profile",
-                "menuElements", UserPortalConfiguration.studentMenuElements
+                "menuElements", UserConfiguration.studentMenuElements
         ));
         return "/student/profile";
     }
