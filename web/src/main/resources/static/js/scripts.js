@@ -44,13 +44,36 @@ const educatorFilterPositions = (keyStroke, data) => {
  * @param {*} data
  * @returns An array of positions that contain the given keystroke
  */
-const partnerFilterPositions = (keyStroke, data) => {
+const partnerFilterJobs = (keyStroke, data) => {
 	let filteredData = [];
 	for (let i = 0; i < data.length; i++) {
 		keyStroke = keyStroke.toLowerCase();
 
 		let id = data[i].id;
-		let type = data[i].type.toLowerCase();
+        let startDate = formatDate(data[i].startDate);
+        let endDate = formatDate(data[i].endDate);
+        let description = data[i].description.toLowerCase();
+
+		if ( id == keyStroke || type.includes(keyStroke) || startDate.includes(keyStroke) ||
+            endDate.includes(keyStroke) || description.includes(keyStroke) )  {
+			filteredData.push(data[i]);
+		}
+	}
+	return filteredData;
+};
+
+/**
+ * Filter a list of given values and return only those that contain the given keystroke character
+ * @param {*} keyStroke
+ * @param {*} data
+ * @returns An array of positions that contain the given keystroke
+ */
+const partnerFilterPlacements = (keyStroke, data) => {
+	let filteredData = [];
+	for (let i = 0; i < data.length; i++) {
+		keyStroke = keyStroke.toLowerCase();
+
+		let id = data[i].id;
         let startDate = formatDate(data[i].startDate);
         let endDate = formatDate(data[i].endDate);
         let description = data[i].description.toLowerCase();
@@ -94,12 +117,36 @@ const rebuildEducatorPositionsTable = (data, table) => {
  * @param {*} data
  * @param {*} table
  */
-const rebuildPartnerPositionsTable = (data, table) => {
+const rebuildPartnerJobsTable = (data, table) => {
 	table.innerHTML = ``;
 	for (let i = 0; i < data.length; i++) {
 		let row = `<tr>
                     <th scope="row">${data[i].id}</th>
-                    <td>${data[i].type}</td>
+                    <td>${formatDate(data[i].startDate)}</td>
+                    <td>${formatDate(data[i].endDate)}</td>
+                    <td>${data[i].description}</td>
+                    <td>${data[i].approved? 'Approved':'Pending'}</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
+                        </div>
+                    </td>
+                   </tr>`;
+		table.innerHTML += row;
+	}
+};
+
+/**
+ * Rebuild the given table using only the given data
+ * @param {*} data
+ * @param {*} table
+ */
+const rebuildPartnerPlacementsTable = (data, table) => {
+	table.innerHTML = ``;
+	for (let i = 0; i < data.length; i++) {
+		let row = `<tr>
+                    <th scope="row">${data[i].id}</th>
                     <td>${formatDate(data[i].startDate)}</td>
                     <td>${formatDate(data[i].endDate)}</td>
                     <td>${data[i].description}</td>
