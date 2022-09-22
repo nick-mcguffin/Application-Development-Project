@@ -99,7 +99,7 @@
 
 <!-- Form for creating a new placement -->
 <div th:fragment="new-placement-form" xmlns:th="http://www.thymeleaf.org" id="new-placement-form">
-  <form>
+  <form th:action="@{create-placement}" th:object="${placement}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
   </form>

@@ -4,6 +4,7 @@ import com.wilma.config.web.UserConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.dto.JobDTO;
+import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
@@ -71,7 +72,8 @@ public class PartnerPortalController {
                 "menuElements", UserConfiguration.partnerMenuElements,
                 "positionOptions", List.of("Select...", "Job", "Placement" ),
                 "type", type,
-                "job", new JobDTO()
+                "job", new JobDTO(),
+                "placement", new PlacementDTO()
         ));
         return "/partner/new-position";
     }
@@ -95,6 +97,18 @@ public class PartnerPortalController {
                 "job", jobDTO));
 
         log.info("Job created from DTO: "+ newJob);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/create-placement")
+    public RedirectView createPlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
+        var newPlacement = positionService.addPlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "placement", placementDTO));
+
+        log.info("Placement created from DTO: "+ newPlacement);
         return new RedirectView("/partner/marketplace");
     }
     //endregion
