@@ -6,6 +6,7 @@ import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.PositionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -29,6 +30,8 @@ import static org.mockito.Mockito.when;
 class StudentPortalControllerTest {
     @Mock
     private ConcurrentModel model;
+    @Mock
+    private PositionService positionService;
     @Mock
     private CategoryService categoryService;
     @Mock
