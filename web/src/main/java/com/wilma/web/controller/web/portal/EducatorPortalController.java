@@ -161,7 +161,7 @@ public class EducatorPortalController {
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
 "currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "openExpressionsOfInterest", List.of(
                         new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
                         new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
