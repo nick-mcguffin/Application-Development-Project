@@ -20,9 +20,13 @@
                         </ol>
                     </nav>
                     <!-- Pending Expressions Of Interest Table-->
-                    <h1 class="text-center m-3">Pending Expressions of Interest</h1>    
-                    <div th:replace="fragments/expressions-of-interest-tables :: partnerExpressionsOfInterest"></div>
-                    
+                    <h1 class="text-center m-3">Expressions of Interest</h1>    
+                    <div th:replace="fragments/expressions-of-interest-tables :: partner-pending-expressions-of-interest"></div>
+
+                    <br>
+                    <h1 class="text-center m-3">Requests to Supply</h1>
+                    <div th:replace="fragments/expressions-of-interest-tables :: partner-pending-requests-to-supply"></div>
+                    <div th:replace="fragments/expressions-of-interest-tables :: partner-requests-to-supply-history"></div>
                 </div>
             </div>
         </div>

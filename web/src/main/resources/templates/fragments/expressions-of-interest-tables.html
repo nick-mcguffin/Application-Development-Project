@@ -170,45 +170,100 @@
     <hr/>
 </div>
 
+<!-- Partner can view and apply for Expressions of Interest that are still open. -->
+<div th:fragment="partner-pending-expressions-of-interest" id="pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
+    
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Open Expressions Of Interest</h1></div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingEOIFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
+        <div class="col-md-1 col-xl-3"></div>
+    </div>
+    
+    <div class="row table-container">
+        <table class="table table-sm table-primary table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Date Opened</th>
+                    <th class="text-center">Manage</th>
+                </tr>
+            </thead>
+            <tbody id="partnerOpenExpressionsOfInterestData">
+                <tr th:each="openEOI : ${openExpressionsOfInterest}">
+                    <th scope="row" th:text="${openEOI.id}"></th>
+                    <td th:text="${openEOI.category}">Microsoft</td>
+                    <td th:text="${openEOI.location}">Brisbane</td>
+                    <td th:text="${openEOI.description}">Slavey with extra steps</td>
+                    <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <button class="form-button">Apply</button>
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var partnerPendingExpressionsOfInterest =
+                /*[[${pendingExpressionsOfInterest}]]*/
+                /*]]>*/
+                $("#pendingEOIFilter").on("keyup", function () {
+                    var value = $(this).val();
+                    var table = document.getElementById("partnerOpenExpressionOfInterestData");
+                    var filteredData = partnerFilterPositions(value, positions);
+                    rebuildPartnerPositionsTable(filteredData, table);
+                });
+        </script>
+    </div>
+    <hr/>
 
-<!-- Partner Expressions of Interest -->
-<div th:fragment="partnerExpressionsOfInterest" id="partner" xmlns:th="http://www.thymeleaf.org">
+</div>
+
+<!-- Partner Pending Requests to Supply -->
+<div th:fragment="partner-pending-requests-to-supply" id="partner-pending-request-to-supply" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Your Expressions of Interest</h1>
+            <h1 class="table-heading">Your Pending Requests To Supply</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /></div>
-        <div class="col-md-1 col-xl-3"></div>
+            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Pending Requests to Supply..." /></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><button class="form-button center">+ New Request to Supply</button></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-primary table-striped table-hover">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th class="text-center">Manage</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Provider</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                    <th class="text-center">Manage</th>
+                </tr>
             </thead>
-            <tbody id="partnerExpressionsOfInterestData">
-            <tr th:each="eoi : ${pendingPartnerExpressionsOfInterest}">
-                <th scope="row" th:text="${eoi.id}"></th>
-                <td th:text="${#dates.format(eoi.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                <td th:text="${#dates.format(eoi.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                <td th:text="${eoi.description}">Just a one month job</td>
-                <td th:text="${eoi.approved ? 'Approved' : 'Pending'}">Approved</td>
-                <td style="display: flex;">
-                    <div class="mx-auto">
-                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
-                        <span class="material-symbols-rounded btn-delete">delete</span>
-                    </div>
-                </td>
-            </tr>
+            <tbody id="partnerOpenRequestsToSupplyData">
+                <tr th:each="openRTS : ${openRequestsToSupply}">
+                    <th scope="row" th:text="${openRTS.id}"></th>
+                    <td th:text="${openRTS.partner.businessName}">Microsoft</td>
+                    <td th:text="${#dates.format(openRTS.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(openRTS.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${openRTS.description}">Just a one month job</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
@@ -219,11 +274,60 @@
                 /*]]>*/
                 $("#partnerFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("partnerPositionsData");
+                    var table = document.getElementById("partnerOpenRequestsToSupplyData");
                     var filteredData = partnerFilterPositions(value, positions);
                     rebuildPartnerPositionsTable(filteredData, table);
                 });
         </script>
     </div>
+    <hr/>
+</div>
 
+<!-- Partner Accepted Requests to Supply History -->
+<div th:fragment="partner-requests-to-supply-history" id="partner-requests-to-supply-history" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Your Accepted Requests To Supply History</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="rtsHistoryFilter" type="text" name="keyword" placeholder="Filter Requests to Supply History..." /></div>
+    </div>
+
+    <div class="row table-container">
+        <table class="table table-primary table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Provider</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody id="partnerRTSHistoryData">
+                <tr th:each="rtsHistory : ${requestsToSupplyHistory}">
+                    <th scope="row" th:text="${rtsHistory.id}"></th>
+                    <td th:text="${rtsHistory.partner.businessName}">Microsoft</td>
+                    <td th:text="${#dates.format(rtsHistory.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(rtsHistory.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${rtsHistory.description}">Just a one month job</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var positions =
+                /*[[${partnerPositions}]]*/
+                /*]]>*/
+                $("#rtsHistoryFilter").on("keyup", function () {
+                    var value = $(this).val();
+                    var table = document.getElementById("partnerRTSHistoryData");
+                    var filteredData = partnerFilterPositions(value, positions);
+                    rebuildPartnerPositionsTable(filteredData, table);
+                });
+        </script>
+    </div>
+    <hr/>
 </div>
