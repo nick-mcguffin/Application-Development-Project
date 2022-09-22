@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,5 +55,22 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
                 .distinct()
                 .filter(doc -> applicationDTO.getFileIds().contains(doc.getId()))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Get a distinct collection of all {@link PositionApplication}s with {@link PositionApplication#isViewed()} = false
+     * @return A set on un-viewed applications
+     */
+    public Set<PositionApplication> getAllUnViewedApplications() {
+        return applicationRepository.findByViewed(false);
+    }
+
+    /**
+     * Updates a collection of {@link PositionApplication}s
+     * @param applications A collection of applications with unsaved changes
+     * @return A collection of updated applications
+     */
+    public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
+        return applicationRepository.saveAll(applications);
     }
 }
