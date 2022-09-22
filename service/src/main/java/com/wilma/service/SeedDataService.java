@@ -1,11 +1,15 @@
 
 package com.wilma.service;
 
+import com.wilma.entity.Frequency;
+import com.wilma.entity.PayType;
 import com.wilma.entity.Tag;
 import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.forum.ForumCategory;
 import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
+import com.wilma.entity.positions.Job;
+import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.RemoteClient;
 import com.wilma.entity.users.Role;
@@ -20,9 +24,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Seed data only
@@ -55,6 +61,9 @@ public class SeedDataService {
     private UserDocumentRepository userDocumentRepository;
     @Value("${spring.http.multipart.upload-path}")
     private String uploadPath;
+    @Autowired
+    private PositionRepository positionRepository;
+
 
     @PostConstruct
     void initUsersAndRoles() {
@@ -66,6 +75,21 @@ public class SeedDataService {
         initAuthors();
         initPosts();
         initReplies();
+        initPositions();
+    }
+
+    public void initPositions(){
+        var partners = userRepository.findAll().stream()
+                .filter(userAccount -> userAccount instanceof Partner)
+                .map(userAccount -> (Partner) userAccount)
+                .collect(Collectors.toList());
+
+        var positions = List.of(
+                new Job(null, partners.get(0), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
+                new Job(null, partners.get(1), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                new Placement(null, partners.get(2), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false)
+        );
+        positionRepository.saveAll(positions);
         initDocuments();
     }
 
