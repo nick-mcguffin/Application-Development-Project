@@ -60,7 +60,8 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "partnerJobs", positionService.getJobs()
+                "partnerJobs", positionService.getJobs(),
+                "partnerPlacements", positionService.getPlacements()
         ));
         return "/partner/marketplace";
     }
@@ -70,7 +71,6 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "positionOptions", List.of("Select...", "Job", "Placement" ),
                 "type", type,
                 "job", new JobDTO(),
                 "placement", new PlacementDTO()

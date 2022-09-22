@@ -53,5 +53,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return placementRepository.save(placement);
     }
 
-
+    public List<Placement> getPlacements(){
+        return placementRepository.findAll();
+    }
 }
