@@ -9,6 +9,7 @@ import com.wilma.repository.ForumContentRepository;
 import com.wilma.repository.PostRepository;
 import com.wilma.repository.ReplyRepository;
 import com.wilma.repository.TagRepository;
+import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

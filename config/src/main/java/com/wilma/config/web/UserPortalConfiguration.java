@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Configuration
-public class UserConfiguration {
+public class UserPortalConfiguration {
 
     public final static List<SidebarMenuElement> educatorMenuElements = List.of(
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),

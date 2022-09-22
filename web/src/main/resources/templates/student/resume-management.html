@@ -27,7 +27,7 @@
               <h1>File Upload</h1>
 
               <div id="dropzone">
-                <form action="#" class="dropzone needsclick" id="drop-form">
+                <form th:action="@{/student/resume-management}" class="dropzone needsclick" id="drop-form">
                   <div class="dz-message needsclick">
                     <button type="button" class="dz-button">Drop files here or click to upload.</button>
                     <br />
@@ -36,23 +36,8 @@
                 <button onClick="window.location.reload();">Done</button>
               </div>
 
-              <small class="text-center">Maximum file size: 10MB</small>
+                <small class="text-center" th:text="| Maximum file size: ${sizeLimit}|"></small>
             </div>
-
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-            <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-            <link href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" rel="stylesheet" />
-
-            <script>
-        Dropzone.autoDiscover = false;
-
-        $("#drop-form").dropzone({
-            success: function (file, response) {
-                console.log(file.filename + " uploaded successfully");
-            },
-        });
-    </script>
-
             <!-- Dropzone -->
 
 
@@ -63,23 +48,27 @@
                 <thead>
                 <tr>
                   <th>File Name</th>
-                  <th>File Type</th>
                   <th>Upload Date</th>
-                  <th>Download/Delete</th>
+                  <th>Open/Download/Delete</th>
                 </tr>
                 </thead>
                 <thead>
-                <tr th:each="Resume : ${studentResumes}">
-                  <td><span th:text="${Resume.name}"> name </span></td>
-                  <td><span th:text="${Resume.type}"> type </span></td>
-                  <td th:text="${#dates.format(Resume.uploadDate, 'dd/MM/yyyy')}"></td>
+                <tr th:each="doc : ${documents}">
+                  <td><span th:text="${doc.filename}"> name </span></td>
+                  <td th:text="${#dates.format(doc.uploadDate, 'dd/MM/yyyy')}"></td>
                   <td style="display: flex;">
-                      <button type="button" class="btn btn-default btn-lg">
-                        <span class="material-symbols-rounded btn-download" aria-hidden="true">Download</span>
-                      </button>
-                      <button type="button" class="btn btn-default btn-lg">
-                        <span class="material-symbols-rounded btn-delete" aria-hidden="true">Delete</span>
-                      </button>
+                      <a role="button" th:target="_blank" th:href="@{open?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Open">
+                          <span class="material-symbols-rounded ">open_in_new</span>
+                      </a>
+
+                      <a role="button" th:href="@{download?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Download">
+                          <span class="material-symbols-rounded" aria-hidden="true">Download</span>
+                      </a>
+
+                      <a role="button" th:href="@{delete?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Delete">
+                          <span class="material-symbols-rounded" aria-hidden="true">Delete</span>
+                      </a>
+
                   </td>
                 </tr>
               </table>
@@ -90,5 +79,20 @@
     </div>
   </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" rel="stylesheet"/>
+
+<script>
+        Dropzone.autoDiscover = false;
+
+        $("#drop-form").dropzone({
+            success: function (file, response) {
+                console.log(file.filename + " uploaded successfully");
+            },
+        });
+</script>
+
 </body>
 </html>

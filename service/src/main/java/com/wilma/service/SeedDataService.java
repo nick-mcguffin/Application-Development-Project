@@ -2,6 +2,7 @@
 package com.wilma.service;
 
 import com.wilma.entity.Tag;
+import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.forum.ForumCategory;
 import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
@@ -13,6 +14,7 @@ import com.wilma.repository.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,7 +51,10 @@ public class SeedDataService {
     private ReplyRepository replyRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
+    @Autowired
+    private UserDocumentRepository userDocumentRepository;
+    @Value("${spring.http.multipart.upload-path}")
+    private String uploadPath;
 
     @PostConstruct
     void initUsersAndRoles() {
@@ -61,8 +66,23 @@ public class SeedDataService {
         initAuthors();
         initPosts();
         initReplies();
+        initDocuments();
     }
 
+    public void initDocuments(){
+        var student = userRepository.findByUsername("student");
+        var docs = List.of(
+            new UserDocument(null, new Date(), "resume1.docx", uploadPath + "resume1.docx", student),
+            new UserDocument(null, new Date(), "resume2.docx", uploadPath + "resume2.docx", student),
+            new UserDocument(null, new Date(), "cover-letter-1.pdf",uploadPath + "cover-letter-1.pdf", student)
+        );
+        docs.forEach(document -> {
+            if(! userDocumentRepository.existsByFilepath(document.getFilepath())){
+                userDocumentRepository.save(document);
+            }
+        });
+
+    }
     public void initReplies(){
         //(Integer id, UserAccount author, Date timestamp, String body, Post post)
         var google = userRepository.findByUsername("google");

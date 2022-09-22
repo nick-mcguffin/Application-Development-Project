@@ -2,7 +2,6 @@ package com.wilma.service;
 
 import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserAccountRepository;
-import com.wilma.service.forum.CrudOpsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

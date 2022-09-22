@@ -1,4 +1,4 @@
-package com.wilma.service.forum;
+package com.wilma.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
