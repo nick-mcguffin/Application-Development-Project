@@ -8,6 +8,7 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
@@ -166,12 +167,23 @@ public class PartnerPortalController {
                 "currentPage", "Expressions Of Interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
 
-                "pendingPartnerExpressionsOfInterest", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                "openExpressionsOfInterest", List.of(
+                    new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
+                    new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
+                    new ExpressionOfInterest(3,"Project Management", "Melbourne", "Another sample job", new Date(), false)
+                ),
+                "openRequestsToSupply", List.of(
+                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                    new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                    new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                ),
+                "acceptedRequestsToSupply", List.of(
+                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
+                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true)
                 )
+
+
         ));
         return "/partner/expressions-of-interest";
     }

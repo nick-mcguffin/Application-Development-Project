@@ -1,15 +1,74 @@
 
-<!-- Expressions of Interest that are still pending approval (Educator) -->
-<div th:fragment="pending-approval" id="pending-approval" xmlns:th="http://www.thymeleaf.org">
+<!-- Expressions of Interest that are still open to be filled by a Partner -->
+<div th:fragment="pending-expressions-of-interest" id="pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
     
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Applications</h1></div>
-        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Applications..." /></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Expressions Of Interest</h1></div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingAcceptanceFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><button class="form-button center">+ New Expression of Interest</button></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
     
     <div class="row table-container">
-        <table class="table table-sm table-danger table-striped table-hover">
+        <table class="table table-sm table-primary table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Category</th>
+                    <th>Location</th>
+                    <th>Description</th>
+                    <th>Date Opened</th>
+                    <th class="text-center">Manage</th>
+                </tr>
+            </thead>
+            <tbody id="openExpressionsOfInterestData">
+                <tr th:each="openEOI : ${openExpressionsOfInterest}">
+                    <th scope="row" th:text="${openEOI.id}"></th>
+                    <td th:text="${openEOI.category}">Microsoft</td>
+                    <td th:text="${openEOI.location}">Brisbane</td>
+                    <td th:text="${openEOI.description}">Slavey with extra steps</td>
+                    <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var pendingExpressionsOfInterest =
+                /*[[${pendingExpressionsOfInterest}]]*/
+                /*]]>*/
+                $("#pendingAcceptanceFilter").on("keyup", function () {
+                    var value = $(this).val();
+                    var table = document.getElementById("openExpressionOfInterestData");
+                    var filteredData = educatorFilterPositions(value, positions);
+                    rebuildEducatorPositionsTable(filteredData, table);
+                });
+        </script>
+    </div>
+    <hr/>
+
+</div>
+
+<!-- Current Pending Requests to Supply from Partners (Educator) -->
+<div th:fragment="pending-requests-to-supply" id="pending-requests-to-supply" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Pending Requests To Supply Services</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="pendingRTSFilter" type="text" name="keyword" placeholder="Filter Pending Requests to Supply..." /></div>
+        <div class="col-md-1 col-xl-3"></div>
+    </div>
+
+    <div class="row table-container">
+        <table class="table table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -20,13 +79,13 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="pendingPositionsData">
-                <tr th:each="pos : ${pendingPositions}">
-                    <th scope="row" th:text="${pos.id}"></th>
-                    <td th:text="${pos.partner.businessName}">Microsoft</td>
-                    <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                    <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                    <td th:text="${pos.description}">Just a one month job</td>
+            <tbody id="pendingRequestsToSupplyData">
+                <tr th:each="pendingRTS : ${pendingRequestsToSupply}">
+                    <th scope="row" th:text="${pendingRTS.id}"></th>
+                    <td th:text="${pendingRTS.partner.businessName}">Microsoft</td>
+                    <td th:text="${#dates.format(pendingRTS.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(pendingRTS.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${pendingRTS.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <span class="material-symbols-rounded btn-approve">done</span>
@@ -37,39 +96,37 @@
                 </tr>
             </tbody>
         </table>
-    
+
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var pendingPositions =
-                /*[[${pendingPositions}]]*/
+            var pendingRequestsToSupply =
+                /*[[${pendingRequestsToSupply}]]*/
                 /*]]>*/
-                $("#pendingApprovalFilter").on("keyup", function () {
+                $("#pendingRTSFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("pendingPositionsData");
+                    var table = document.getElementById("pendingRequestsToSupplyData");
                     var filteredData = educatorFilterPositions(value, positions);
                     rebuildEducatorPositionsTable(filteredData, table);
                 });
         </script>
     </div>
-    <hr />
-
+    <hr/>
 </div>
 
-
-<!-- Current (approved) Expressions of Interest (Educator) -->
-<div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
+<!-- Accepted Requests to Supply from Partners (Educator) -->
+<div th:fragment="accepted-requests-to-supply" id="accepted-requests-to-supply" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Approved Applications</h1>
+            <h1 class="table-heading">Accepted Requests To Supply Services</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Applications..." /></div>
+            <input class="form-control" id="acceptedRTSFilter" type="text" name="keyword" placeholder="Filter Accepted Requests to Supply..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -80,13 +137,13 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="approvedPositionsData">
-                <tr th:each="pos : ${approvedPositions}">
-                    <th scope="row" th:text="${pos.id}"></th>
-                    <td th:text="${pos.partner.businessName}">Microsoft</td>
-                    <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                    <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                    <td th:text="${pos.description}">Just a one month job</td>
+            <tbody id="acceptedRequestsToSupplyData">
+                <tr th:each="acceptedRTS : ${acceptedRequestsToSupply}">
+                    <th scope="row" th:text="${acceptedRTS.id}"></th>
+                    <td th:text="${acceptedRTS.partner.businessName}">Microsoft</td>
+                    <td th:text="${#dates.format(acceptedRTS.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(acceptedRTS.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${acceptedRTS.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
@@ -99,19 +156,20 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
-                /*[[${approvedPositions}]]*/
+            var acceptedRequestsToSupply =
+                /*[[${acceptedRequestsToSupply}]]*/
                 /*]]>*/
-                $("#approvedFilter").on("keyup", function () {
+                $("#acceptedRTSFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("approvedPositionsData");
+                    var table = document.getElementById("acceptedRequestsToSupplyData");
                     var filteredData = educatorFilterPositions(value, positions);
                     rebuildEducatorPositionsTable(filteredData, table);
                 });
         </script>
     </div>
-
+    <hr/>
 </div>
+
 
 <!-- Partner Expressions of Interest -->
 <div th:fragment="partnerExpressionsOfInterest" id="partner" xmlns:th="http://www.thymeleaf.org">
