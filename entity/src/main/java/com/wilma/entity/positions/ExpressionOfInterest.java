@@ -45,7 +45,7 @@ public class ExpressionOfInterest {
     @Column
     private Date date;
 
-    @Column
+@Column(name = "is_filled")
     private boolean isFilled;
 
     public ExpressionOfInterest(Integer id, String category, String location, String description, Date date, boolean isFilled) {
