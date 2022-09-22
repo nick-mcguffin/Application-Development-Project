@@ -1,0 +1,121 @@
+<!-- ================ Job View ================ -->
+<div th:fragment="job-view" id="job-view" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="form-group row py-3">
+        <label for="jobId" class="col-lg-1 col-form-label pr-0 text-end">Job ID</label>
+        <div class="col-lg-11">
+            <input type="text" readonly class="form-control-plaintext" id="jobId" th:value="${position.id}">
+        </div>
+
+    </div>
+    <div class="form-group row py-3">
+
+        <label for="jobStartDate" class="col-lg-1 col-form-label pr-0 text-end">Start Date</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="jobStartDate"
+                   th:value="${#dates.format(position.startDate, 'dd/MM/yyyy')}">
+        </div>
+
+        <label for="jobEndDate" class="col-lg-1 col-form-label pr-0 text-end">End Date</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="jobEndDate"
+                   th:value="${#dates.format(position.endDate, 'dd/MM/yyyy')}">
+        </div>
+
+        <label for="jobPeriod" class="col-lg-1 col-form-label pr-0 text-end">Period</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="jobPeriod"
+                   th:value="|Days = ${position.period.days}, Months = ${position.period.months}, Years = ${position.period.years}|">
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+        <label for="jobDescription" class="col-lg-1 col-form-label pr-0 text-end">Description</label>
+        <div class="col-lg-11">
+            <textarea rows="5" class="form-control" id="jobDescription" th:value="${position.description}" th:text="${position.description}"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+        <label for="jobPayRate" class="col-lg-1 col-form-label pr-0 text-end">Pay Rate</label>
+        <div class="col-lg-1">
+            <input type="text" class="form-control" id="jobPayRate" th:value="${#numbers.formatCurrency(position.payRate)}">
+        </div>
+
+        <label for="jobPayType" class="col-lg-2 col-form-label pr-0 text-end">Pay Type</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="jobPayType" th:value="${position.payType}">
+        </div>
+
+        <label for="jobPayFrequency" class="col-lg-2 col-form-label pr-0 text-end">Pay Frequency</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="jobPayFrequency" th:value="${position.payFrequency}">
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+        <label for="partnerBusinessName" class="col-lg-1 col-form-label pr-0 text-end">Partner</label>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" id="partnerBusinessName" th:value="${position.partner.businessName}">
+        </div>
+
+        <label for="partnerEmail" class="col-lg-2 col-form-label pr-0 text-end">Partner Email</label>
+        <div class="col-lg-5">
+            <input type="text" class="form-control" id="partnerEmail" th:value="${position.partner.email}">
+        </div>
+    </div>
+
+    <div th:replace="fragments/position-details :: application-form"></div>
+</div>
+
+<!-- ================ Placement View ================ -->
+<div th:fragment="placement-view" id="placement-view" xmlns:th="http://www.thymeleaf.org">
+
+    <!-- Placement form to go here -->
+    <h1 th:text="|Placement #${position.id}|">Placement</h1>
+
+    <div th:replace="fragments/position-details :: application-form"></div>
+</div>
+
+<!-- ================ Application Form ================ -->
+<div th:fragment="application-form" xmlns:th="http://www.thymeleaf.org">
+    <hr/>
+    <h2 class="text-center fst-italic fw-semibold text-muted">Want to Apply?</h2>
+
+    <form  id="application-form" class="form-group row py-3" th:action="@{apply}" th:object="${application}" method="post">
+
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-6">
+            <input type="hidden" name="positionId" th:value="${position.id}">
+            <label for="file-multi-select" class="col-form-label pr-0">Select the files to attach</label>
+            <select name="userDocs" class="select-box col-lg-3" id="file-multi-select"
+                    multiple multiselect-search="true"
+                    multiselect-select-all="true"
+                    th:field="*{fileIds}">
+                <option
+                        th:each="file : ${studentFiles}"
+                        th:value="${file.id}"
+                        th:text="${file.filename}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group row pb-3">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-10">
+                <label for="jobDescription" class="col-form-label pr-0">Message</label>
+                <textarea rows="5" class="form-control" id="applicationMessage" th:field="*{message}" placeholder="Write a brief message to be sent with your application"></textarea>
+            </div>
+            <div class="col-lg-1"></div>
+        </div>
+
+        <div class="col-lg-3"></div>
+
+        <div class="row col-lg-12 text-center">
+            <button type="submit" class="btn btn-primary w-auto mx-auto">Apply</button>
+        </div>
+
+    </form>
+
+</div>
