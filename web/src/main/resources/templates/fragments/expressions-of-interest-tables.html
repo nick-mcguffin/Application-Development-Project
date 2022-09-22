@@ -198,13 +198,11 @@
                     <td th:text="${openEOI.location}">Brisbane</td>
                     <td th:text="${openEOI.description}">Slavey with extra steps</td>
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
-                    <td style="display: flex;">
-                        <div class="mx-auto">
-                            <button class="form-button">Apply</button>
-                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
-                            <span class="material-symbols-rounded btn-delete">delete</span>
-                        </div>
-                    </td>
+<td style="display: flex;">
+    <div class="mx-auto">
+        <button class="form-button">Apply</button>
+    </div>
+</td>
                 </tr>
             </tbody>
         </table>
