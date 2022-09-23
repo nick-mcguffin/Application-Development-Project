@@ -178,7 +178,7 @@ public class PartnerPortalController {
                     new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
                     new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
                 ),
-                "acceptedRequestsToSupply", List.of(
+                "requestsToSupplyHistory", List.of(
                     new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
                     new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true)
                 )
