@@ -56,4 +56,12 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     public List<Placement> getPlacements(){
         return placementRepository.findAll();
     }
+
+    public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
+        var currentUser = activeProfile.equalsIgnoreCase("prod")?
+                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
+        var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
+
+        return placementRepository.save(placement);
+    }
 }

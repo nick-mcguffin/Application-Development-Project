@@ -79,11 +79,14 @@ public class PartnerPortalController {
     }
 
     @GetMapping("/edit-position")
-    public String editPosition (Model model, @RequestParam String type) {
+    public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "type", type
+                "type", type,
+                "id", id,
+                "job", new JobDTO(),
+                "placement", new PlacementDTO()
         ));
         return "/partner/edit-position";
     }
@@ -103,6 +106,18 @@ public class PartnerPortalController {
     @PostMapping("/create-placement")
     public RedirectView createPlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
         var newPlacement = positionService.addPlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "placement", placementDTO));
+
+        log.info("Placement created from DTO: "+ newPlacement);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-placement")
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.partnerMenuElements,

@@ -11,6 +11,7 @@ import java.util.Date;
 
 @Data
 public class JobDTO {
+    private Integer id;
     private Partner partner;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
