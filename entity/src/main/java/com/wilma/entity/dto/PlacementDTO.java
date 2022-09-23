@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.Period;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Data
@@ -18,4 +19,21 @@ public class PlacementDTO {
     private Period period;
     private String location;
     private String description;
+
+    public PlacementDTO(Integer id, Partner partner, Date startDate, Date endDate, String location, String description) {
+        this.id = id;
+        this.partner = partner;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.period = Period.between(
+                startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(),
+                endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        );
+        this.location = location;
+        this.description = description;
+    }
+
+    public PlacementDTO() {
+
+    }
 }

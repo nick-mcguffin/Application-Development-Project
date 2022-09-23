@@ -10,10 +10,10 @@
     <input type="date" class="form-floating user-input" id="position-end-date" th:field="*{endDate}">
   </div>
 
-  <div class="row p-3 pt-0">
-    <label for="position-period" class="form-label">Period</label>
-    <input class="form-floating user-input" id="position-period" th:field="*{period}">
-  </div>
+<!--  <div class="row p-3 pt-0">-->
+<!--    <label for="position-period" class="form-label">Period</label>-->
+<!--    <input class="form-floating user-input" id="position-period" th:field="*{period}">-->
+<!--  </div>-->
 
   <div class="row p-3 pt-0">
     <label for="position-location" class="form-label">Location</label>
@@ -107,7 +107,7 @@
 
 <!-- Form for editing job -->
 <div th:fragment="edit-job-form" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
-  <form>
+  <form th:action="@{update-placement}" th:object="${job}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
     <div th:replace="fragments/position-forms  :: edit-position-fields"></div>

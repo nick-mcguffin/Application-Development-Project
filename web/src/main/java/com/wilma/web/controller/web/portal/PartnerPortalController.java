@@ -85,8 +85,8 @@ public class PartnerPortalController {
                 "menuElements", UserConfiguration.partnerMenuElements,
                 "type", type,
                 "id", id,
-                "job", new JobDTO(),
-                "placement", new PlacementDTO()
+                "placement", positionService.findById(id),
+                "job", positionService.findById(id)
         ));
         return "/partner/edit-position";
     }
