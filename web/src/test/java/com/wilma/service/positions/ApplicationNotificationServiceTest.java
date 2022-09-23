@@ -35,7 +35,6 @@ class ApplicationNotificationServiceTest {
     @Mock
     UserAccount applicant1;
     Partner partner1;
-    @Mock
     Partner partner2;
     @Mock
     UserAccount applicant2;
@@ -49,8 +48,11 @@ class ApplicationNotificationServiceTest {
     void setUp() {
         openMocks(this);
         partner1 = new Partner();
+        partner2 = new Partner();
         partner1.setUsername("Microsoft");
+        partner1.setEmail("your-email-here@gmail.com");
         partner2.setUsername("Google");
+        partner2.setEmail("example@email.com");
         position1.setPartner(partner1);
         position2.setPartner(partner2);
         position3.setPartner(partner1);
@@ -99,7 +101,6 @@ class ApplicationNotificationServiceTest {
     @Disabled
     @Test
     void runScheduledEmailNotifications() {
-        partner1.setEmail("aussiedev81@gmail.com");
         var applications = applicationNotificationService.getApplicationsByPartner(applicationNotificationService.getNewApplications(), partner1);
         position1.setId(23);
         position3.setId(72);
