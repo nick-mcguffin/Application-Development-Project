@@ -1,13 +1,13 @@
 
 <!-- Jobs & Placements that are still pending approval -->
-<div th:fragment="pending-approval" id="pending-approval" xmlns:th="http://www.thymeleaf.org">
-    
+<div th:fragment="pending-approval" id="pending-approval" th:if="${ not #lists.isEmpty(pendingPositions)}" xmlns:th="http://www.thymeleaf.org">
+
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Approval</h1></div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
-    
+
     <div class="row table-container">
         <table class="table table-sm table-danger table-striped table-hover">
             <thead>
@@ -22,7 +22,7 @@
                 </tr>
             </thead>
             <tbody id="pendingPositionsData">
-                <tr th:each="pos : ${pendingPositions}">
+                <tr th:each="pos : ${positionData}" th:if="${!pos.approved}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
@@ -31,7 +31,7 @@
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-approve">Done</span>
+                            <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                             <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
                             <span class="material-symbols-rounded btn-delete">Delete</span>
                         </div>
@@ -39,11 +39,11 @@
                 </tr>
             </tbody>
         </table>
-    
+
         <script th:inline="javascript">
             /*<![CDATA[*/
             var pendingPositions =
-                /*[[${pendingPositions}]]*/
+                /*[[${positionData}]]*/
                 /*]]>*/
                 $("#pendingApprovalFilter").on("keyup", function () {
                     var value = $(this).val();
@@ -84,7 +84,7 @@
                 </tr>
             </thead>
             <tbody id="approvedPositionsData">
-                <tr th:each="pos : ${approvedPositions}">
+            <tr th:each="pos : ${positionData}" th:if="${pos.approved}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
@@ -104,7 +104,7 @@
         <script th:inline="javascript">
             /*<![CDATA[*/
             var positions =
-                /*[[${approvedPositions}]]*/
+                /*[[${positionData}]]*/
                 /*]]>*/
                 $("#approvedFilter").on("keyup", function () {
                     var value = $(this).val();

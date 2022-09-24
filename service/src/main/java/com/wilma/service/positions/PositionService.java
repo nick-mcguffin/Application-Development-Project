@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,8 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     private PositionApplicationRepository applicationRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    PositionRepository positionRepository;
 
     /**
      * Submit an application for an available position
@@ -72,5 +75,15 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
      */
     public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
         return applicationRepository.saveAll(applications);
+    }
+
+    public Position setApproved(Integer id) {
+        var pos = positionRepository.findById(id).orElseThrow();
+        pos.setApproved(true);
+        return positionRepository.save(pos);
+    }
+
+    public List<Position> pendingPositions(){
+        return positionRepository.findByApproved(false);
     }
 }

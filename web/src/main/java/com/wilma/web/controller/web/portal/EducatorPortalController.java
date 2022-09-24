@@ -1,20 +1,16 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
 import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 
-import com.wilma.entity.positions.Job;
-
-import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +33,8 @@ public class EducatorPortalController {
     ForumService forumService;
     @Autowired
     TagService tagService;
+    @Autowired
+    PositionService positionService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -55,18 +53,22 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-                ),
-                "pendingPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-                )
+                "positionData", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions()
         ));
         return "/educator/marketplace";
+    }
+
+    @GetMapping("/marketplace-approve")
+    public String marketplaceSetApproved(Model model, @RequestParam Integer posId) {
+        positionService.setApproved(posId);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "positionData", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions()
+        ));
+        return "redirect:marketplace";
     }
     //endregion
 
