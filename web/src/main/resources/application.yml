@@ -11,12 +11,18 @@ spring:
     active: dev # Set this as either dev or prod
 
   mail:
-    # Credentials for the sendinblue smtp service
-    site-email: projectwilma@mail.com
-    host: smtp-relay.sendinblue.com
-    port: 587
-    username: projectwilma@mail.com
-    password: njYDR2S9ZCQKIkf5
+    # Credentials for the gmail smtp service passed in run configurations
+    site-email:
+    host:
+    port:
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
 
   http:
     multipart:
