@@ -12,11 +12,11 @@ spring:
 
   mail:
     # Credentials for the gmail smtp service will need to be added to your test run configuration
-    site-email:
-    host:
-    port:
-    username:
-    password:
+    site-email: wilmaproject.dev@gmail.com
+    host: smtp.gmail.com
+    port: 587
+    username: wilmaproject.dev@gmail.com
+    password: bditlkfcuotzojpu
     properties:
       mail:
         smtp:
