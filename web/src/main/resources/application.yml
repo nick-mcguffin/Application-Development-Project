@@ -15,8 +15,8 @@ spring:
     site-email: projectwilma@mail.com
     host: smtp-relay.sendinblue.com
     port: 587
-    username: projectwilma@mail.com
-    password: njYDR2S9ZCQKIkf5
+    username: wilmaproject.dev@gmail.com
+    password: re9XBCi4b-tshUX
 
   http:
     multipart:
