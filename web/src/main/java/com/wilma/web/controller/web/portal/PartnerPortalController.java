@@ -116,12 +116,14 @@ public class PartnerPortalController {
     }
 
     @PostMapping("/update-placement")
-    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
         var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserConfiguration.partnerMenuElements,
-                "placement", placementDTO));
+                "placement", placementDTO,
+                "id", id
+        ));
 
         log.info("Placement created from DTO: "+ newPlacement);
         return new RedirectView("/partner/marketplace");
