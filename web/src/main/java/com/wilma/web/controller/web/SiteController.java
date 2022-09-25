@@ -63,7 +63,7 @@ public class SiteController {
 
         String mailerMessage = "From: " + contactForm.getName() + "\n\n" + "Contact Email: " + contactForm.getEmail() + "\n\n" + "Message: \"" + contactForm.getDetails() + "\"";
         
-        mailer.sendEmail("nicholas.mcguffin@gmail.com", "WILMA: Contact Us Request Received",  mailerMessage);
+        mailer.sendEmail("wilmaproject.dev@gmail.com", "WILMA: Contact Us Request Received",  mailerMessage);
 
         return "/contact";
     }
