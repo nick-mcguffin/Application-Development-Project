@@ -23,7 +23,11 @@
                     <hr/>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block">
-                    <form id="contact-us" class="row g-3 form-border mt-3">
+                    <form id="contact-us" 
+                    class="row g-3 form-border mt-3" 
+                    th:action="@{/submit}"
+                    method="post"
+                    modelAttribute="contactForm">
                     <h1 class="display-4 header-style center">Contact Us</h1>
                     <div class="col-md-10 ms-5 mt-3">
                         <label for="name" class="form-label">Name</label>
@@ -31,8 +35,7 @@
                             type="text"
                             class="form-control"
                             id="name"
-                            name="name"
-                        />
+                            name="name"/>
                         <br/>
                     </div>
                     <div class="col-md-10 ms-5 mt-2">
@@ -42,7 +45,7 @@
                         class="form-control"
                         id="email"
                         aria-describedby="email"
-                        />
+                        name="name"/>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="col-md-10 ms-5 mt-2">
@@ -51,8 +54,8 @@
                         class="form-control"
                         id="details"
                         rows="8"
-                        columns="50">
-                        </textarea>
+                        columns="50"
+                        name="details"></textarea>
                     </div>
                     <div class="form-group mb-3 mt-2 text-center">
                     <button type="submit" class="btn form-button">Submit</button>
