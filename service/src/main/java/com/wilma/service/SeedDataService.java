@@ -10,10 +10,7 @@ import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.users.Partner;
-import com.wilma.entity.users.RemoteClient;
-import com.wilma.entity.users.Role;
-import com.wilma.entity.users.UserAccount;
+import com.wilma.entity.users.*;
 import com.wilma.repository.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -230,21 +227,26 @@ public class SeedDataService {
 
     public void initUsers() {
         var users = List.of(
-                new UserAccount(
+                new Educator(
                         null,
                         "educator",
                         passwordEncoder.encode("educator"),
                         "educator@cqu.edu.au",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation incididunt ut labore et dolore magna aliqua.",
                         true,
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("ADMIN"))),
+                        Set.of(roleRepository.findByName("ADMIN")),
+                        null,
+                        "Software Engineering",
+                        "S1396902"),
                 new UserAccount(
                         null,
                         "partner",
                         passwordEncoder.encode("partner"),
                         "partner@email.com",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                         true,
                         true,
                         true,
@@ -255,6 +257,7 @@ public class SeedDataService {
                         "student",
                         passwordEncoder.encode("student"),
                         "student@email.com",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                         true,
                         true,
                         true,
