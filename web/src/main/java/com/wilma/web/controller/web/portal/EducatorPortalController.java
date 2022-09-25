@@ -3,15 +3,15 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
-import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
-
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
-
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
+import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
+import com.wilma.service.UserService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.Period;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +38,8 @@ public class EducatorPortalController {
     ForumService forumService;
     @Autowired
     TagService tagService;
+    @Autowired
+    UserService userService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -190,9 +193,28 @@ public class EducatorPortalController {
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Profile",
-                "menuElements", UserPortalConfiguration.educatorMenuElements
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "currentUser", userService.findByUsername("educator"),
+                "inEditMode", false
         ));
         return "/educator/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfile(Model model, HttpServletRequest request){
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "inEditMode", true,
+                "currentUser", userService.getCurrentUser()
+        ));
+        return "/educator/profile";
+    }
+
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute Educator educator){
+        var updatedUser = userService.updateEducatorProfile(educator);
+        return "redirect:profile";
     }
     //endregion
 
