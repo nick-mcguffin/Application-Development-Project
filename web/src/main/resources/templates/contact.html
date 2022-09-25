@@ -27,7 +27,7 @@
                     class="row g-3 form-border mt-3" 
                     th:action="@{/submit}"
                     method="post"
-                    modelAttribute="contactForm">
+                    th:object="${contactForm}"><!-- Bind the object we want to use -->
                     <h1 class="display-4 header-style center">Contact Us</h1>
                     <div class="col-md-10 ms-5 mt-3">
                         <label for="name" class="form-label">Name</label>
@@ -35,7 +35,8 @@
                             type="text"
                             class="form-control"
                             id="name"
-                            name="name"/>
+                            name="name"
+                        th:field="*{name}"/><!-- Refers to contactForm.name -->
                         <br/>
                     </div>
                     <div class="col-md-10 ms-5 mt-2">
@@ -45,7 +46,8 @@
                         class="form-control"
                         id="email"
                         aria-describedby="email"
-                        name="name"/>
+                        name="name"
+                        th:field="*{email}"/>
                         <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
                     <div class="col-md-10 ms-5 mt-2">
@@ -55,7 +57,8 @@
                         id="details"
                         rows="8"
                         columns="50"
-                        name="details"></textarea>
+                        name="details"
+                        th:field="*{details}"></textarea>
                     </div>
                     <div class="form-group mb-3 mt-2 text-center">
                     <button type="submit" class="btn form-button">Submit</button>

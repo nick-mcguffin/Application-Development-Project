@@ -50,7 +50,8 @@ public class SiteController {
     @GetMapping("/contact")
     public String contact(Model model) {
         model.addAllAttributes(Map.of(
-            "currentPage", "Contact Us"));
+            "currentPage", "Contact Us",
+            "contactForm", new ContactForm()));//Need to pass a new blank contact form so thymeleaf knows the shape we're working with
         return "/contact";
     }
 
