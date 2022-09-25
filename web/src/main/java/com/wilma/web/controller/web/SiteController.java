@@ -61,7 +61,7 @@ public class SiteController {
         model.addAllAttributes(Map.of(
             "currentPage", "Contact Us"));
 
-        String mailerMessage = "From: " + contactForm.getName() + "\n\n" + "Contact Email: " + contactForm.getEmail() + "\n\n" + "Message: " + contactForm.getDetails();
+        String mailerMessage = "From: " + contactForm.getName() + "\n\n" + "Contact Email: " + contactForm.getEmail() + "\n\n" + "Message: \"" + contactForm.getDetails() + "\"";
         
         mailer.sendEmail("nicholas.mcguffin@gmail.com", "WILMA: Contact Us Request Received",  mailerMessage);
 
