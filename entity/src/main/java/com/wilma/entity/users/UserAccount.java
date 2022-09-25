@@ -36,6 +36,10 @@ public class UserAccount {
     @Column(name = "email")
     private String email;
 
+    @Lob
+    @Column(name = "bio")
+    private String bio;
+
     @Column(name = "credentials_non_expired")
     public boolean credentialsNonExpired;
 
@@ -63,11 +67,12 @@ public class UserAccount {
         this.username = username;
     }
 
-    public UserAccount(Integer userId, String username, String password, String email, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles) {
+    public UserAccount(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles) {
         this.userId = userId;
         this.username = username;
         this.password = password;
         this.email = email;
+        this.bio = bio;
         this.credentialsNonExpired = credentialsNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.accountNonExpired = accountNonExpired;
