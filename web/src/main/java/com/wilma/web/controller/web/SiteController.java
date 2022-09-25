@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wilma.entity.contact.ContactForm;
 import com.wilma.service.mail.Mailer;
+import com.wilma.service.positions.ApplicationNotificationService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class SiteController {
 
     @Autowired
     protected Mailer mailer;
+
+    @Autowired
+    protected ApplicationNotificationService applicationNotificationService;
 
     @GetMapping("/")
     public String home(Model model) {
@@ -60,12 +64,9 @@ public class SiteController {
 
         model.addAllAttributes(Map.of(
             "currentPage", "Contact Us"));
+            applicationNotificationService.sendContactUsEmail(contactForm);
 
-        String mailerMessage = "From: " + contactForm.getName() + "\n\n" + "Contact Email: " + contactForm.getEmail() + "\n\n" + "Message: \"" + contactForm.getDetails() + "\"";
-        
-        mailer.sendEmail("wilmaproject.dev@gmail.com", "WILMA: Contact Us Request Received",  mailerMessage);
-
-        return "/contact";
+        return "redirect:contact";
     }
         //autowiring mailing interface
         //call send email function to => 

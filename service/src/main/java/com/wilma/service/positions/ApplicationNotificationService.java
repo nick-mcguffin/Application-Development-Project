@@ -1,5 +1,6 @@
 package com.wilma.service.positions;
 
+import com.wilma.entity.contact.ContactForm;
 import com.wilma.entity.positions.Position;
 import com.wilma.entity.positions.PositionApplication;
 import com.wilma.entity.users.Partner;
@@ -26,6 +27,8 @@ public class ApplicationNotificationService {
     protected Mailer mailer;
     @Autowired
     protected PositionService positionService;
+    
+    private final String WILMA_EMAIL = "wilmaproject.dev@gmail.com";
 
     /**
      * Scheduled to run at 5:00PM each day (MON - FRI only).<br/>
@@ -115,5 +118,33 @@ public class ApplicationNotificationService {
             sb.append("\n");
         });
         return new String(sb);
+    }
+
+    /**
+     *  Composes and sends an email to the wilma dev address containing Contact Us form information.
+     * <pre>
+     *      From: Test User
+     * 
+     *      Email: test@email.com
+     * 
+     *      Details: This email works as expected.
+     * </pre
+     * 
+     * @param contactForm The details from the contact form entered by the user.
+     * 
+     */
+    public void sendContactUsEmail(ContactForm contactForm) {
+
+        var sb = new StringBuilder();
+        var body = ("\nFrom:  %s\n\nContact Email: %s\n\nMessage: %s");
+        final var SUBJECT = "Contact Us Request Received";
+        sb.append(String.format(body,
+                contactForm.getName(),
+                contactForm.getEmail(),
+                contactForm.getDetails()));
+        
+        Thread newThread = new Thread(() -> mailer.sendEmail(WILMA_EMAIL, SUBJECT, sb.toString()));
+        newThread.start();
+
     }
 }

@@ -16,7 +16,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: wilmaproject.dev@gmail.com
-    password: bditlkfcuotzojpu
+    password: qxnxokfdfwhqbnfd
     properties:
       mail:
         smtp:
