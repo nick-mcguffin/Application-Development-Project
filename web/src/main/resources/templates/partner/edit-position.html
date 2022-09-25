@@ -20,10 +20,13 @@
                     </ol>
                 </nav>
 
-                <h1 class="text-center m-3" th:text="'Edit ' + ${type}">Title</h1>
+                <h1 class="text-center m-3" th:text="'Edit ' + ${type} + ': ' + ${id}">Title</h1>
+
                 <!-- Edit position forms -->
-<!--                <div th:replace="fragments/position-forms  :: edit-job-form"></div>-->
-                <div th:replace="fragments/position-forms  :: edit-placement-form"></div>
+                <div id="edit-position-forms" th:switch="${#strings.toLowerCase(type)}">
+                    <div th:case="job" th:insert="fragments/position-forms  :: edit-job-form"></div>
+                    <div th:case="placement" th:insert="fragments/position-forms  :: edit-placement-form"></div>
+                </div>
             </div>
         </div>
     </div>
