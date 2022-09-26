@@ -10,10 +10,7 @@ import com.wilma.entity.forum.Post;
 import com.wilma.entity.forum.Reply;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.users.Partner;
-import com.wilma.entity.users.RemoteClient;
-import com.wilma.entity.users.Role;
-import com.wilma.entity.users.UserAccount;
+import com.wilma.entity.users.*;
 import com.wilma.repository.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -229,37 +227,50 @@ public class SeedDataService {
     }
 
     public void initUsers() {
+        Calendar graduationDate = Calendar.getInstance();
+        graduationDate.set(2023, Calendar.NOVEMBER,7);
         var users = List.of(
-                new UserAccount(
+                new Educator(
                         null,
                         "educator",
                         passwordEncoder.encode("educator"),
                         "educator@cqu.edu.au",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation incididunt ut labore et dolore magna aliqua.",
                         true,
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("ADMIN"))),
-                new UserAccount(
+                        Set.of(roleRepository.findByName("ADMIN")),
+                        null,
+                        "Software Engineering",
+                        "S1396902"),
+                new Partner(
                         null,
                         "partner",
                         passwordEncoder.encode("partner"),
                         "partner@email.com",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                         true,
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("PARTNER"))),
-                new UserAccount(
+                        Set.of(roleRepository.findByName("PARTNER")),
+                        "Microsoft"),
+                new Student(
                         null,
                         "student",
                         passwordEncoder.encode("student"),
                         "student@email.com",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
                         true,
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("STUDENT")))
+                        Set.of(roleRepository.findByName("STUDENT")),
+                        null,
+                        "Software Development",
+                        "S10562309",
+                        graduationDate.getTime())
         );
 
         users.forEach(user -> {

@@ -1,7 +1,6 @@
 package com.wilma.service.docs;
 
 import com.wilma.entity.docs.UserDocument;
-import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserDocumentRepository;
 import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
@@ -10,7 +9,6 @@ import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,6 +30,7 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
     private UserDocumentRepository userDocumentRepository;
     @Autowired
     private UserService userService;
+
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
@@ -46,7 +45,7 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
      * @return A list of documents
      */
     public List<UserDocument> findAllForUser() {
-        return userDocumentRepository.findAllByUser(this.getCurrentUser());
+        return userDocumentRepository.findAllByUser(userService.getCurrentUser());
     }
 
     /**
@@ -59,7 +58,7 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
         byte[] bytes = file.getBytes();
         Path path = Paths.get(uploadPath.concat(Objects.requireNonNull(file.getOriginalFilename())));
         Files.write(path, bytes);
-        return add(new UserDocument(null, new Date(), file.getOriginalFilename(), path.toString(), this.getCurrentUser()));
+        return add(new UserDocument(null, new Date(), file.getOriginalFilename(), path.toString(), userService.getCurrentUser()));
     }
 
     /**
@@ -68,16 +67,6 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
      */
     public void deleteFile(UserDocument file) {
         userDocumentRepository.delete(file);
-    }
-
-    /**
-     * Get the currently logged-in user
-     * @return The user account for the currently logged-in user
-     */
-    public UserAccount getCurrentUser(){
-        return activeProfile.equalsIgnoreCase("prod")?
-                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) :
-                userService.findByUsername("student");
     }
 
 }

@@ -7,6 +7,8 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.users.Student;
+import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
@@ -47,6 +49,9 @@ public class StudentPortalController {
     UserDocumentConfiguration userDocumentConfiguration;
     @Autowired
     PositionService positionService;
+
+    @Autowired
+    UserService userService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -222,12 +227,34 @@ public class StudentPortalController {
 
     //region Profile
     @GetMapping("/profile")
-    public String studentProfile(Model model) {
+    public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "profile",
-                "menuElements", UserPortalConfiguration.studentMenuElements
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "currentUser", userService.getCurrentUser(),
+                "inEditMode", false
         ));
         return "/student/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfile(Model model, HttpServletRequest request){
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "inEditMode", true,
+                "currentUser", userService.getCurrentUser()
+        ));
+        return "/student/profile";
+    }
+
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute Student student, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        userService.updateStudentProfile(student, file.isEmpty() ?
+                ((Student) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
+        return "redirect:profile";
     }
     //endregion
 
