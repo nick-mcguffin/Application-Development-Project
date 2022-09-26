@@ -125,7 +125,21 @@ public class PartnerPortalController {
                 "id", id
         ));
 
-        log.info("Placement created from DTO: "+ newPlacement);
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-job")
+    public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
+        var newJob = positionService.updateJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "job", jobDTO,
+                "id", id
+        ));
+
+        log.info("Job updated from DTO: "+ jobDTO);
         return new RedirectView("/partner/marketplace");
     }
     //endregion
