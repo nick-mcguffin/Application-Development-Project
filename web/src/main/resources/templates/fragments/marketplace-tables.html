@@ -211,7 +211,7 @@
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
-                        <a th:href="@{'/partner/edit-position?type=job'}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                        <a th:href="@{~/partner/edit-position?type=Job&id={jid}( jid=${job.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                         <span class="material-symbols-rounded btn-delete">delete</span>
                     </div>
                 </td>
