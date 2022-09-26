@@ -143,7 +143,7 @@ public class ApplicationNotificationService {
                 contactForm.getEmail(),
                 contactForm.getDetails()));
         
-        Thread newThread = new Thread(() -> mailer.sendEmail(WILMA_EMAIL, SUBJECT, sb.toString()));
+Thread newThread = new Thread(() -> mailer.sendEmail(siteEmail, SUBJECT, sb.toString()));
         newThread.start();
 
     }
