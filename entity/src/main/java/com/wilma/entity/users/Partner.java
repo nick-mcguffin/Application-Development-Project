@@ -19,8 +19,8 @@ public class Partner extends UserAccount {
     @Column(name = "Business_name")
     private String businessName;
 
-    public Partner(Integer userId, String username, String password, String email, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName) {
-        super(userId, username, password, email, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles);
+    public Partner(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName) {
+        super(userId, username, password, email, bio, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles);
         this.businessName = businessName;
     }
 

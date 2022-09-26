@@ -1,18 +1,27 @@
 package com.wilma.service;
 
+import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserAccountRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
+@Slf4j
 @Service
 public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRepository> {
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
+
+    @Value("${spring.profiles.dev-username}")
+    private String currentDevUser;
     @Autowired
     private UserAccountRepository userRepository;
     @Autowired
@@ -26,12 +35,23 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
     }
 
     public UserAccount getCurrentUser(){
-        return activeProfile.equalsIgnoreCase("prod")?
-                this.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) :
-                this.findByUsername("student");
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof AnonymousAuthenticationToken)
+            return this.findByUsername(Objects.requireNonNull(currentDevUser));
+        return this.findByUsername(authentication.getName());
     }
 
     public UserAccount findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+    public void updateEducatorProfile(Educator updatedEducator, Integer profileImageId) {
+        var currentUser = (Educator) this.getCurrentUser();
+        currentUser.setUsername(updatedEducator.getUsername());
+        currentUser.setDiscipline(updatedEducator.getDiscipline());
+        currentUser.setBio(updatedEducator.getBio());
+        currentUser.setProfileImageId(profileImageId);
+        currentUser = userRepository.save(currentUser);
+        log.info("User updated: {}", currentUser);
     }
 }
