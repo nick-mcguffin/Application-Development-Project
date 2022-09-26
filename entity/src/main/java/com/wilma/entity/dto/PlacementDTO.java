@@ -19,8 +19,13 @@ public class PlacementDTO {
     private Period period;
     private String location;
     private String description;
+    private boolean filled;
 
-    public PlacementDTO(Integer id, Partner partner, Date startDate, Date endDate, String location, String description) {
+    private boolean approved;
+
+    private boolean completed;
+
+    public PlacementDTO(Integer id, Partner partner, Date startDate, Date endDate, String location, String description, boolean filled, boolean approved, boolean completed) {
         this.id = id;
         this.partner = partner;
         this.startDate = startDate;
@@ -31,6 +36,9 @@ public class PlacementDTO {
         );
         this.location = location;
         this.description = description;
+        this.filled = filled;
+        this.approved = approved;
+        this.completed = completed;
     }
 
     public PlacementDTO() {
