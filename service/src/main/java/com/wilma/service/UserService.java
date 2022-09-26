@@ -1,6 +1,7 @@
 package com.wilma.service;
 
 import com.wilma.entity.users.Educator;
+import com.wilma.entity.users.Partner;
 import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserAccountRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,17 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
         currentUser.setUsername(updatedEducator.getUsername());
         currentUser.setDiscipline(updatedEducator.getDiscipline());
         currentUser.setBio(updatedEducator.getBio());
+        currentUser.setProfileImageId(profileImageId);
+        currentUser = userRepository.save(currentUser);
+        log.info("User updated: {}", currentUser);
+    }
+
+    public void updatePartnerProfile(Partner updatedPartner, Integer profileImageId) {
+        var currentUser = (Partner) this.getCurrentUser();
+        currentUser.setUsername(updatedPartner.getUsername());
+        currentUser.setEmail(updatedPartner.getEmail());
+        currentUser.setBio(updatedPartner.getBio());
+        currentUser.setBusinessName(updatedPartner.getBusinessName());
         currentUser.setProfileImageId(profileImageId);
         currentUser = userRepository.save(currentUser);
         log.info("User updated: {}", currentUser);
