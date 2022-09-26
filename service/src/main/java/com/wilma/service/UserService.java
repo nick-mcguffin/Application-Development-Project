@@ -10,12 +10,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRepository> {
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
+
+    @Value("${spring.profiles.dev-username}")
+    private String currentDevUser;
     @Autowired
     private UserAccountRepository userRepository;
     @Autowired
@@ -29,9 +34,10 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
     }
 
     public UserAccount getCurrentUser(){
-        return activeProfile.equalsIgnoreCase("prod")?
-                this.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) :
-                this.findByUsername("educator");
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof AnonymousAuthenticationToken)
+            return this.findByUsername(Objects.requireNonNull(currentDevUser));
+        return this.findByUsername(authentication.getName());
     }
 
     public UserAccount findByUsername(String username) {
