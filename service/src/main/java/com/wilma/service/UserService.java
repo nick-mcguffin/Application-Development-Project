@@ -6,6 +6,7 @@ import com.wilma.repository.UserAccountRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -44,11 +45,13 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
         return userRepository.findByUsername(username);
     }
 
-    public Educator updateEducatorProfile(Educator updatedEducator) {
+    public void updateEducatorProfile(Educator updatedEducator, Integer profileImageId) {
         var currentUser = (Educator) this.getCurrentUser();
         currentUser.setUsername(updatedEducator.getUsername());
         currentUser.setDiscipline(updatedEducator.getDiscipline());
         currentUser.setBio(updatedEducator.getBio());
-        return userRepository.save(currentUser);
+        currentUser.setProfileImageId(profileImageId);
+        currentUser = userRepository.save(currentUser);
+        log.info("User updated: {}", currentUser);
     }
 }

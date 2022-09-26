@@ -24,6 +24,9 @@ public class Educator extends UserAccount {
     @Column(name = "staff_id")
     private String staffId;
 
+    @Column(name = "profile_image_id")
+    private Integer profileImageId;
+
     public Educator(String username, String discipline) {
         super(username);
         this.discipline = discipline;

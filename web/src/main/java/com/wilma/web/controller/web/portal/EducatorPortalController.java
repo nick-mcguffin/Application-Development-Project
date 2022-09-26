@@ -12,6 +12,7 @@ import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
+import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
@@ -20,9 +21,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.Period;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +43,8 @@ public class EducatorPortalController {
     TagService tagService;
     @Autowired
     UserService userService;
+    @Autowired
+    DocumentService documentService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -194,7 +199,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "Profile",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "currentUser", userService.findByUsername("educator"),
+                "currentUser", userService.getCurrentUser(),
                 "inEditMode", false
         ));
         return "/educator/profile";
@@ -212,8 +217,10 @@ public class EducatorPortalController {
     }
 
     @PostMapping("/update-profile")
-    public String updateProfile(@ModelAttribute Educator educator){
-        var updatedUser = userService.updateEducatorProfile(educator);
+    public String updateProfile(@ModelAttribute Educator educator, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        var savedFile = documentService.uploadFile(file);
+        userService.updateEducatorProfile(educator, savedFile.getId());
+        log.info(savedFile.getFilename() +" saved by client with IP = "+ request.getRemoteAddr());
         return "redirect:profile";
     }
     //endregion

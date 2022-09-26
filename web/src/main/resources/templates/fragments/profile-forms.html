@@ -5,8 +5,13 @@
             <div class="row no-gutters d-flex justify-content-center ">
 
                 <!-- Profile Picture -->
-                <div class="col-md-auto ">
-                    <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="">
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
                 </div>
 
                 <!-- Profile information -->
@@ -75,14 +80,31 @@
 <!-- Edit educator profile -->
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="edit-educator-profile">
 
-    <form th:action="@{update-profile}" th:object="${currentUser}" method="post">
+    <form th:action="@{update-profile}" th:object="${currentUser}" method="post" enctype="multipart/form-data">
 
         <div class="container">
             <div class="row no-gutters d-flex justify-content-center ">
 
                 <!-- Profile Picture -->
-                <div class="col-md-auto ">
-                    <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="">
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
                 </div>
 
                 <!-- Profile information -->
