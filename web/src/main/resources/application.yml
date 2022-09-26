@@ -12,11 +12,11 @@ spring:
 
   mail:
     # Credentials for the gmail smtp service passed in run configurations
-    site-email: wilmaproject.dev@gmail.com
-    host: smtp.gmail.com
-    port: 587
-    username: wilmaproject.dev@gmail.com
-    password: qxnxokfdfwhqbnfd
+    site-email:
+    host:
+    port:
+    username:
+    password:
     properties:
       mail:
         smtp:
