@@ -1,6 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.UserConfiguration;
+import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.positions.ExpressionOfInterest;
@@ -10,6 +10,7 @@ import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
@@ -42,7 +43,7 @@ public class EducatorPortalController {
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "menuElements", UserPortalConfiguration.educatorMenuElements
         ));
         return "/educator/dashboard";
     }
@@ -53,7 +54,7 @@ public class EducatorPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "approvedPositions", List.of(
                         new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
                         new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
@@ -74,7 +75,7 @@ public class EducatorPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -85,7 +86,7 @@ public class EducatorPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -102,7 +103,7 @@ public class EducatorPortalController {
         var categoryName = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "postId", postId,
                 "categoryName", categoryName,
                 "postsByCategory", forumService.getPostByCategoryName(categoryName),
@@ -118,7 +119,7 @@ public class EducatorPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -135,7 +136,7 @@ public class EducatorPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -147,7 +148,7 @@ public class EducatorPortalController {
         forumService.deleteById(postId);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -160,18 +161,24 @@ public class EducatorPortalController {
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
 "currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "openExpressionsOfInterest", List.of(
+                        new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
+                        new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
+                        new ExpressionOfInterest(3,"Project Management", "Melbourne", "Another sample job", new Date(), false)
+
                 ),
-                "pendingPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                "pendingRequestsToSupply", List.of(
+                        new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                        new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                        new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                        new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                ),
+                "acceptedRequestsToSupply", List.of(
+                        new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
+                        new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true),
+                        new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", true, true),
+                        new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", true, true)
                 )
         ));
         return "/educator/expressions-of-interest";
@@ -182,8 +189,8 @@ public class EducatorPortalController {
     @GetMapping("/profile")
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "profile",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.educatorMenuElements
         ));
         return "/educator/profile";
     }

@@ -1,6 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.UserConfiguration;
+import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.dto.JobDTO;
@@ -10,6 +10,7 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
@@ -48,7 +49,7 @@ public class PartnerPortalController {
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.partnerMenuElements
+                "menuElements", UserPortalConfiguration.partnerMenuElements
         ));
         return "/partner/dashboard";
     }
@@ -73,7 +74,8 @@ public class PartnerPortalController {
                 "menuElements", UserConfiguration.partnerMenuElements,
                 "type", type,
                 "job", new JobDTO(),
-                "placement", new PlacementDTO()
+                "placement", new PlacementDTO(),
+                "positionOptions", List.of("Select...", "Job", "Placement" )
         ));
         return "/partner/new-position";
     }
@@ -149,7 +151,7 @@ public class PartnerPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -160,7 +162,7 @@ public class PartnerPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -177,7 +179,7 @@ public class PartnerPortalController {
         var category = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "postId", postId,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
@@ -194,7 +196,7 @@ public class PartnerPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -210,7 +212,7 @@ public class PartnerPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -223,15 +225,26 @@ public class PartnerPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "currentPage", "Expressions Of Interest",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
 
-                "pendingPartnerExpressionsOfInterest", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                "openExpressionsOfInterest", List.of(
+                    new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
+                    new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
+                    new ExpressionOfInterest(3,"Project Management", "Melbourne", "Another sample job", new Date(), false)
+                ),
+                "openRequestsToSupply", List.of(
+                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
+                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
+                    new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
+                    new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
+                ),
+                "requestsToSupplyHistory", List.of(
+                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
+                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true)
                 )
+
+
         ));
         return "/partner/expressions-of-interest";
     }
@@ -241,8 +254,8 @@ public class PartnerPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "profile",
-                "menuElements", UserConfiguration.partnerMenuElements
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.partnerMenuElements
         ));
         return "/partner/profile";
     }

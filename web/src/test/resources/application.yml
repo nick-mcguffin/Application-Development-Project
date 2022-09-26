@@ -1,6 +1,6 @@
 ### Common ###
 module:
-  name: WEB
+  name: TEST
 
 spring:
   application:
@@ -11,7 +11,7 @@ spring:
     active: dev # Set this as either dev or prod
 
   mail:
-    # Credentials for the gmail smtp service passed in run configurations
+    # Credentials for the gmail smtp service will need to be added to your test run configuration
     site-email:
     host:
     port:
@@ -23,17 +23,6 @@ spring:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
-
-  http:
-    multipart:
-      upload-path: web/src/main/resources/uploads/
-
-  servlet:
-    multipart:
-      enabled: true
-      file-size-threshold: 10MB
-      max-file-size: 10MB
-      max-request-size: 10MB
 
 api:
   v1.context-path: /api/v1

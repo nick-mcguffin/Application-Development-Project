@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.Period;
@@ -16,9 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "positions")
+@Table(name = "request_to_supply")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Position {
+public class RequestToSupply {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -29,11 +28,9 @@ public class Position {
     private Partner partner;
 
     @Column(name = "start_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "end_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
 
     private Period period;
@@ -43,10 +40,11 @@ public class Position {
 
     private boolean approved;
 
+    @Transient
     private String type;
 
 
-    public Position(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved) {
+    public RequestToSupply(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved) {
         this.id = id;
         this.partner = partner;
         this.startDate = startDate;
