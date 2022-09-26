@@ -241,7 +241,7 @@ public class SeedDataService {
                         null,
                         "Software Engineering",
                         "S1396902"),
-                new UserAccount(
+                new Partner(
                         null,
                         "partner",
                         passwordEncoder.encode("partner"),
@@ -251,7 +251,8 @@ public class SeedDataService {
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("PARTNER"))),
+                        Set.of(roleRepository.findByName("PARTNER")),
+                        "Microsoft"),
                 new UserAccount(
                         null,
                         "student",
