@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.Period;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -226,6 +227,8 @@ public class SeedDataService {
     }
 
     public void initUsers() {
+        Calendar graduationDate = Calendar.getInstance();
+        graduationDate.set(2023, Calendar.NOVEMBER,7);
         var users = List.of(
                 new Educator(
                         null,
@@ -253,7 +256,7 @@ public class SeedDataService {
                         true,
                         Set.of(roleRepository.findByName("PARTNER")),
                         "Microsoft"),
-                new UserAccount(
+                new Student(
                         null,
                         "student",
                         passwordEncoder.encode("student"),
@@ -263,7 +266,11 @@ public class SeedDataService {
                         true,
                         true,
                         true,
-                        Set.of(roleRepository.findByName("STUDENT")))
+                        Set.of(roleRepository.findByName("STUDENT")),
+                        null,
+                        "Software Development",
+                        "S10562309",
+                        graduationDate.getTime())
         );
 
         users.forEach(user -> {
