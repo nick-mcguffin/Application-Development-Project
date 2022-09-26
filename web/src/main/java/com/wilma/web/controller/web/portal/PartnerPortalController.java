@@ -9,6 +9,7 @@ import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
+import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -224,9 +225,10 @@ public class PartnerPortalController {
 
     @PostMapping("/update-profile")
     public String updateProfile(@ModelAttribute Partner partner, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
-        var savedFile = documentService.uploadFile(file);
-        userService.updatePartnerProfile(partner, savedFile.getId());
-        log.info(savedFile.getFilename() +" saved by client with IP = "+ request.getRemoteAddr());
+        userService.updatePartnerProfile(partner, file.isEmpty() ?
+                ((Partner) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
         return "redirect:profile";
     }
     //endregion

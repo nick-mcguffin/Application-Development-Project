@@ -218,9 +218,10 @@ public class EducatorPortalController {
 
     @PostMapping("/update-profile")
     public String updateProfile(@ModelAttribute Educator educator, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
-        var savedFile = documentService.uploadFile(file);
-        userService.updateEducatorProfile(educator, savedFile.getId());
-        log.info(savedFile.getFilename() +" saved by client with IP = "+ request.getRemoteAddr());
+        userService.updateEducatorProfile(educator, file.isEmpty() ?
+                ((Educator) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
         return "redirect:profile";
     }
     //endregion
