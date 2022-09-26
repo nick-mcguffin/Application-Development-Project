@@ -28,7 +28,8 @@ public class ApplicationNotificationService {
     @Autowired
     protected PositionService positionService;
     
-    private final String WILMA_EMAIL = "wilmaproject.dev@gmail.com";
+@Value("${spring.mail.site-email}")
+private String siteEmail;
 
     /**
      * Scheduled to run at 5:00PM each day (MON - FRI only).<br/>
