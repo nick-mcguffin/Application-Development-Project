@@ -45,6 +45,14 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return jobRepository.findAll();
     }
 
+    public Job updateJobFromDTO(JobDTO jobDTO) {
+        var currentUser = activeProfile.equalsIgnoreCase("prod")?
+                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
+        var job = new Job(jobDTO.getId(), jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), jobDTO.isFilled(), jobDTO.isApproved(), jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
+
+        return jobRepository.save(job);
+    }
+
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
         var currentUser = activeProfile.equalsIgnoreCase("prod")?
                 userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");

@@ -23,4 +23,6 @@ public class JobDTO {
     private double payRate;
     private PayType payType;
     private Frequency payFrequency;
+    private boolean filled;
+    private boolean approved;
 }
