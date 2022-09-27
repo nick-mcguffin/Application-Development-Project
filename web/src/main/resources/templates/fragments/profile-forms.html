@@ -1,0 +1,537 @@
+<!-- Educator profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="educator-profile">
+    <div th:object="${currentUser}">
+        <div class="container ">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.username}">Username</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.email}">Email Address</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Discipline: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.discipline}">Discipline</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>CQU Educator ID: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.staffId}">Staff ID</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <p class="card-text" th:text="${currentUser.bio}">Bio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit educator profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit-educator-profile">
+
+    <form th:action="@{update-profile}" th:object="${currentUser}" method="post" enctype="multipart/form-data">
+
+        <div class="container">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                                       th:field="*{username}">
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                                       th:field="*{email}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Discipline: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
+                                       th:field="*{discipline}">
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>CQU Educator ID: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.staffId}"
+                                       th:field="*{staffId}" disabled>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- =========================================================================== -->
+
+<!-- Partner profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="partner-profile">
+    <div th:object="${currentUser}">
+        <div class="container ">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.username}">Username</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.email}">Email Address</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Business Name: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.businessName}">Business Name</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <p class="card-text" th:text="${currentUser.bio}">Bio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit partner profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit-partner-profile">
+
+    <form th:action="@{update-profile}" th:object="${currentUser}" method="post" enctype="multipart/form-data">
+
+        <div class="container">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                                       th:field="*{username}">
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                                       th:field="*{email}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Business Name: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.businessName}"
+                                       th:field="*{businessName}">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+<!-- =========================================================================== -->
+
+<!-- Student profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="student-profile">
+    <div th:object="${currentUser}">
+        <div class="container ">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.username}">Username</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.email}">Email Address</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Discipline: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.discipline}">Discipline</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>CQU Student ID: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${currentUser.studentId}">Student ID</p>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Expected Graduation: </p>
+                            </div>
+                            <div class="col-5">
+                                <p th:text="${#dates.format(currentUser.expectedGraduationDate, 'MMM yyyy')}">Expected Graduation Date</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <p class="card-text" th:text="${currentUser.bio}">Bio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Edit student profile -->
+<div xmlns:th="http://www.thymeleaf.org" th:fragment="edit-student-profile">
+
+    <form th:action="@{update-profile}" th:object="${currentUser}" method="post" enctype="multipart/form-data">
+
+        <div class="container">
+            <div class="row no-gutters d-flex justify-content-center ">
+
+                <!-- Profile Picture -->
+                <div class="col-md-auto " >
+                    <div th:if="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                    <div th:unless="${currentUser.profileImageId == null}">
+                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <br/>
+                        <div class="text-center py-2">
+                            <input type="file" name="file"/><br/>
+                            <small><i>Changes will take effect after changes are saved</i></small>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+
+                <!-- Profile information -->
+                <div class="col-sm-6">
+                    <div class="container ">
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Name: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                                       th:field="*{username}">
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Email Address: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                                       th:field="*{email}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Discipline: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
+                                       th:field="*{discipline}">
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>CQU Student ID: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.studentId}"
+                                       th:field="*{studentId}" disabled>
+                            </div>
+                        </div>
+
+                        <div class="row border-bottom">
+                            <div class="col-4">
+                                <p>Expected Graduation: </p>
+                            </div>
+                            <div class="col-8">
+                                <input type="date" class="w-100 h-auto my-1" th:value="${currentUser.expectedGraduationDate}"
+                                       th:field="*{expectedGraduationDate}" >
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row no-gutters d-flex justify-content-center ">
+                <div class="col-sm-9 ">
+                    <div class="card" style="width: 58rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Bio</h5>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>

@@ -8,10 +8,14 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
+import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
+import com.wilma.service.UserService;
+import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
@@ -21,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
-
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.time.Period;
 import java.util.Date;
 import java.util.List;
@@ -38,11 +44,18 @@ public class PartnerPortalController {
     CategoryService categoryService;
     @Autowired
     ForumService forumService;
+    
     @Autowired
     TagService tagService;
 
     @Autowired
     PositionService positionService;
+    
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    DocumentService documentService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -255,9 +268,31 @@ public class PartnerPortalController {
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "Profile",
-                "menuElements", UserPortalConfiguration.partnerMenuElements
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "currentUser", userService.getCurrentUser(),
+                "inEditMode", false
         ));
         return "/partner/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfile(Model model, HttpServletRequest request){
+        model.addAllAttributes(Map.of(
+                "currentPage", "Profile",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "inEditMode", true,
+                "currentUser", userService.getCurrentUser()
+        ));
+        return "/partner/profile";
+    }
+
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute Partner partner, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        userService.updatePartnerProfile(partner, file.isEmpty() ?
+                ((Partner) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
+        return "redirect:profile";
     }
     //endregion
 
