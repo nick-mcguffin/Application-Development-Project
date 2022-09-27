@@ -70,7 +70,8 @@ public class PartnerPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerJobs", positionService.getJobs(),
-                "partnerPlacements", positionService.getPlacements()
+                "partnerPlacements", positionService.getPlacements(),
+                "partnerEOIPositions", positionService.getExpressionsOfInterest()
         ));
         return "/partner/marketplace";
     }
@@ -149,7 +150,7 @@ public class PartnerPortalController {
                 "id", id
         ));
 
-        log.info("Job updated from DTO: "+ jobDTO);
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
     }
     //endregion

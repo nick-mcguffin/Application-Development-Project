@@ -298,7 +298,9 @@
 
 </div>
 
-<!-- [ ] Partner Jobs -->
+
+<!-- [x] Partner Jobs -->
+<!-- Fix: Add edit and delete button functionality -->
 <div th:fragment="partner-jobs" id="partner-jobs" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -343,7 +345,7 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
+            var partnerDataList =
                 /*[[${partnerJobs}]]*/
                 /*]]>*/
                 $("#partnerJobFilter").on("keyup", function () {
@@ -356,9 +358,9 @@
                         let startDate = formatDate(partnerDataList[i].startDate);
                         let endDate = formatDate(partnerDataList[i].endDate);
                         let description = partnerDataList[i].description.toLowerCase();
+                        let status = partnerDataList[i].approved ? 'Approved' : 'Pending';
 
-                        if (id == value ||
-                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value)) {
                             filteredData.push(partnerDataList[i]);
                         }
                     }
@@ -386,7 +388,9 @@
     </div>
 </div>
 
-<!-- [ ] Partner Placements -->
+
+<!-- [x] Partner Placements -->
+<!-- Fix: Add edit and delete button functionality -->
 <div th:fragment="partner-placements" id="partner-placements" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -430,19 +434,8 @@
         </table>
 
         <script th:inline="javascript">
-            /*<![CDATA[*/
-            var positions =
-                /*[[${partnerPlacements}]]*/
-                /*]]>*/
-                $("#partnerPlacementsFilter").on("keyup", function () {
-                    var value = $(this).val();
-                    var table = document.getElementById("partnerPlacementsData");
-                    var filteredData = partnerFilterPlacements(value, positions);
-                    rebuildPartnerPlacementsTable(filteredData, table);
-                });
-
                 /*<![CDATA[*/
-            var positions =
+            var partnerPlacementsList =
                 /*[[${partnerPlacements}]]*/
                 /*]]>*/
                 $("#partnerPlacementsFilter").on("keyup", function () {
@@ -450,16 +443,16 @@
                     var value = $(this).val();
 
                     let filteredData = [];
-                    for (let i = 0; i < positions.length; i++) {
+                    for (let i = 0; i < partnerPlacementsList.length; i++) {
                         value = value.toLowerCase();
-                        let id = positions[i].id;
-                        let startDate = formatDate(positions[i].startDate);
-                        let endDate = formatDate(positions[i].endDate);
-                        let description = positions[i].description.toLowerCase();
+                        let id = partnerPlacementsList[i].id;
+                        let startDate = formatDate(partnerPlacementsList[i].startDate);
+                        let endDate = formatDate(partnerPlacementsList[i].endDate);
+                        let description = partnerPlacementsList[i].description.toLowerCase();
+                        let status = partnerPlacementsList[i].approved ? 'Approved' : 'Pending';
 
-                        if (id == value ||
-                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
-                            filteredData.push(eoiDataList[i]);
+                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value)) {
+                            filteredData.push(partnerPlacementsList[i]);
                         }
                     }
 
@@ -471,10 +464,10 @@
                                 <td>${formatDate(filteredData[i].startDate)}</td>
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
-                                <td>${filteredData[i].approved}</td>
+                                <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
                                 <td style="display: flex;">
                                     <div class="mx-auto">
-                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=${filteredData[i].type}"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
+                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
                                     </div>
                                 </td>
@@ -485,6 +478,7 @@
         </script>
     </div>
 </div>
+
 
 <!-- Partner EOIs -->
 <div th:fragment="partner-expression-of-interest" id="partner-expression-of-interest" xmlns:th="http://www.thymeleaf.org">
@@ -533,29 +527,30 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var eoiDataList =
-                /*[[${approvedPositions}]]*/
+            var partnerEOIPositionsList =
+                /*[[${partnerEOIPositions}]]*/
                 /*]]>*/
-                $("#filterApproved").on("keyup", function () {
+                $("#filterPartnerExpressionOfInterest").on("keyup", function () {
 
                     var value = $(this).val();
 
                     let filteredData = [];
-                    for (let i = 0; i < eoiDataList.length; i++) {
+                    for (let i = 0; i < partnerEOIPositionsList.length; i++) {
                         value = value.toLowerCase();
-                        let id = eoiDataList[i].id;
-                        let type = eoiDataList[i].type.toLowerCase();
-                        let startDate = formatDate(eoiDataList[i].startDate);
-                        let endDate = formatDate(eoiDataList[i].endDate);
-                        let description = eoiDataList[i].description.toLowerCase();
+                        let id = partnerEOIPositionsList[i].id;
+                        let type = partnerEOIPositionsList[i].type.toLowerCase();
+                        let startDate = formatDate(partnerEOIPositionsList[i].startDate);
+                        let endDate = formatDate(partnerEOIPositionsList[i].endDate);
+                        let description = partnerEOIPositionsList[i].description.toLowerCase();
+                        let status = partnerPlacementsList[i].approved ? 'Approved' : 'Pending';
 
-                        if (id == value || type.includes(value) ||
-                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
-                            filteredData.push(eoiDataList[i]);
+                        if (id == value || type.includes(value) || startDate.includes(value) || endDate.includes(value) ||
+                            description.includes(value)  || status.toLowerCase().includes(value)) {
+                            filteredData.push(partnerEOIPositionsList[i]);
                         }
                     }
 
-                    var table = document.getElementById("approvedData");
+                    var table = document.getElementById("partnerExpressionOfInterestData");
                     table.innerHTML = ``;
                     for (let i = 0; i < filteredData.length; i++) {
                         let row = `<tr>
@@ -564,12 +559,14 @@
                                 <td>${formatDate(filteredData[i].startDate)}</td>
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
-                                <td>${filteredData[i].approved}</td>
+                                <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
                                 <td style="display: flex;">
+                                    <td style="display: flex;">
                                     <div class="mx-auto">
-                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=${filteredData[i].type}"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
+                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-expression-of-interest?id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
                                     </div>
+                                </td>
                                 </td>
                                 </tr>`;
                         table.innerHTML += row;
