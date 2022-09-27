@@ -3,6 +3,9 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.dto.JobDTO;
+import com.wilma.entity.dto.PlacementDTO;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
@@ -15,6 +18,7 @@ import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.marketplace.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,9 +43,13 @@ public class PartnerPortalController {
     CategoryService categoryService;
     @Autowired
     ForumService forumService;
+    
     @Autowired
     TagService tagService;
 
+    @Autowired
+    PositionService positionService;
+    
     @Autowired
     UserService userService;
 
@@ -64,34 +72,89 @@ public class PartnerPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserPortalConfiguration.partnerMenuElements,
-                "partnerPositions", List.of(
-                        new Job(1, new Partner("Warlock Digital", "Warlock Digital"), new Date(), new Date(), Period.of(0,6,0), "Geraldton", "Build Android version of Ill Technique App", false, false, 36.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,0,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-                )
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "partnerJobs", positionService.getJobs(),
+                "partnerPlacements", positionService.getPlacements()
         ));
         return "/partner/marketplace";
     }
 
     @GetMapping("/new-position")
-    public String newPosition (Model model) {
+    public String newPosition (Model model, @RequestParam String type) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "type", type,
+                "job", new JobDTO(),
+                "placement", new PlacementDTO(),
                 "positionOptions", List.of("Select...", "Job", "Placement" )
         ));
         return "/partner/new-position";
     }
 
     @GetMapping("/edit-position")
-    public String newPosition (Model model, @RequestParam String type) {
+    public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserPortalConfiguration.partnerMenuElements,
-                "positionType", type
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id),
+                "job", positionService.findById(id)
         ));
         return "/partner/edit-position";
+    }
+
+    @PostMapping("/create-job")
+    public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
+        var newJob = positionService.addJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "job", jobDTO));
+
+        log.info("Job created from DTO: "+ newJob);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/create-placement")
+    public RedirectView createPlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
+        var newPlacement = positionService.addPlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "placement", placementDTO));
+
+        log.info("Placement created from DTO: "+ newPlacement);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-placement")
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "placement", placementDTO,
+                "id", id
+        ));
+
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-job")
+    public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
+        var newJob = positionService.updateJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserConfiguration.partnerMenuElements,
+                "job", jobDTO,
+                "id", id
+        ));
+
+        log.info("Job updated from DTO: "+ jobDTO);
+        return new RedirectView("/partner/marketplace");
     }
     //endregion
 
