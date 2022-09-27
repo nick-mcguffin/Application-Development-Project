@@ -1,6 +1,7 @@
 
 package com.wilma.entity.users;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wilma.entity.docs.UserDocument;
 import lombok.*;
 
@@ -52,6 +53,7 @@ public class UserAccount {
     @Column(name = "active")
     private boolean enabled;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
