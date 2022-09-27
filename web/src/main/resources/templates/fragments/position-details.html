@@ -1,4 +1,4 @@
-<!-- ================ Job View ================ -->
+<!-- [x] ================ Job View ================ -->
 <div th:fragment="job-view" id="job-view" xmlns:th="http://www.thymeleaf.org">
 
     <div class="form-group row py-3">
@@ -13,90 +13,145 @@
         <label for="jobStartDate" class="col-lg-1 col-form-label pr-0 text-end">Start Date</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" id="jobStartDate"
-                   th:value="${#dates.format(position.startDate, 'dd/MM/yyyy')}">
+                th:value="${#dates.format(position.startDate, 'dd/MM/yyyy')}" disabled>
         </div>
 
         <label for="jobEndDate" class="col-lg-1 col-form-label pr-0 text-end">End Date</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" id="jobEndDate"
-                   th:value="${#dates.format(position.endDate, 'dd/MM/yyyy')}">
+                th:value="${#dates.format(position.endDate, 'dd/MM/yyyy')}" disabled>
         </div>
 
         <label for="jobPeriod" class="col-lg-1 col-form-label pr-0 text-end">Period</label>
         <div class="col-lg-3">
             <input type="text" class="form-control" id="jobPeriod"
-                   th:value="|Days = ${position.period.days}, Months = ${position.period.months}, Years = ${position.period.years}|">
+                th:value="|Days = ${position.period.days}, Months = ${position.period.months}, Years = ${position.period.years}|" disabled>
         </div>
     </div>
 
     <div class="form-group row py-3">
         <label for="jobDescription" class="col-lg-1 col-form-label pr-0 text-end">Description</label>
         <div class="col-lg-11">
-            <textarea rows="5" class="form-control" id="jobDescription" th:value="${position.description}" th:text="${position.description}"></textarea>
+            <textarea rows="5" class="form-control" id="jobDescription" th:value="${position.description}"
+                th:text="${position.description}" disabled></textarea>
         </div>
     </div>
 
     <div class="form-group row py-3">
         <label for="jobPayRate" class="col-lg-1 col-form-label pr-0 text-end">Pay Rate</label>
         <div class="col-lg-1">
-            <input type="text" class="form-control" id="jobPayRate" th:value="${#numbers.formatCurrency(position.payRate)}">
+            <input type="text" class="form-control" id="jobPayRate"
+                th:value="${#numbers.formatCurrency(position.payRate)}" disabled>
         </div>
 
         <label for="jobPayType" class="col-lg-2 col-form-label pr-0 text-end">Pay Type</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" id="jobPayType" th:value="${position.payType}">
+            <input type="text" class="form-control" id="jobPayType" th:value="${position.payType}" disabled>
         </div>
 
         <label for="jobPayFrequency" class="col-lg-2 col-form-label pr-0 text-end">Pay Frequency</label>
         <div class="col-lg-3">
-            <input type="text" class="form-control" id="jobPayFrequency" th:value="${position.payFrequency}">
+            <input type="text" class="form-control" id="jobPayFrequency" th:value="${position.payFrequency}" disabled>
         </div>
     </div>
 
     <div class="form-group row py-3">
-        <label for="partnerBusinessName" class="col-lg-1 col-form-label pr-0 text-end">Partner</label>
+        <label for="partnerJobBusinessName" class="col-lg-1 col-form-label pr-0 text-end">Partner</label>
         <div class="col-lg-4">
-            <input type="text" class="form-control" id="partnerBusinessName" th:value="${position.partner.businessName}">
+            <input type="text" class="form-control" id="partnerJobBusinessName"
+                th:value="${position.partner.businessName}" disabled>
         </div>
 
-        <label for="partnerEmail" class="col-lg-2 col-form-label pr-0 text-end">Partner Email</label>
+        <label for="partnerJobEmail" class="col-lg-2 col-form-label pr-0 text-end">Partner Email</label>
         <div class="col-lg-5">
-            <input type="text" class="form-control" id="partnerEmail" th:value="${position.partner.email}">
+            <input type="text" class="form-control" id="partnerJobEmail" th:value="${position.partner.email}" disabled>
         </div>
     </div>
 
     <div th:replace="fragments/position-details :: application-form"></div>
 </div>
 
-<!-- ================ Placement View ================ -->
+<!-- [x] ================ Placement View ================ -->
 <div th:fragment="placement-view" id="placement-view" xmlns:th="http://www.thymeleaf.org">
 
-    <!-- Placement form to go here -->
-    <h1 th:text="|Placement #${position.id}|">Placement</h1>
+    <div class="form-group row py-3">
+        <label for="placementId" class="col-lg-1 col-form-label pr-0 text-end">Job ID</label>
+        <div class="col-lg-11">
+            <input type="text" readonly class="form-control-plaintext" id="placementId" th:value="${position.id}">
+        </div>
+
+    </div>
+
+    <div class="form-group row py-3">
+
+        <label for="placementStartDate" class="col-lg-1 col-form-label pr-0 text-end">Start Date</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="placementStartDate" 
+                th:value="${#dates.format(position.startDate, 'dd/MM/yyyy')}" disabled>
+        </div>
+
+        <label for="placementEndDate" class="col-lg-1 col-form-label pr-0 text-end">End Date</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="placementEndDate"
+                th:value="${#dates.format(position.endDate, 'dd/MM/yyyy')}" disabled>
+        </div>
+
+        <label for="placementPeriod" class="col-lg-1 col-form-label pr-0 text-end">Period</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="placementPeriod"
+                th:value="|Days = ${position.period.days}, Months = ${position.period.months}, Years = ${position.period.years}|" disabled> 
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+        <label for="placementDescription" class="col-lg-1 col-form-label pr-0 text-end">Description</label>
+        <div class="col-lg-11">
+            <textarea rows="5" class="form-control" id="placementDescription" th:value="${position.description}"
+                th:text="${position.description}" disabled></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+        <label for="placementLocation" class="col-lg-1 col-form-label pr-0 text-end">Location</label>
+        <div class="col-lg-2">
+            <input type="text" class="form-control" id="placementLocation" th:value="${position.location}" disabled>
+        </div>
+
+        <label for="partnerPlacementBusinessName" class="col-lg-1 col-form-label pr-0 text-end">Partner</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="partnerPlacementBusinessName"
+                th:value="${position.partner.businessName}" disabled>
+        </div>
+
+        <label for="partnerPlacementEmail" class="col-lg-2 col-form-label pr-0 text-end">Partner Email</label>
+        <div class="col-lg-3">
+            <input type="text" class="form-control" id="partnerPlacementEmail" th:value="${position.partner.email}" disabled>
+        </div>
+    </div>
+
+    <div class="form-group row py-3">
+
+    </div>
 
     <div th:replace="fragments/position-details :: application-form"></div>
 </div>
 
-<!-- ================ Application Form ================ -->
+<!-- [x] ================ Application Form ================ -->
 <div th:fragment="application-form" xmlns:th="http://www.thymeleaf.org">
-    <hr/>
+    <hr />
     <h2 class="text-center fst-italic fw-semibold text-muted">Want to Apply?</h2>
 
-    <form  id="application-form" class="form-group row py-3" th:action="@{apply}" th:object="${application}" method="post">
+    <form id="application-form" class="form-group row py-3" th:action="@{apply}" th:object="${application}"
+        method="post">
 
         <div class="col-lg-3"></div>
 
         <div class="col-lg-6">
             <input type="hidden" name="positionId" th:value="${position.id}">
             <label for="file-multi-select" class="col-form-label pr-0">Select the files to attach</label>
-            <select name="userDocs" class="select-box col-lg-3" id="file-multi-select"
-                    multiple multiselect-search="true"
-                    multiselect-select-all="true"
-                    th:field="*{fileIds}">
-                <option
-                        th:each="file : ${studentFiles}"
-                        th:value="${file.id}"
-                        th:text="${file.filename}">
+            <select name="userDocs" class="select-box col-lg-3" id="file-multi-select" multiple
+                multiselect-search="true" multiselect-select-all="true" th:field="*{fileIds}">
+                <option th:each="file : ${studentFiles}" th:value="${file.id}" th:text="${file.filename}">
                 </option>
             </select>
         </div>
@@ -105,7 +160,8 @@
             <div class="col-lg-1"></div>
             <div class="col-lg-10">
                 <label for="jobDescription" class="col-form-label pr-0">Message</label>
-                <textarea rows="5" class="form-control" id="applicationMessage" th:field="*{message}" placeholder="Write a brief message to be sent with your application"></textarea>
+                <textarea rows="5" class="form-control" id="applicationMessage" th:field="*{message}"
+                    placeholder="Write a brief message to be sent with your application"></textarea>
             </div>
             <div class="col-lg-1"></div>
         </div>
