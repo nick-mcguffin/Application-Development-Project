@@ -174,7 +174,7 @@ public class StudentPortalController {
     @GetMapping("/resume-management")
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Resume Management",
+                "currentPage", "resume-management",
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "sizeLimit", userDocumentConfiguration.getUploadSizeLimit(),
                 "documents", documentService.findAllForUser()
@@ -229,7 +229,7 @@ public class StudentPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "currentUser", userService.getCurrentUser(),
                 "inEditMode", false
@@ -240,12 +240,12 @@ public class StudentPortalController {
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpServletRequest request){
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "inEditMode", true,
                 "currentUser", userService.getCurrentUser()
         ));
-        return "/student/profile";
+        return "redirect:profile";
     }
 
     @PostMapping("/update-profile")
