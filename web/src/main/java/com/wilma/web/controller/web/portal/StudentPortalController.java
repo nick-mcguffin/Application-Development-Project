@@ -72,7 +72,7 @@ public class StudentPortalController {
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "job", new Job(),
                 "placement", new Placement(),
-                "approvedPositions", positionService.findAll()
+                "allPositions", positionService.findAll()
         ));
         return "/student/marketplace";
     }
@@ -87,7 +87,7 @@ public class StudentPortalController {
                 "studentFiles", documentService.findAllForUser(),
                 "application", new ApplicationDTO()
                 ));
-        return "/student/marketplace";
+        return "redirect:marketplace";
     }
 
     @PostMapping("/apply")
