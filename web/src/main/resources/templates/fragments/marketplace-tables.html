@@ -97,7 +97,7 @@
 </div>
 
 
-<!-- Current (approved) Jobs & Placements -->
+<!-- [x] Current (approved) Jobs & Placements -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -105,7 +105,9 @@
             <h1 class="table-heading">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="filterApproved" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -122,7 +124,7 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="approvedPositionsData">
+            <tbody id="approvedData">
                 <tr th:each="pos : ${approvedPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
@@ -142,14 +144,48 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
+            var data =
                 /*[[${approvedPositions}]]*/
                 /*]]>*/
-                $("#approvedFilter").on("keyup", function () {
+                $("#filterApproved").on("keyup", function () {
+
                     var value = $(this).val();
-                    var table = document.getElementById("approvedPositionsData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
+
+                    let filteredData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        value = value.toLowerCase();
+                        let id = data[i].id;
+                        let type = data[i].type.toLowerCase();
+                        let provider = data[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(data[i].startDate);
+                        let endDate = formatDate(data[i].endDate);
+                        let description = data[i].description;
+
+                        if (id == value || type.includes(value) || provider.includes(value) ||
+                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                            filteredData.push(data[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("approvedData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                <th scope="row">${filteredData[i].id}</th>
+                                <td>${filteredData[i].type}</td>
+                                <td>${filteredData[i].partner.businessName}</td>
+                                <td>${formatDate(filteredData[i].startDate)}</td>
+                                <td>${formatDate(filteredData[i].endDate)}</td>
+                                <td>${filteredData[i].description}</td>
+                                <td style="display: flex;">
+                                    <div class="mx-auto">
+                                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                                        <span class="material-symbols-rounded btn-delete">delete</span>
+                                    </div>
+                                </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
                 });
         </script>
     </div>
