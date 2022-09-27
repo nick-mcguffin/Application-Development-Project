@@ -1,13 +1,17 @@
-
-<!-- Jobs & Placements that are still pending approval -->
+<!-- [x] Jobs & Placements that are still pending approval -->
 <div th:fragment="pending-approval" id="pending-approval" xmlns:th="http://www.thymeleaf.org">
-    
+
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Approval</h1></div>
-        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Pending Approval</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="filterPendingApproval" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
-    
+
     <div class="row table-container">
         <table class="table table-sm table-danger table-striped table-hover">
             <thead>
@@ -21,7 +25,7 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="pendingPositionsData">
+            <tbody id="pendingApprovalData">
                 <tr th:each="pos : ${pendingPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
@@ -39,17 +43,52 @@
                 </tr>
             </tbody>
         </table>
-    
+
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var pendingPositions =
+            var data =
                 /*[[${pendingPositions}]]*/
                 /*]]>*/
-                $("#pendingApprovalFilter").on("keyup", function () {
+                $("#filterPendingApproval").on("keyup", function () {
+
                     var value = $(this).val();
-                    var table = document.getElementById("pendingPositionsData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
+
+                    let filteredData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        value = value.toLowerCase();
+                        let id = data[i].id;
+                        let type = data[i].type.toLowerCase();
+                        let provider = data[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(data[i].startDate);
+                        let endDate = formatDate(data[i].endDate);
+                        let description = data[i].description;
+
+                        if (id == value || type.includes(value) || provider.includes(value) ||
+                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                            filteredData.push(data[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("pendingApprovalData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                        <th scope="row">${filteredData[i].id}</th>
+                                        <td>${filteredData[i].type}</td>
+                                        <td>${filteredData[i].partner.businessName}</td>
+                                        <td>${formatDate(filteredData[i].startDate)}</td>
+                                        <td>${formatDate(filteredData[i].endDate)}</td>
+                                        <td>${filteredData[i].description}</td>
+                                        <td style="display: flex;">
+                                            <div class="mx-auto">
+                                                <span class="material-symbols-rounded btn-approve">Done</span>
+                                                <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
+                                                <span class="material-symbols-rounded btn-delete">Delete</span>
+                                            </div>
+                                        </td>
+                                        </tr>`;
+                        table.innerHTML += row;
+                    }
                 });
         </script>
     </div>
