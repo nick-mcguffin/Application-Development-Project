@@ -3,6 +3,7 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
+import com.wilma.entity.dto.ExpressionOfInterestDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
@@ -75,6 +76,17 @@ public class EducatorPortalController {
                 )
         ));
         return "/educator/marketplace";
+    }
+    //endregion
+
+    @GetMapping("/new-expression-of-interest")
+    public String newExpressionOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoiDTO", new ExpressionOfInterestDTO()
+        ));
+        return "/educator/new-expression-of-interest";
     }
     //endregion
 

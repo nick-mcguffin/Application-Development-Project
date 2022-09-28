@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>
         <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingAcceptanceFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><button class="form-button center">+ New Expression of Interest</button></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><a class="form-button center" th:href="@{~/educator/new-expression-of-interest}">+ New Expression of Interest</a></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
     
@@ -172,7 +172,7 @@
 
 <!-- [x] Partner can view and apply for Expressions of Interest that are still open. -->
 <!-- Todo: Apply for EIO functionality -->
-<div th:fragment="partner-pending-expressions-of-interest" id="pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="partner-pending-expressions-of-interest" id="partner-pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
     
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>

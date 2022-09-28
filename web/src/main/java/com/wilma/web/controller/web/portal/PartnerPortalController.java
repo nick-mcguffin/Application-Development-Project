@@ -83,8 +83,7 @@ public class PartnerPortalController {
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "type", type,
                 "job", new JobDTO(),
-                "placement", new PlacementDTO(),
-                "positionOptions", List.of("Select...", "Job", "Placement" )
+                "placement", new PlacementDTO()
         ));
         return "/partner/new-position";
     }
