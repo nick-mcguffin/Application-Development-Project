@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,10 +32,15 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
     private BCryptPasswordEncoder passwordEncoder;
 
     public UserAccount add(UserAccount userAccount){
-
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-
         return userRepository.save(userAccount);
+    }
+
+    public Collection<Educator> findAllEducators(){
+        return userRepository.findAll().stream()
+                .filter(user -> user instanceof Educator)
+                .map(user ->(Educator) user)
+                .collect(Collectors.toSet());
     }
 
     public UserAccount getCurrentUser(){
