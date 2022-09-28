@@ -70,7 +70,8 @@ public class PartnerPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerJobs", positionService.getJobs(),
-                "partnerPlacements", positionService.getPlacements()
+                "partnerPlacements", positionService.getPlacements(),
+                "partnerEOIPositions", positionService.getExpressionsOfInterest()
         ));
         return "/partner/marketplace";
     }
@@ -149,7 +150,7 @@ public class PartnerPortalController {
                 "id", id
         ));
 
-        log.info("Job updated from DTO: "+ jobDTO);
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
     }
     //endregion
@@ -233,7 +234,7 @@ public class PartnerPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Expressions Of Interest",
+                "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
 
                 "openExpressionsOfInterest", List.of(
@@ -262,7 +263,7 @@ public class PartnerPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "currentUser", userService.getCurrentUser(),
                 "inEditMode", false
@@ -273,7 +274,7 @@ public class PartnerPortalController {
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpServletRequest request){
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "inEditMode", true,
                 "currentUser", userService.getCurrentUser()

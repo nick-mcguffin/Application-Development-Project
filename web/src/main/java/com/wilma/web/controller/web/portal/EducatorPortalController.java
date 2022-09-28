@@ -168,7 +168,7 @@ public class EducatorPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "expressions-of-interest",
+            "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "openExpressionsOfInterest", List.of(
                         new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
@@ -197,7 +197,7 @@ public class EducatorPortalController {
     @GetMapping("/profile")
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "currentUser", userService.getCurrentUser(),
                 "inEditMode", false
@@ -208,7 +208,7 @@ public class EducatorPortalController {
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpServletRequest request){
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "inEditMode", true,
                 "currentUser", userService.getCurrentUser()
