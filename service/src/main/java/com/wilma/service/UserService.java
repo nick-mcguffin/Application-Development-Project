@@ -50,6 +50,13 @@ public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRe
                 .collect(Collectors.toSet());
     }
 
+    public Collection<Student> findAllStudents() {
+        return userRepository.findAll().stream()
+                .filter(user -> user instanceof Student)
+                .map(user ->(Student) user)
+                .collect(Collectors.toSet());
+    }
+
     public UserAccount getCurrentUser(){
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication instanceof AnonymousAuthenticationToken)
