@@ -16,7 +16,7 @@ public class UserDTO {
 
     //Educator/Student
     private String staffId;
-    private String studentID;
+    private String studentId;
     private String discipline;
 
     //Partner
