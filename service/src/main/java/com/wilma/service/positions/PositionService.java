@@ -18,8 +18,12 @@ import com.wilma.repository.PositionRepository;
 import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -40,19 +44,23 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     private UserService userService;
-
+    
     @Autowired
     PositionRepository positionRepository;
 
     @Autowired
     JobRepository jobRepository;
-
+    
     @Autowired
-    PlacementRepository placementRepository;
-
+    PlacementRepository placementRepository;    
+    
     @Autowired
     private ExpressionOfInterestRepository expressionOfInterestRepository;
+    
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
 
+    
     public Job addJobFromDTO(JobDTO jobDTO) {
         var job = new Job(null, (Partner) userService.getCurrentUser(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
 

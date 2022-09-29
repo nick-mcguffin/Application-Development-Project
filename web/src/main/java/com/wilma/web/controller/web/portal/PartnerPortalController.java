@@ -6,6 +6,8 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
+import com.wilma.entity.positions.Job;
+import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
