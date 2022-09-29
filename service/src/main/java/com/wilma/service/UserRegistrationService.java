@@ -42,7 +42,7 @@ public class UserRegistrationService {
                         null, false, false,
                         false, false, null,  userDTO.getBusinessName(),
                         userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber(), userDTO.getAbn());
-            System.err.print("A new " + userDTO.getUserType() + " has been added to the database.");
+log.info("A new {} has been added to the database", userDTO.getUserType());
             return userRepository.save(partner);
         }
 
