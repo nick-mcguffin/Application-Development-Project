@@ -19,9 +19,11 @@ import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -85,6 +87,10 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
                 .collect(Collectors.toList());
     }
 
+    public ExpressionOfInterest addExpressionOfInterest(ExpressionOfInterest eoi){
+        return expressionOfInterestRepository.save(eoi);
+    }
+
     public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
         var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), placementDTO.isFilled(), placementDTO.isApproved(), placementDTO.isCompleted());
         return placementRepository.save(placement);
@@ -134,6 +140,22 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
      */
     public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
         return applicationRepository.saveAll(applications);
+    }
+
+    public ExpressionOfInterest getExpressionOfInterestById(Integer id) {
+        return expressionOfInterestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public ExpressionOfInterest updateExpressionOfInterest(ExpressionOfInterest expressionOfInterest) {
+        return expressionOfInterestRepository.save(expressionOfInterest);
+    }
+
+    public HttpStatus deleteExpressionOfInterestById(Integer id) {
+        if(expressionOfInterestRepository.existsById(id)){
+            expressionOfInterestRepository.deleteById(id);
+            return HttpStatus.NO_CONTENT;//Deleted
+        }
+        return HttpStatus.BAD_REQUEST;// Not deleted
     }
 
 }
