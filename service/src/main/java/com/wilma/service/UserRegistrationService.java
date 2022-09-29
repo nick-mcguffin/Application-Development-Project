@@ -32,7 +32,7 @@ public class UserRegistrationService {
         userDTO.getUsername(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail(),
         null, false, false,
         false, false, null, null, userDTO.getDiscipline(), userDTO.getStaffId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber()); 
-        System.err.print("A new " + userDTO.getUserType() + " has been added to the database.");
+log.info("A new {} has been added to the database", userDTO.getUserType());
         return userRepository.save(educator);
     }
 
