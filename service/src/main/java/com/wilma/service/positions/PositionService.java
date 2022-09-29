@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     public List<Job> getJobs(){
         return jobRepository.findAll().stream()
-            .filter(pos -> pos instanceof Job)
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 
@@ -74,13 +75,13 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     public List<Placement> getPlacements(){
         return placementRepository.findAll().stream()
-            .filter(pos -> pos instanceof Placement)
+            .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 
     public List<ExpressionOfInterest> getExpressionsOfInterest() {
         return expressionOfInterestRepository.findAll().stream()
-                .filter(pos -> pos instanceof ExpressionOfInterest)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
