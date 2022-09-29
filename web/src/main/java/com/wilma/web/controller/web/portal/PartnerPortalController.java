@@ -1,15 +1,11 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
@@ -18,7 +14,6 @@ import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
 import com.wilma.service.positions.PositionService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +36,7 @@ public class PartnerPortalController {
 
     @Autowired
     CategoryService categoryService;
+
     @Autowired
     ForumService forumService;
     
