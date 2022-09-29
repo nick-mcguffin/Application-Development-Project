@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.wilma.entity.contact.ContactForm;
@@ -52,14 +55,23 @@ public class SiteController {
     }
 
     @PostMapping("/register")
-    public RedirectView registerPartner(@ModelAttribute UserDTO userDTO, Model model) {
+    public RedirectView registerUser(@ModelAttribute UserDTO userDTO, Model model) {
         model.addAllAttributes(Map.of(
             "currentPage", "Register",
             "userOptions", List.of("Select...", "Educator", "Partner", "Student"),
             "userDTO", userDTO
             ));
-            var result = userRegistrationService.register(userDTO);
+            userRegistrationService.register(userDTO);
             return new RedirectView("/");
+    }
+
+
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, Model model){
+        model.addAllAttributes(Map.of(
+            "currentPage", "Account Confirmation"));
+            var result = userRegistrationService.confirmEmailVerification(confirmationToken);
+            return result;
     }
 
     @GetMapping("/about")
