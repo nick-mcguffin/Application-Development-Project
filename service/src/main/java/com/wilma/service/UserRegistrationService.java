@@ -12,6 +12,7 @@ import com.wilma.entity.users.Student;
 import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.UserAccountRepository;
 
+@Slf4j
 @Service
 public class UserRegistrationService {
 
