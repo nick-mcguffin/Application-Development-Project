@@ -8,7 +8,6 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
@@ -19,7 +18,8 @@ import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
-import com.wilma.service.marketplace.PositionService;
+import com.wilma.service.positions.PositionService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,7 +73,7 @@ public class PartnerPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerJobs", positionService.getJobs(),
                 "partnerPlacements", positionService.getPlacements()
         ));
@@ -84,7 +84,7 @@ public class PartnerPortalController {
     public String newPosition (Model model, @RequestParam String type) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "type", type,
                 "job", new JobDTO(),
                 "placement", new PlacementDTO(),
@@ -97,7 +97,7 @@ public class PartnerPortalController {
     public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "type", type,
                 "id", id,
                 "placement", positionService.findById(id),
@@ -111,7 +111,7 @@ public class PartnerPortalController {
         var newJob = positionService.addJobFromDTO(jobDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "job", jobDTO));
 
         log.info("Job created from DTO: "+ newJob);
@@ -123,7 +123,7 @@ public class PartnerPortalController {
         var newPlacement = positionService.addPlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "placement", placementDTO));
 
         log.info("Placement created from DTO: "+ newPlacement);
@@ -135,7 +135,7 @@ public class PartnerPortalController {
         var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "placement", placementDTO,
                 "id", id
         ));
@@ -149,7 +149,7 @@ public class PartnerPortalController {
         var newJob = positionService.updateJobFromDTO(jobDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "job", jobDTO,
                 "id", id
         ));

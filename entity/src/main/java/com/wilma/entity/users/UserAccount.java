@@ -67,6 +67,7 @@ public class UserAccount {
         this.username = username;
     }
 
+
     public UserAccount(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles) {
         this.userId = userId;
         this.username = username;
