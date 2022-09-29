@@ -21,15 +21,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRepository> {
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
-
     @Value("${spring.profiles.dev-username}")
-    private String currentDevUser;
+    protected String currentDevUser;
     @Autowired
-    private UserAccountRepository userRepository;
+    protected UserAccountRepository userRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    protected BCryptPasswordEncoder passwordEncoder;
 
     public UserAccount add(UserAccount userAccount){
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));

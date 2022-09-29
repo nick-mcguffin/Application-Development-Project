@@ -20,11 +20,17 @@ public class StudentController implements StudentAPI {
     protected String domain;
 
     @Autowired
-    UserService userService;
+    protected UserService userService;
 
     @Override
     public ResponseEntity<Student> add(Student student) {
-        return ResponseEntity.ok((Student) userService.add(student));
+        var obj = (Student) userService.add(student);
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", obj.getUserId())
+                                .build().toUri())
+                .body(obj);
     }
 
     @Override
@@ -53,4 +59,5 @@ public class StudentController implements StudentAPI {
     public ResponseEntity<?> deleteById(Integer id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userService.deleteById(id));
     }
+
 }

@@ -28,11 +28,11 @@ public class PartnerController implements PartnerAPI {
     protected String domain;
 
     @Autowired
-    UserService userService;
+    protected UserService userService;
     @Autowired
-    private DocumentService documentService;
+    protected DocumentService documentService;
     @Autowired
-    private UserDocumentConfiguration documentConfiguration;
+    protected UserDocumentConfiguration documentConfiguration;
 
     @GetMapping("/view-attachment/{documentId}")
     public ResponseEntity<?> viewAttachment(@PathVariable Integer documentId) throws IOException {
@@ -45,7 +45,13 @@ public class PartnerController implements PartnerAPI {
 
     @Override
     public ResponseEntity<Partner> add(Partner partner) {
-        return ResponseEntity.ok((Partner) userService.add(partner));
+        var obj = (Partner) userService.add(partner);
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", obj.getUserId())
+                                .build().toUri())
+                .body(obj);
     }
 
     @Override
@@ -74,4 +80,5 @@ public class PartnerController implements PartnerAPI {
     public ResponseEntity<?> deleteById(Integer id) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userService.deleteById(id));
     }
+
 }

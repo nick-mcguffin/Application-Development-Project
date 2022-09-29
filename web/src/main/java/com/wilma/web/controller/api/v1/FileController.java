@@ -19,9 +19,9 @@ import java.nio.file.Path;
 public class FileController {
 
     @Autowired
-    private DocumentService documentService;
+    protected DocumentService documentService;
     @Autowired
-    private UserDocumentConfiguration documentConfiguration;
+    protected UserDocumentConfiguration documentConfiguration;
 
     @GetMapping("/view-file/{fileId}")
     public ResponseEntity<?> viewFile(@PathVariable Integer fileId) throws IOException {

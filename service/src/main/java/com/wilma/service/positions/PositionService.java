@@ -32,25 +32,22 @@ import java.util.stream.Collectors;
 public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepository> {
 
     @Autowired
-    private DocumentService documentService;
+    protected DocumentService documentService;
 
     @Autowired
-    private PositionApplicationRepository applicationRepository;
+    protected PositionApplicationRepository applicationRepository;
 
     @Autowired
-    private UserService userService;
+    protected UserService userService;
 
     @Autowired
-    PositionRepository positionRepository;
+    protected JobRepository jobRepository;
 
     @Autowired
-    JobRepository jobRepository;
+    protected PlacementRepository placementRepository;
 
     @Autowired
-    PlacementRepository placementRepository;
-
-    @Autowired
-    private ExpressionOfInterestRepository expressionOfInterestRepository;
+    protected ExpressionOfInterestRepository expressionOfInterestRepository;
 
     public Job addJobFromDTO(JobDTO jobDTO) {
         var job = new Job(null, jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());

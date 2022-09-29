@@ -19,11 +19,17 @@ public class EducatorController implements EducatorAPI {
     @Value("${spring.application.domain}${api.v1.context-path}/educators/")
     protected String domain;
     @Autowired
-    UserService userService;
+    protected UserService userService;
 
     @Override
     public ResponseEntity<Educator> add(Educator educator) {
-        return ResponseEntity.ok((Educator) userService.add(educator));
+        var obj = (Educator) userService.add(educator);
+        return ResponseEntity.created(
+                UriComponentsBuilder
+                        .fromUriString(domain)
+                        .queryParam("id", obj.getUserId())
+                        .build().toUri())
+                .body(obj);
     }
 
     @Override
@@ -53,6 +59,5 @@ public class EducatorController implements EducatorAPI {
     public ResponseEntity<?> deleteById(@PathVariable Integer id){
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(userService.deleteById(id));
     }
-
 
 }
