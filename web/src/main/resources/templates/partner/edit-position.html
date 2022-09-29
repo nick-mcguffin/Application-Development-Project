@@ -24,8 +24,8 @@
 
                 <!-- Edit position forms -->
                 <div id="edit-position-forms" th:switch="${#strings.toLowerCase(type)}">
-                    <div th:case="job" th:insert="fragments/position-forms  :: edit-job-form"></div>
-                    <div th:case="placement" th:insert="fragments/position-forms  :: edit-placement-form"></div>
+                    <div th:case="job" th:insert="fragments/position-forms  :: partner-edit-job-form"></div>
+                    <div th:case="placement" th:insert="fragments/position-forms  :: partner-edit-placement-form"></div>
                 </div>
             </div>
         </div>

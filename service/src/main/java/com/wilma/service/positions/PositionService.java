@@ -4,10 +4,13 @@ import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.dto.ApplicationDTO;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.Position;
 import com.wilma.entity.positions.PositionApplication;
+import com.wilma.entity.users.Partner;
+import com.wilma.repository.ExpressionOfInterestRepository;
 import com.wilma.repository.JobRepository;
 import com.wilma.repository.PlacementRepository;
 import com.wilma.repository.PositionApplicationRepository;
@@ -23,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -34,20 +38,88 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     private DocumentService documentService;
+
     @Autowired
     private PositionApplicationRepository applicationRepository;
+
     @Autowired
     private UserService userService;
+    
     @Autowired
     PositionRepository positionRepository;
 
     @Autowired
     JobRepository jobRepository;
+    
     @Autowired
-    PlacementRepository placementRepository;
-
+    PlacementRepository placementRepository;    
+    
+    @Autowired
+    private ExpressionOfInterestRepository expressionOfInterestRepository;
+    
     @Value("${spring.profiles.active}")
     private String activeProfile;
+
+    
+    public Job addJobFromDTO(JobDTO jobDTO) {
+        var job = new Job(null, (Partner) userService.getCurrentUser(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
+
+        return jobRepository.save(job);
+    }
+
+    public Job updateJobFromDTO(JobDTO jobDTO) {
+        var job = (Job) findById(jobDTO.getId());
+        job.setStartDate(jobDTO.getStartDate());
+        job.setEndDate(jobDTO.getEndDate());
+        job.setPeriod(jobDTO.getPeriod());
+        job.setLocation(jobDTO.getLocation());
+        job.setDescription(jobDTO.getDescription());
+        job.setFilled(jobDTO.isFilled());
+        job.setApproved(jobDTO.isApproved());
+        job.setPayRate(jobDTO.getPayRate());
+        job.setPayType(jobDTO.getPayType());
+        job.setPayFrequency(jobDTO.getPayFrequency());
+
+        return jobRepository.save(job);
+    }
+
+    public List<Job> getJobs(){
+        return jobRepository.findAll().stream()
+            .filter(pos -> pos instanceof Job)
+            .collect(Collectors.toList());
+    }
+
+    public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
+        var placement = new Placement(null,
+                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
+        return placementRepository.save(placement);
+    }
+
+    public List<Placement> getPlacements(){
+        return placementRepository.findAll().stream()
+            .filter(pos -> pos instanceof Placement)
+            .collect(Collectors.toList());
+    }
+
+    public List<ExpressionOfInterest> getExpressionsOfInterest() {
+        return expressionOfInterestRepository.findAll().stream()
+                .filter(pos -> pos instanceof ExpressionOfInterest)
+                .collect(Collectors.toList());
+    }
+
+    public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
+        var placement = (Placement) findById(placementDTO.getId());
+        placement.setStartDate(placementDTO.getStartDate());
+        placement.setEndDate(placementDTO.getEndDate());
+        placement.setPeriod(placementDTO.getPeriod());
+        placement.setLocation(placementDTO.getLocation());
+        placement.setDescription(placementDTO.getDescription());
+        placement.setFilled(placementDTO.isFilled());
+        placement.setApproved(placementDTO.isApproved());
+        placement.setCompleted(placementDTO.isCompleted());
+        return placementRepository.save(placement);
+    }
+
     /**
      * Submit an application for an available position
      * @param applicationDTO The data transfer object used to create a {@link PositionApplication}
@@ -94,44 +166,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return applicationRepository.saveAll(applications);
     }
 
-    public Job addJobFromDTO(JobDTO jobDTO) {
+    public Object getApprovedPositions() {
 
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
-                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
-        var job = new Job(null, jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
-
-        return jobRepository.save(job);
+        return positionRepository.findAll().stream()
+                .filter(pos -> pos.isApproved())
+                .collect(Collectors.toList());
     }
 
-    public List<Job> getJobs(){
-        return jobRepository.findAll();
-    }
-
-    public Job updateJobFromDTO(JobDTO jobDTO) {
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
-                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
-        var job = new Job(jobDTO.getId(), jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), jobDTO.isFilled(), jobDTO.isApproved(), jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
-
-        return jobRepository.save(job);
-    }
-
-    public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
-                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
-        var placement = new Placement(null, placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
-
-        return placementRepository.save(placement);
-    }
-
-    public List<Placement> getPlacements(){
-        return placementRepository.findAll();
-    }
-
-    public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
-                userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
-        var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), placementDTO.isFilled(), placementDTO.isApproved(), placementDTO.isCompleted());
-
-        return placementRepository.save(placement);
+    public Object getPendingPositions() {
+        return positionRepository.findAll().stream()
+                .filter(pos -> !pos.isApproved())
+                .collect(Collectors.toList());
     }
 }

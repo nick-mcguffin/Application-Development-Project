@@ -1,17 +1,14 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
-import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -19,7 +16,6 @@ import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
 import com.wilma.service.positions.PositionService;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -42,6 +38,7 @@ public class PartnerPortalController {
 
     @Autowired
     CategoryService categoryService;
+
     @Autowired
     ForumService forumService;
     
@@ -75,7 +72,8 @@ public class PartnerPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerJobs", positionService.getJobs(),
-                "partnerPlacements", positionService.getPlacements()
+                "partnerPlacements", positionService.getPlacements(),
+                "partnerEOIPositions", positionService.getExpressionsOfInterest()
         ));
         return "/partner/marketplace";
     }
@@ -154,7 +152,7 @@ public class PartnerPortalController {
                 "id", id
         ));
 
-        log.info("Job updated from DTO: "+ jobDTO);
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
     }
     //endregion
@@ -238,7 +236,7 @@ public class PartnerPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Expressions Of Interest",
+                "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
 
                 "openExpressionsOfInterest", List.of(
@@ -267,7 +265,7 @@ public class PartnerPortalController {
     @GetMapping("/profile")
     public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "currentUser", userService.getCurrentUser(),
                 "inEditMode", false
@@ -278,7 +276,7 @@ public class PartnerPortalController {
     @GetMapping("/edit-profile")
     public String editProfile(Model model, HttpServletRequest request){
         model.addAllAttributes(Map.of(
-                "currentPage", "Profile",
+                "currentPage", "profile",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "inEditMode", true,
                 "currentUser", userService.getCurrentUser()
