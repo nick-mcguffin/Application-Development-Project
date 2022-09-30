@@ -146,4 +146,9 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
         return eoiRepository.save(eoi);
     }
+
+    public ExpressionOfInterest updateEOIFromDTO(ExpressionOfInterestDTO eoiDTO) {
+        var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
+        return eoiRepository.save(eoi);
+    }
 }

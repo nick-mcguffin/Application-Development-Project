@@ -4,6 +4,7 @@ import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.Frequency;
 import com.wilma.entity.PayType;
 import com.wilma.entity.dto.ExpressionOfInterestDTO;
+import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
@@ -90,6 +91,30 @@ public class EducatorPortalController {
                 "eoi", new ExpressionOfInterestDTO()
         ));
         return "/educator/new-expression-of-interest";
+    }
+
+    @GetMapping("/edit-expression-of-interest")
+    public String editExpressionOfInterest(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", positionService.findById(id)
+        ));
+        return "/educator/edit-expression-of-interest";
+    }
+
+    @PostMapping("/update-expression-of-interest")
+    public RedirectView updatePlacement(@ModelAttribute ExpressionOfInterestDTO expressionOfInterestDTO, @RequestParam Integer id, Model model){
+        var newEOI = positionService.updateEOIFromDTO(expressionOfInterestDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "eoi", expressionOfInterestDTO,
+                "id", id
+        ));
+
+        log.info("EOI updated from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
     }
 
     @PostMapping("/create-expression-of-interest")

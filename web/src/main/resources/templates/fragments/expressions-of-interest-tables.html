@@ -30,7 +30,7 @@
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <a th:href="@{~/educator/edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <span class="material-symbols-rounded btn-delete">delete</span>
                         </div>
                     </td>

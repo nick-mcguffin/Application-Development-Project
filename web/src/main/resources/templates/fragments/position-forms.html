@@ -100,6 +100,20 @@
   </div>
 </div>
 
+<!-- field for editing EOI -->
+<div th:fragment="edit-eoi-field" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <div class="form-group col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="eoiFilledCheck" th:field="*{filled}">
+        <label class="form-check-label" for="eoiFilledCheck">
+          Completed
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- submit/cancel buttons -->
 <div th:fragment="submit-cancel" xmlns:th="http://www.thymeleaf.org">
     <div class="form-group mb-3 text-center">
@@ -149,6 +163,15 @@
 <div th:fragment="new-eoi-form" xmlns:th="http://www.thymeleaf.org" id="new-eoi-form">
   <form th:action="@{~/educator/create-expression-of-interest}" th:object="${eoi}" method="post">
     <div th:replace="fragments/position-forms  :: eoi-form"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing an EOI -->
+<div th:fragment="new-eoi-form" xmlns:th="http://www.thymeleaf.org" id="edit-eoi-form">
+  <form th:action="@{~/educator/update-expression-of-interest?id={eid}( eid=${id} )}" th:object="${eoi}" method="post">
+    <div th:replace="fragments/position-forms  :: eoi-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-eoi-field"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
   </form>
 </div>
