@@ -143,4 +143,7 @@ Tasks include:
 <a href="https://discord.gg/8KpQFS4AEC" title="Join our discord server" >
 <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" />
 </a>
- 
+
+# OpenAPI - Swagger
+- The Swagger UI page is available at http://localhost:8080/swagger-ui/index.html
+- JSON format http://localhost:8080/v3/api-docs
