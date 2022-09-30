@@ -2,6 +2,7 @@ package com.wilma.service.positions;
 
 import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.dto.ApplicationDTO;
+import com.wilma.entity.dto.ExpressionOfInterestDTO;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.positions.*;
@@ -42,6 +43,9 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ExpressionOfInterestRepository eoiRepository;
 
     @Autowired
     protected PlacementRepository placementRepository;
@@ -246,5 +250,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return positionRepository.findAll().stream()
                 .filter(pos -> !pos.isApproved())
                 .collect(Collectors.toList());
+    }
+
+
+    public ExpressionOfInterest addEOIFromDTO(ExpressionOfInterestDTO eoiDTO) {
+        var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
+        return eoiRepository.save(eoi);
+    }
+
+    public ExpressionOfInterest updateEOIFromDTO(ExpressionOfInterestDTO eoiDTO) {
+        var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
+        return eoiRepository.save(eoi);
     }
 }
