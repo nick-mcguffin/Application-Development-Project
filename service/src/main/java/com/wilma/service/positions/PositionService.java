@@ -4,16 +4,8 @@ import com.wilma.entity.docs.UserDocument;
 import com.wilma.entity.dto.ApplicationDTO;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
-import com.wilma.entity.positions.Position;
-import com.wilma.entity.positions.PositionApplication;
-import com.wilma.repository.ExpressionOfInterestRepository;
-import com.wilma.repository.JobRepository;
-import com.wilma.repository.PlacementRepository;
-import com.wilma.repository.PositionApplicationRepository;
-import com.wilma.repository.PositionRepository;
+import com.wilma.entity.positions.*;
+import com.wilma.repository.*;
 import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -51,6 +43,12 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     protected ExpressionOfInterestRepository expressionOfInterestRepository;
+
+    @Autowired
+    protected PositionCategoryRepository positionCategoryRepository;
+
+    @Autowired
+    protected PositionApplicationRepository positionApplicationRepository;
 
     public Job addJobFromDTO(JobDTO jobDTO) {
         var job = new Job(null, jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
@@ -158,4 +156,53 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return HttpStatus.BAD_REQUEST;// Not deleted
     }
 
+    public PositionCategory addPositionCategory(PositionCategory category) {
+        return positionCategoryRepository.save(category);
+    }
+
+    public PositionCategory getPositionCategoryById(Integer id) {
+        return positionCategoryRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<PositionCategory> getPositionCategories() {
+        return positionCategoryRepository.findAll().stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public PositionCategory updatePositionCategory(PositionCategory category) {
+        return positionCategoryRepository.save(category);
+    }
+
+    public HttpStatus deletePositionCategoryById(Integer id) {
+        if(positionCategoryRepository.existsById(id)){
+            positionCategoryRepository.deleteById(id);
+            return HttpStatus.NO_CONTENT;//Deleted
+        }
+        return HttpStatus.BAD_REQUEST;// Not deleted
+    }
+
+    public PositionApplication addPositionApplication(PositionApplication application) {
+        return positionApplicationRepository.save(application);
+    }
+
+    public PositionApplication getPositionApplicationById(Integer id) {
+        return positionApplicationRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<PositionApplication> getPositionApplications() {
+        return positionApplicationRepository.findAll();
+    }
+
+    public PositionApplication updatePositionApplication(PositionApplication application) {
+        return positionApplicationRepository.save(application);
+    }
+
+    public HttpStatus deletePositionApplicationById(Integer id) {
+        if(positionApplicationRepository.existsById(id)){
+            positionApplicationRepository.deleteById(id);
+            return HttpStatus.NO_CONTENT;//Deleted
+        }
+        return HttpStatus.BAD_REQUEST;// Not deleted
+    }
 }

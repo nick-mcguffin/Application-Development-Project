@@ -1,8 +1,6 @@
 package com.wilma.web.controller.api.v1;
 
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.*;
 import com.wilma.service.positions.PositionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -138,4 +136,81 @@ public class PositionController implements PositionsAPI {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(positionService.deleteExpressionOfInterestById(id));
     }
     //endregion
+
+    //region Position Categories
+    @Override
+    public ResponseEntity<PositionCategory> addPositionCategory(PositionCategory category) {
+        var obj = (PositionCategory) positionService.addPositionCategory(category);
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", obj.getId())
+                                .build().toUri())
+                .body(obj);
+    }
+
+    @Override
+    public ResponseEntity<?> getPositionCategory(Integer id) {
+        return ResponseEntity.ok(positionService.getPositionCategoryById(id));
+    }
+
+    @Override
+    public ResponseEntity<Collection<PositionCategory>> getAllPositionCategory() {
+        return ResponseEntity.ok(positionService.getPositionCategories());
+    }
+
+    @Override
+    public ResponseEntity<PositionCategory> updatePositionCategory(PositionCategory category) {
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", category.getId())
+                                .build().toUri())
+                .body(positionService.updatePositionCategory(category));
+    }
+
+    @Override
+    public ResponseEntity<?> deletePositionCategoryById(Integer id) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(positionService.deletePositionCategoryById(id));
+    }
+    //endregion
+
+    //region Position Applications
+    @Override
+    public ResponseEntity<PositionApplication> addPositionApplication(PositionApplication application) {
+        var obj = (PositionApplication) positionService.addPositionApplication(application);
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", obj.getId())
+                                .build().toUri())
+                .body(obj);
+    }
+
+    @Override
+    public ResponseEntity<?> getPositionApplication(Integer id) {
+        return ResponseEntity.ok(positionService.getPositionApplicationById(id));
+    }
+
+    @Override
+    public ResponseEntity<Collection<PositionApplication>> getAllPositionApplications() {
+        return ResponseEntity.ok(positionService.getPositionApplications());
+    }
+
+    @Override
+    public ResponseEntity<PositionApplication> updatePositionApplication(PositionApplication application) {
+        return ResponseEntity.created(
+                        UriComponentsBuilder
+                                .fromUriString(domain)
+                                .queryParam("id", application.getId())
+                                .build().toUri())
+                .body(positionService.updatePositionApplication(application));
+    }
+
+    @Override
+    public ResponseEntity<?> deletePositionApplicationById(Integer id) {
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(positionService.deletePositionApplicationById(id));
+    }
+    //endregion
+
 }

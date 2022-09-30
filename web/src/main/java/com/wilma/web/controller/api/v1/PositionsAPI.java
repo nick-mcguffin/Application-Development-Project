@@ -1,8 +1,6 @@
 package com.wilma.web.controller.api.v1;
 
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -99,5 +97,59 @@ public interface PositionsAPI {
     @Operation(summary = "Delete an expression of interest", description = "Delete an existing expression of interest by id", tags = {"Expression of Interest", "Delete"})
     @ApiResponses(value = {@ApiResponse(description = "success operation", responseCode = "204")})
     ResponseEntity<?> deleteExpressionOfInterestById(@Parameter(description = "The id of the expression of interest to delete") @Valid @PathVariable Integer id);
+    //endregion
+
+    //region Position Category
+    @PostMapping(value = "/categories", consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" })
+    @Operation(summary = "Add a category", description = "Add a new category", tags = {"Category", "Create"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionCategory.class))})})
+    ResponseEntity<PositionCategory> addPositionCategory(@Parameter(description = "Add a new category") @Valid @RequestBody PositionCategory category);
+
+    @GetMapping("/categories")
+    @Operation(summary = "Get a category", description = "Get a category by id", tags = {"Category", "Get"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionCategory.class))})})
+    ResponseEntity<?> getPositionCategory(@Parameter(description = "Get an category by id") @RequestParam(required = false) Integer id);
+
+    @GetMapping("/categories/all")
+    @Operation(summary = "Get all categories", description = "Get a list of all categories", tags = {"Category", "Get"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionCategory.class))})})
+    ResponseEntity<Collection<PositionCategory>> getAllPositionCategory();
+
+    @PatchMapping("/categories")
+    @Operation(summary = "Update a category", description = "Update an existing category", tags = {"Category", "Update"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionCategory.class))})})
+    ResponseEntity<PositionCategory> updatePositionCategory(@Parameter(description = "The updated category object") @Valid @RequestBody PositionCategory category);
+
+    @DeleteMapping("/categories/{id}")
+    @Operation(summary = "Delete a category", description = "Delete an existing category by id", tags = {"Category", "Delete"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", responseCode = "204")})
+    ResponseEntity<?> deletePositionCategoryById(@Parameter(description = "The id of the category to delete") @Valid @PathVariable Integer id);
+    //endregion
+
+    //region Position Applications
+    @PostMapping(value = "/applications", consumes = { "application/json", "application/xml", "application/x-www-form-urlencoded" })
+    @Operation(summary = "Add an application", description = "Add a new application", tags = {"Application", "Create"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionApplication.class))})})
+    ResponseEntity<PositionApplication> addPositionApplication(@Parameter(description = "Add a new application") @Valid @RequestBody PositionApplication application);
+
+    @GetMapping("/applications")
+    @Operation(summary = "Get an application", description = "Get an application by id", tags = {"Application", "Get"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionApplication.class))})})
+    ResponseEntity<?> getPositionApplication(@Parameter(description = "Get an application by id") @RequestParam(required = false) Integer id);
+
+    @GetMapping("/applications/all")
+    @Operation(summary = "Get all applications", description = "Get a list of all applications", tags = {"Application", "Get"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionApplication.class))})})
+    ResponseEntity<Collection<PositionApplication>> getAllPositionApplications();
+
+    @PatchMapping("/applications")
+    @Operation(summary = "Update an application", description = "Update an existing application", tags = {"Application", "Update"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = PositionApplication.class))})})
+    ResponseEntity<PositionApplication> updatePositionApplication(@Parameter(description = "The updated application object") @Valid @RequestBody PositionApplication application);
+
+    @DeleteMapping("/applications/{id}")
+    @Operation(summary = "Delete an application", description = "Delete an existing application by id", tags = {"Application", "Delete"})
+    @ApiResponses(value = {@ApiResponse(description = "success operation", responseCode = "204")})
+    ResponseEntity<?> deletePositionApplicationById(@Parameter(description = "The id of the application to delete") @Valid @PathVariable Integer id);
     //endregion
 }
