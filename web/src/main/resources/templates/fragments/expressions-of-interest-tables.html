@@ -201,7 +201,7 @@
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <button class="btn form-button">Apply</button>
+                            <a th:href="@{~/partner/new-placement-from-eoi?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Apply">Apply</a>
                         </div>
                     </td>
                 </tr>
