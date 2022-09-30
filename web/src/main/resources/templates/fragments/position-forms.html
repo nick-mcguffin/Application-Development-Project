@@ -83,19 +83,19 @@
 <!-- fields for creating EOI -->
 <div th:fragment="eoi-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
-    <label for="eoi-category" class="form-label">Pay Frequency</label>
+    <label for="eoi-category" class="form-label">Category</label>
     <input class="form-floating user-input" id="eoi-category" th:field="*{category}">
   </div>
   <div class="row p-3 pt-0">
-    <label for="eoi-location" class="form-label">Pay Frequency</label>
+    <label for="eoi-location" class="form-label">Location</label>
     <input class="form-floating user-input" id="eoi-location" th:field="*{location}">
   </div>
   <div class="row p-3 pt-0">
-    <label for="eoi-description" class="form-label">Pay Frequency</label>
+    <label for="eoi-description" class="form-label">Description</label>
     <input class="form-floating user-input" id="eoi-description" th:field="*{description}">
   </div>
   <div class="row p-3 pt-0">
-    <label for="eoi-date" class="form-label">Pay Frequency</label>
+    <label for="eoi-date" class="form-label">Date</label>
     <input class="form-floating user-input" id="eoi-date" th:field="*{date}">
   </div>
 </div>
@@ -148,7 +148,6 @@
 <!-- Form for creating an EOI -->
 <div th:fragment="new-eoi-form" xmlns:th="http://www.thymeleaf.org" id="new-eoi-form">
   <form th:action="@{~/educator/create-expression-of-interest}" th:object="${eoi}" method="post">
-    <h1>Wassup?</h1>
     <div th:replace="fragments/position-forms  :: eoi-form"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
   </form>
