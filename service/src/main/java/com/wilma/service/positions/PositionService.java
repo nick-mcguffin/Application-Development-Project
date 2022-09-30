@@ -95,8 +95,9 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
 
     public void AddReview(Placement updatedPlacement) {
-        System.out.println(updatedPlacement.toString());
-        var logplacement = placementRepository.save(updatedPlacement);
+        var currentplacement =(Placement) this.findById(updatedPlacement.getId());
+        currentplacement.setReview(updatedPlacement.getReview());
+        var logplacement = placementRepository.save(currentplacement);
         log.info("Placement updated: {}", logplacement);
     }
     /**
