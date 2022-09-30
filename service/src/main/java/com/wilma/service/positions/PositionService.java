@@ -5,10 +5,18 @@ import com.wilma.entity.dto.ApplicationDTO;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.positions.*;
+import com.wilma.entity.positions.ExpressionOfInterest;
+import com.wilma.entity.positions.Job;
+import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.Position;
+import com.wilma.entity.positions.PositionApplication;
+import com.wilma.entity.users.Partner;
 import com.wilma.repository.*;
 import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
+
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,19 +35,25 @@ import java.util.stream.Collectors;
 public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepository> {
 
     @Autowired
-    protected DocumentService documentService;
+    private DocumentService documentService;
 
     @Autowired
-    protected PositionApplicationRepository applicationRepository;
+    private PositionApplicationRepository applicationRepository;
 
     @Autowired
-    protected UserService userService;
-
-    @Autowired
-    protected JobRepository jobRepository;
+    private UserService userService;
 
     @Autowired
     protected PlacementRepository placementRepository;
+
+    @Autowired
+    JobRepository jobRepository;
+
+    @Autowired
+    PlacementRepository placementRepository;
+
+    @Autowired
+    private ExpressionOfInterestRepository expressionOfInterestRepository;
 
     @Autowired
     protected ExpressionOfInterestRepository expressionOfInterestRepository;
@@ -51,13 +65,23 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     protected PositionApplicationRepository positionApplicationRepository;
 
     public Job addJobFromDTO(JobDTO jobDTO) {
-        var job = new Job(null, jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
+        var job = new Job(null, (Partner) userService.getCurrentUser(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
 
         return jobRepository.save(job);
     }
 
     public Job updateJobFromDTO(JobDTO jobDTO) {
-        var job = new Job(jobDTO.getId(), jobDTO.getPartner(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), jobDTO.isFilled(), jobDTO.isApproved(), jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
+        var job = (Job) findById(jobDTO.getId());
+        job.setStartDate(jobDTO.getStartDate());
+        job.setEndDate(jobDTO.getEndDate());
+        job.setPeriod(jobDTO.getPeriod());
+        job.setLocation(jobDTO.getLocation());
+        job.setDescription(jobDTO.getDescription());
+        job.setFilled(jobDTO.isFilled());
+        job.setApproved(jobDTO.isApproved());
+        job.setPayRate(jobDTO.getPayRate());
+        job.setPayType(jobDTO.getPayType());
+        job.setPayFrequency(jobDTO.getPayFrequency());
 
         return jobRepository.save(job);
     }
@@ -69,7 +93,8 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
-        var placement = new Placement(null, placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
+        var placement = new Placement(null,
+                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
         return placementRepository.save(placement);
     }
 
@@ -90,7 +115,15 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
-        var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), placementDTO.isFilled(), placementDTO.isApproved(), placementDTO.isCompleted());
+        var placement = (Placement) findById(placementDTO.getId());
+        placement.setStartDate(placementDTO.getStartDate());
+        placement.setEndDate(placementDTO.getEndDate());
+        placement.setPeriod(placementDTO.getPeriod());
+        placement.setLocation(placementDTO.getLocation());
+        placement.setDescription(placementDTO.getDescription());
+        placement.setFilled(placementDTO.isFilled());
+        placement.setApproved(placementDTO.isApproved());
+        placement.setCompleted(placementDTO.isCompleted());
         return placementRepository.save(placement);
     }
 
@@ -204,5 +237,17 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
             return HttpStatus.NO_CONTENT;//Deleted
         }
         return HttpStatus.BAD_REQUEST;// Not deleted
+    }
+    public Object getApprovedPositions() {
+
+        return positionRepository.findAll().stream()
+                .filter(pos -> pos.isApproved())
+                .collect(Collectors.toList());
+    }
+
+    public Object getPendingPositions() {
+        return positionRepository.findAll().stream()
+                .filter(pos -> !pos.isApproved())
+                .collect(Collectors.toList());
     }
 }

@@ -7,8 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.wilma.entity.contact.ContactForm;
+import com.wilma.entity.dto.UserDTO;
+import com.wilma.service.UserRegistrationService;
 import com.wilma.service.mail.Mailer;
 import com.wilma.service.positions.ApplicationNotificationService;
 
@@ -27,6 +30,9 @@ public class SiteController {
     @Autowired
     protected ApplicationNotificationService applicationNotificationService;
 
+    @Autowired 
+    protected UserRegistrationService userRegistrationService;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAllAttributes(Map.of(
@@ -39,8 +45,21 @@ public class SiteController {
     public String register(Model model) {
         model.addAllAttributes(Map.of(
             "currentPage", "Register",
-                "userOptions", List.of("Select...", "Educator", "Partner", "Student")));
+            "userOptions", List.of("Select...", "Educator", "Partner", "Student"),
+            "userDTO", new UserDTO()
+        ));
         return "/register";
+    }
+
+    @PostMapping("/register")
+    public RedirectView registerPartner(@ModelAttribute UserDTO userDTO, Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Register",
+            "userOptions", List.of("Select...", "Educator", "Partner", "Student"),
+            "userDTO", userDTO
+            ));
+            var result = userRegistrationService.register(userDTO);
+            return new RedirectView("/");
     }
 
     @GetMapping("/about")

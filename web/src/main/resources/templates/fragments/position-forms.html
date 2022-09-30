@@ -105,8 +105,8 @@
   </form>
 </div>
 
-<!-- Form for editing job -->
-<div th:fragment="edit-job-form" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
+<!-- Form for editing job (partner) -->
+<div th:fragment="partner-edit-job-form" xmlns:th="http://www.thymeleaf.org" id="partner-edit-job-form">
   <form th:action="@{~/partner/update-job?id={jid}( jid=${id} )}" th:object="${job}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
@@ -115,9 +115,29 @@
   </form>
 </div>
 
-<!-- Form for editing a placement -->
-<div th:fragment="edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="edit-placement-form">
+<!-- Form for editing a placement (partner) -->
+<div th:fragment="partner-edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="partner-edit-placement-form">
   <form th:action="@{~/partner/update-placement?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: edit-placement-field"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing job (educator) -->
+<div th:fragment="educator-edit-job-form" xmlns:th="http://www.thymeleaf.org" id="educator-edit-job-form">
+  <form th:action="@{~/educator/update-job?id={jid}( jid=${id} )}" th:object="${job}" method="post">
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: job-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing a placement (educator) -->
+<div th:fragment="educator-edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="educator-edit-placement-form">
+  <form th:action="@{~/educator/update-placement?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
     <div th:replace="fragments/position-forms  :: edit-placement-field"></div>
