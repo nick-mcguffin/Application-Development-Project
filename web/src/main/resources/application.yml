@@ -5,7 +5,7 @@ module:
 spring:
   application:
     domain: http://localhost:8080
-    view-attachment-path: ${spring.application.domain}/api/v1/partners/view-attachment/
+    view-attachment-path: ${spring.application.domain}/api/v1/files/
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
