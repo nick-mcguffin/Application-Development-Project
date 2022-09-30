@@ -50,19 +50,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     JobRepository jobRepository;
 
     @Autowired
-    PlacementRepository placementRepository;
-
-    @Autowired
     private ExpressionOfInterestRepository expressionOfInterestRepository;
-
-    @Autowired
-    protected ExpressionOfInterestRepository expressionOfInterestRepository;
 
     @Autowired
     protected PositionCategoryRepository positionCategoryRepository;
 
     @Autowired
     protected PositionApplicationRepository positionApplicationRepository;
+
+    @Autowired
+    protected PositionRepository positionRepository;
 
     public Job addJobFromDTO(JobDTO jobDTO) {
         var job = new Job(null, (Partner) userService.getCurrentUser(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
@@ -241,7 +238,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     public Object getApprovedPositions() {
 
         return positionRepository.findAll().stream()
-                .filter(pos -> pos.isApproved())
+                .filter(Position::isApproved)
                 .collect(Collectors.toList());
     }
 
