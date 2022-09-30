@@ -98,16 +98,12 @@ public class SiteController {
 
         return "redirect:contact";
     }
-        //autowiring mailing interface
-        //call send email function to => 
-    // }
-    
+
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("currentPage", "Login");
         return "/login";
     }
-
 
 }
 

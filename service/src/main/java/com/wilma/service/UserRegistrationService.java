@@ -1,5 +1,8 @@
 package com.wilma.service;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,9 +13,11 @@ import com.wilma.entity.dto.UserDTO;
 import com.wilma.entity.users.ConfirmationToken;
 import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
+import com.wilma.entity.users.Role;
 import com.wilma.entity.users.Student;
 import com.wilma.entity.users.UserAccount;
 import com.wilma.repository.ConfirmationTokenRepository;
+import com.wilma.repository.RoleRepository;
 import com.wilma.repository.UserAccountRepository;
 import com.wilma.service.mail.Mailer;
 import com.wilma.service.mail.MailerImpl;
@@ -27,6 +32,8 @@ public class UserRegistrationService {
     private BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
+    @Autowired
+    private RoleRepository roleRepository;
     @Autowired
     private MailerImpl mailer;
 
@@ -70,7 +77,7 @@ public class UserRegistrationService {
         Educator educator = new Educator(userDTO.getUserId(),
         userDTO.getUsername(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail(),
         null, false, false,
-        false, false, null, null, userDTO.getDiscipline(), userDTO.getStaffId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber()); 
+        false, false, Set.of(roleRepository.findByName("ADMIN")), null, userDTO.getDiscipline(), userDTO.getStaffId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber()); 
         log.info("A new {} has been added to the database", userDTO.getUserType());
 
         ConfirmationToken confirmationToken = new ConfirmationToken(educator);
@@ -95,7 +102,7 @@ public class UserRegistrationService {
         Partner partner = new Partner (userDTO.getUserId(),
                         userDTO.getUsername(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail(),
                         null, false, false,
-                        false, false, null,  userDTO.getBusinessName(),
+                        false, false, Set.of(roleRepository.findByName("PARTNER")),  userDTO.getBusinessName(),
                         userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber(), userDTO.getAbn());
             log.info("A new {} has been added to the database", userDTO.getUserType());
 
@@ -121,7 +128,7 @@ public class UserRegistrationService {
         Student student = new Student(userDTO.getUserId(),
         userDTO.getUsername(), passwordEncoder.encode(userDTO.getPassword()), userDTO.getEmail(),
         null, false, false,
-        false, false, null, null, userDTO.getDiscipline(), userDTO.getStudentId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber());
+        false, false, Set.of(roleRepository.findByName("STUDENT")), null, userDTO.getDiscipline(), userDTO.getStudentId(), userDTO.getFirstName(), userDTO.getLastName(), userDTO.getContactNumber());
             log.info("A new {} has been added to the database", userDTO.getUserType());
             
             ConfirmationToken confirmationToken = new ConfirmationToken(student);

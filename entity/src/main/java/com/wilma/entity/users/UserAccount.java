@@ -35,7 +35,7 @@ public class UserAccount {
 
     @Column(name = "email")
     private String email;
-
+    
     @Lob
     @Column(name = "bio")
     private String bio;
