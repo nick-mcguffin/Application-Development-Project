@@ -6,18 +6,12 @@ import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collection;
 
 @RestController
@@ -33,15 +27,6 @@ public class PartnerController implements PartnerAPI {
     protected DocumentService documentService;
     @Autowired
     protected UserDocumentConfiguration documentConfiguration;
-
-    @GetMapping("/view-attachment/{documentId}")
-    public ResponseEntity<?> viewAttachment(@PathVariable Integer documentId) throws IOException {
-        var file = documentService.findById(documentId);
-        return ResponseEntity.ok()
-                .header("Content-type", documentConfiguration.getMediaType(file.getFilename()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"".concat(file.getFilename()).concat("\""))
-                .body(Files.readAllBytes(Path.of(file.getFilepath())));
-    }
 
     @Override
     public ResponseEntity<Partner> add(Partner partner) {
