@@ -6,6 +6,7 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.ExpressionOfInterest;
+import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
@@ -102,6 +103,17 @@ public class PartnerPortalController {
         return "/partner/edit-position";
     }
 
+    @GetMapping("/add-review")
+    public String addReview(Model model, @RequestParam String type, @RequestParam Integer id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id)
+        ));
+        return "/partner/add-review";
+    }
     @PostMapping("/create-job")
     public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
         var newJob = positionService.addJobFromDTO(jobDTO);
@@ -140,20 +152,6 @@ public class PartnerPortalController {
         return new RedirectView("/partner/marketplace");
     }
 
-    @PostMapping("/add-review")
-    public RedirectView addReview(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
-        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
-        model.addAllAttributes(Map.of(
-                "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.partnerMenuElements,
-                "placement", placementDTO,
-                "id", id
-        ));
-
-        log.info("Placement updated from DTO: "+ newPlacement);
-        return new RedirectView("/partner/marketplace");
-    }
-
     @PostMapping("/update-job")
     public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
         var newJob = positionService.updateJobFromDTO(jobDTO);
@@ -166,6 +164,13 @@ public class PartnerPortalController {
 
         log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-review")
+    public String updateReview(@ModelAttribute PlacementDTO placementDTO) throws IOException {
+       positionService.AddReview((Placement) positionService.findById(placementDTO.getId()));
+
+                return "redirect:/partner/marketplace";
     }
     //endregion
 

@@ -4,6 +4,7 @@ import com.wilma.entity.users.Partner;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,11 +17,11 @@ import java.util.Date;
 @Entity
 @NoArgsConstructor
 @Table(name = "placements")
+@ToString
 public class Placement extends Position {
 
     private boolean completed;
 
-    @Column(name = "review")
     private String review;
     public Placement(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved, boolean completed,String review) {
         super(id, partner, startDate, endDate, period, location, description, filled, approved);

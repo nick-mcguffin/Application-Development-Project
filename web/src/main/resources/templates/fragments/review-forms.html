@@ -17,7 +17,7 @@
 </div>
 
 <div th:fragment="add-review-form" xmlns:th="http://www.thymeleaf.org" id="add-review-form">
-    <form th:action="@{~/partner/add-review?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
+    <form th:action="@{~/partner/update-review?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
         <div th:replace="fragments/review-forms  :: review-form"></div>
         <div th:replace="fragments/review-forms  :: submit-cancel"></div>
     </form>

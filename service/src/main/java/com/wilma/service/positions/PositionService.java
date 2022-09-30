@@ -9,6 +9,7 @@ import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.Position;
 import com.wilma.entity.positions.PositionApplication;
+import com.wilma.entity.users.Educator;
 import com.wilma.repository.ExpressionOfInterestRepository;
 import com.wilma.repository.JobRepository;
 import com.wilma.repository.PlacementRepository;
@@ -92,6 +93,12 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return placementRepository.save(placement);
     }
 
+
+    public void AddReview(Placement updatedPlacement) {
+        System.out.println(updatedPlacement.toString());
+        var logplacement = placementRepository.save(updatedPlacement);
+        log.info("Placement updated: {}", logplacement);
+    }
     /**
      * Submit an application for an available position
      * @param applicationDTO The data transfer object used to create a {@link PositionApplication}
