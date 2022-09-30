@@ -17,6 +17,7 @@ import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +47,9 @@ public class EducatorPortalController {
     UserService userService;
     @Autowired
     DocumentService documentService;
+
+    @Autowired
+    PositionService positionService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -79,14 +83,27 @@ public class EducatorPortalController {
     }
     //endregion
 
+    //region EOIs
     @GetMapping("/new-expression-of-interest")
     public String newExpressionOfInterest(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "eoiDTO", new ExpressionOfInterestDTO()
+                "eoi", new ExpressionOfInterestDTO()
         ));
         return "/educator/new-expression-of-interest";
+    }
+
+    @PostMapping("/create-expression-of-interest")
+    public RedirectView createEOI(@ModelAttribute ExpressionOfInterestDTO eoiDTO, Model model){
+        var newEOI = positionService.addEOIFromDTO(eoiDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", eoiDTO));
+
+        log.info("EOI created from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
     }
     //endregion
 
