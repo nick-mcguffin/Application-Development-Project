@@ -188,7 +188,7 @@
 </div>
 
 <!-- Form for editing an EOI -->
-<div th:fragment="new-eoi-form" xmlns:th="http://www.thymeleaf.org" id="edit-eoi-form">
+<div th:fragment="edit-eoi-form" xmlns:th="http://www.thymeleaf.org" id="edit-eoi-form">
   <form th:action="@{~/educator/update-expression-of-interest?id={eid}( eid=${id} )}" th:object="${eoi}" method="post">
     <div th:replace="fragments/position-forms  :: eoi-form"></div>
     <div th:replace="fragments/position-forms  :: edit-eoi-field"></div>

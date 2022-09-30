@@ -1,21 +1,14 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
-import com.wilma.entity.dto.ExpressionOfInterestDTO;
-import com.wilma.entity.dto.PlacementDTO;
-import com.wilma.entity.dto.PostDTO;
-import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.Job;
-import com.wilma.entity.positions.Placement;
+import com.wilma.entity.dto.*;
 import com.wilma.entity.users.Educator;
-import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.EOIService;
 import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +20,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.Period;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 @Slf4j
 @Controller
@@ -48,6 +38,8 @@ public class EducatorPortalController {
     DocumentService documentService;
     @Autowired
     PositionService positionService;
+    @Autowired
+    EOIService eoiService;
 
 
     //region Dashboard
@@ -90,17 +82,18 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "eoi", positionService.findById(id)
+                "eoi", eoiService.findEOIById(id),
+                "id", id
         ));
         return "/educator/edit-expression-of-interest";
     }
 
     @PostMapping("/update-expression-of-interest")
     public RedirectView updatePlacement(@ModelAttribute ExpressionOfInterestDTO expressionOfInterestDTO, @RequestParam Integer id, Model model){
-        var newEOI = positionService.updateEOIFromDTO(expressionOfInterestDTO);
+        var newEOI = eoiService.updateEOIFromDTO(expressionOfInterestDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "eoi", expressionOfInterestDTO,
                 "id", id
         ));
@@ -111,7 +104,7 @@ public class EducatorPortalController {
 
     @PostMapping("/create-expression-of-interest")
     public RedirectView createEOI(@ModelAttribute ExpressionOfInterestDTO eoiDTO, Model model){
-        var newEOI = positionService.addEOIFromDTO(eoiDTO);
+        var newEOI = eoiService.addEOIFromDTO(eoiDTO);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
