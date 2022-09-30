@@ -71,7 +71,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
-        var placement = new Placement(null, placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
+        var placement = new Placement(null, placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false,"");
         return placementRepository.save(placement);
     }
 
@@ -88,7 +88,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public Placement updatePlacementFromDTO(PlacementDTO placementDTO) {
-        var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), placementDTO.isFilled(), placementDTO.isApproved(), placementDTO.isCompleted());
+        var placement = new Placement(placementDTO.getId(), placementDTO.getPartner(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), placementDTO.isFilled(), placementDTO.isApproved(), placementDTO.isCompleted(),placementDTO.getReview());
         return placementRepository.save(placement);
     }
 

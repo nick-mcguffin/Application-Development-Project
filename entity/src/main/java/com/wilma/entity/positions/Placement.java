@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.Period;
@@ -19,7 +20,9 @@ public class Placement extends Position {
 
     private boolean completed;
 
-    public Placement(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved, boolean completed) {
+    @Column(name = "review")
+    private String review;
+    public Placement(Integer id, Partner partner, Date startDate, Date endDate, Period period, String location, String description, boolean filled, boolean approved, boolean completed,String review) {
         super(id, partner, startDate, endDate, period, location, description, filled, approved);
         this.completed = completed;
     }

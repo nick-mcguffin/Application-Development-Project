@@ -1,4 +1,4 @@
-package com.wilma.web.controller.api.v1;
+package com.wilma.web.controller.web.portal.api.v1;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -140,6 +140,20 @@ public class PartnerPortalController {
         return new RedirectView("/partner/marketplace");
     }
 
+    @PostMapping("/add-review")
+    public RedirectView addReview(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "placement", placementDTO,
+                "id", id
+        ));
+
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/partner/marketplace");
+    }
+
     @PostMapping("/update-job")
     public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
         var newJob = positionService.updateJobFromDTO(jobDTO);
