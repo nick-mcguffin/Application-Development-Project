@@ -5,16 +5,14 @@ import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.EOIService;
 import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.Period;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -54,6 +49,9 @@ public class PartnerPortalController {
     @Autowired
     DocumentService documentService;
 
+    @Autowired
+    EOIService eoiService;
+
     //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -73,7 +71,7 @@ public class PartnerPortalController {
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "partnerJobs", positionService.getJobs(),
                 "partnerPlacements", positionService.getPlacements(),
-                "partnerEOIPositions", positionService.getExpressionsOfInterest()
+                "partnerEOIPositions", eoiService.getExpressionsOfInterest()
         ));
         return "/partner/marketplace";
     }
@@ -238,25 +236,21 @@ public class PartnerPortalController {
                 "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
 
-                "openExpressionsOfInterest", List.of(
-                    new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
-                    new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
-                    new ExpressionOfInterest(3,"Project Management", "Melbourne", "Another sample job", new Date(), false)
-                ),
-                "openRequestsToSupply", List.of(
-                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                    new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                    new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                ),
-                "requestsToSupplyHistory", List.of(
-                    new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
-                    new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true)
-                )
-
-
+                "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/partner/expressions-of-interest";
+    }
+
+    @GetMapping("/new-placement-from-eoi")
+    public String newPlacementFromEOI (Model model, @RequestParam Integer id) {
+        var eoi = eoiService.findEOIById(id);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false),
+                "id", id
+        ));
+        return "/partner/new-placement-from-eoi";
     }
     //endregion
 
