@@ -207,7 +207,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
             "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "openExpressionsOfInterest", positionService.getExpressionsOfInterest()
+                "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/educator/expressions-of-interest";
     }

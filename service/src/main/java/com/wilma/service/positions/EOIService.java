@@ -59,7 +59,7 @@ public class EOIService extends CrudOpsImpl<Position, Integer, PositionRepositor
 
     public List<ExpressionOfInterest> getExpressionsOfInterest() {
         return expressionOfInterestRepository.findAll().stream()
-                .filter(Objects::nonNull)
+                .filter(eoi -> !eoi.isFilled())
                 .collect(Collectors.toList());
     }
 
