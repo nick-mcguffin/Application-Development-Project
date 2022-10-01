@@ -33,6 +33,15 @@ public class Student extends UserAccount {
     @Column(name = "profile_image_id")
     private Integer profileImageId;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+    
+    @Column(name = "contact_number")
+    private String contactNumber;
+
     public Student(String username, String discipline) {
         super(username);
         this.discipline = discipline;
@@ -43,6 +52,16 @@ public class Student extends UserAccount {
         this.discipline = discipline;
         this.studentId = studentId;
         this.expectedGraduationDate = expectedGraduationDate;
+    }
+
+    
+    public Student(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, Collection<UserDocument> userDocuments, String discipline, String studentId, String firstName, String lastName, String contactNumber) {
+        super(userId, username, password, email, bio, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles, userDocuments);
+        this.discipline = discipline;
+        this.studentId = studentId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNumber = contactNumber;
     }
 
 }
