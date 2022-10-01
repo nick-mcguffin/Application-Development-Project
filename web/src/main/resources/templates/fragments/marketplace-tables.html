@@ -396,7 +396,6 @@
 
 
 <!-- [x] Partner Jobs -->
-<!-- Fix: Add edit and delete button functionality -->
 <div th:fragment="partner-jobs" id="partner-jobs" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -432,7 +431,7 @@
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
                         <a th:href="@{~/partner/edit-position?type=Job&id={jid}( jid=${job.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                        <span class="material-symbols-rounded btn-delete">delete</span>
+                        <a th:href="@{~/partner/delete-position?positionId={id}( id=${job.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                     </div>
                 </td>
             </tr>
@@ -486,7 +485,6 @@
 
 
 <!-- [x] Partner Placements -->
-<!-- Fix: Add edit and delete button functionality -->
 <div th:fragment="partner-placements" id="partner-placements" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -526,7 +524,7 @@
                         <!-- NB will need to pass id as well -->
                         <a th:if="${pla.completed} == true AND ${pla.review} == null" th:href="@{~/partner/add-review?type=Placement&id={pid}( pid=${pla.id} )}" class="btn btn-primary" >Review</a>
                         <a th:href="@{~/partner/edit-position?type=Placement&id={pid}( pid=${pla.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                        <span class="material-symbols-rounded btn-delete">delete</span>
+                        <a th:href="@{~/partner/delete-position?positionId={id}( id=${pla.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                     </div>
                 </td>
             </tr>
