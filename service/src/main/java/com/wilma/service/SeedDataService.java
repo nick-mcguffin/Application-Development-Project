@@ -84,7 +84,7 @@ public class SeedDataService {
 
         var positions = List.of(
                 new Job(null, partners.get(0), new Date(), new Date(), Period.of(0, 0, 1), "Brisbane", "A sample job", false, false, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                new Job(null, partners.get(1), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
+                new Job(null, partners.get(1), new Date(), new Date(), Period.of(0, 11, 1), "Perth", "A 2nd sample job", false, false, 27.50, PayType.WAGE, Frequency.WEEKLY),
                 new Placement(null, partners.get(2), new Date(), new Date(), Period.of(1, 0, 0), "Sydney", "A placement example", false, false, false)
         );
         positionRepository.saveAll(positions);

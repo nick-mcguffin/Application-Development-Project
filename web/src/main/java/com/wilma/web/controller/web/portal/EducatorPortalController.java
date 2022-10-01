@@ -1,6 +1,8 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
+import com.wilma.entity.positions.ExpressionOfInterest;
+import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.dto.*;
 import com.wilma.entity.users.Educator;
 import com.wilma.service.UserService;
@@ -33,14 +35,16 @@ public class EducatorPortalController {
     @Autowired
     TagService tagService;
     @Autowired
+    PositionService positionService;
+    @Autowired
     UserService userService;
     @Autowired
     DocumentService documentService;
+
     @Autowired
     PositionService positionService;
     @Autowired
     EOIService eoiService;
-
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -59,10 +63,22 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "approvedPositions", positionService.getApprovedPositions(),
-                "pendingPositions", positionService.getPendingPositions()
+                "approvedPositions", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions()
         ));
         return "/educator/marketplace";
+    }
+
+    @GetMapping("/marketplace-approve")
+    public String marketplaceSetApproved(Model model, @RequestParam Integer posId) {
+        positionService.setApproved(posId);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "approvedPositions", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions()
+        ));
+        return "redirect:marketplace";
     }
     //endregion
 

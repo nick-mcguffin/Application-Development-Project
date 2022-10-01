@@ -43,7 +43,6 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private ExpressionOfInterestRepository eoiRepository;
 
@@ -172,6 +171,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
      */
     public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
         return applicationRepository.saveAll(applications);
+    }
+
+    public Position setApproved(Integer id) {
+        var pos = positionRepository.findById(id).orElseThrow();
+        pos.setApproved(true);
+        return positionRepository.save(pos);
+    }
+
+    public List<Position> pendingPositions(){
+        return positionRepository.findByApproved(false);
     }
 
     public ExpressionOfInterest getExpressionOfInterestById(Integer id) {
