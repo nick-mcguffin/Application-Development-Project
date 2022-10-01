@@ -37,7 +37,7 @@
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <span class="material-symbols-rounded btn-approve">Done</span>
-                            <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
+                            <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <span class="material-symbols-rounded btn-delete">Delete</span>
                         </div>
                     </td>
@@ -135,7 +135,7 @@
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <span class="material-symbols-rounded btn-delete">delete</span>
                         </div>
                     </td>
