@@ -30,15 +30,6 @@
         </div>
     </div>
     <div th:replace="fragments/scripts"></div>
-    <script>
-        const formatDate = (inputDate) => {
-            let date = new Date(inputDate);
-            let day = date.getDate();
-            let month = date.getMonth() + 1;
-            let year = date.getFullYear();
-            return [('0' + day).slice(-2), ('0' + month).slice(-2), year].join("/");
-        }
-    </script>
 </body>
 
 </html>

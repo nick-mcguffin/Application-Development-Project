@@ -84,7 +84,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
         var placement = new Placement(null,
-                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false);
+                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false, placementDTO.getReview());
         return placementRepository.save(placement);
     }
 
@@ -119,10 +119,10 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
 
     public void AddReview(Placement updatedPlacement) {
-        var currentplacement =(Placement) this.findById(updatedPlacement.getId());
-        currentplacement.setReview(updatedPlacement.getReview());
-        var logplacement = placementRepository.save(currentplacement);
-        log.info("Placement updated: {}", logplacement);
+        var currentPlacement =(Placement) this.findById(updatedPlacement.getId());
+        currentPlacement.setReview(updatedPlacement.getReview());
+        var logPlacement = placementRepository.save(currentPlacement);
+        log.info("Placement updated: {}", logPlacement);
     }
     /**
      * Submit an application for an available position

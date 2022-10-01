@@ -4,6 +4,7 @@ import com.wilma.config.web.UserDocumentConfiguration;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
+import com.wilma.web.controller.api.v1.PartnerAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
