@@ -97,6 +97,13 @@ public class EducatorPortalController {
 
         return "redirect:/educator/marketplace";
     }
+
+    @GetMapping("delete-position")
+    public String deletePosition(@RequestParam Integer positionId){
+        positionService.deleteById(positionId);
+        log.info("Position with id={} deleted by user {}", positionId, userService.getCurrentUser().getUsername());
+        return "redirect:marketplace";
+    }
     //endregion
 
     //region EOIs

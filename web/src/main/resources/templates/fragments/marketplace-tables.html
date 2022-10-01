@@ -38,7 +38,7 @@
                         <div class="mx-auto">
                             <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <span class="material-symbols-rounded btn-delete">Delete</span>
+                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete"title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -134,7 +134,7 @@
                 <td style="display: flex;">
                     <div class="mx-auto">
                         <a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${pos.id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
-                        <span class="material-symbols-rounded btn-delete">Delete</span>
+                        <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                     </div>
 
 
@@ -233,7 +233,7 @@
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <span class="material-symbols-rounded btn-delete">delete</span>
+                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
