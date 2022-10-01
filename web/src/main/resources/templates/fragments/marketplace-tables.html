@@ -97,6 +97,103 @@
 
 </div>
 
+<!-- pending review -->
+<div th:fragment="pending-review" id="pending-review" xmlns:th="http://www.thymeleaf.org" th:if="${ReviewPlacements.?[review == null].isEmpty() and ReviewPlacements.?[reviewViewed == true].isEmpty() }">
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Pending review</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="filterPendingReview" type="text" name="keyword"
+                   placeholder="Filter Positions..." />
+        </div>
+        <div class="col-md-1 col-xl-3"></div>
+    </div>
+
+    <div class="row table-container">
+        <table class="table table-sm table-danger table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Provider</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th class="text-center">Manage</th>
+            </tr>
+            </thead>
+            <tbody id="ReviewData">
+            <tr th:each="pos : ${ReviewPlacements}" th:if="${pos.review != null and  pos.reviewViewed == false}">
+                <th scope="row" th:text="${pos.id}"></th>
+                <td th:text="${pos.type}">Job</td>
+                <td th:text="${pos.partner.businessName}">Microsoft</td>
+                <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                <td th:text="${pos.description}">Just a one month job</td>
+                <td style="display: flex;">
+                    <div class="mx-auto">
+                        <a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${pos.id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
+                        <span class="material-symbols-rounded btn-delete">Delete</span>
+                    </div>
+
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+            var data =
+                /*[[${ReviewPlacements}]]*/
+                /*]]>*/
+                $("#filterPendingReview").on("keyup", function () {
+
+                    var value = $(this).val();
+
+                    let filteredData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        value = value.toLowerCase();
+                        let id = data[i].id;
+                        let type = data[i].type.toLowerCase();
+                        let provider = data[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(data[i].startDate);
+                        let endDate = formatDate(data[i].endDate);
+                        let description = data[i].description;
+
+                        if (id == value || type.includes(value) || provider.includes(value) ||
+                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                            filteredData.push(data[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("ReviewData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                        <th scope="row">${filteredData[i].id}</th>
+                                        <td>${filteredData[i].type}</td>
+                                        <td>${filteredData[i].partner.businessName}</td>
+                                        <td>${formatDate(filteredData[i].startDate)}</td>
+                                        <td>${formatDate(filteredData[i].endDate)}</td>
+                                        <td>${filteredData[i].description}</td>
+                                        <td style="display: flex;">
+                                            <div class="mx-auto">
+                                            {`<a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${filteredData[i].id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>`}
+                                                <span class="material-symbols-rounded btn-delete">Delete</span>
+                                            </div>
+                                        </td>
+                                        </tr>`;
+                        table.innerHTML += row;
+                    }
+                });
+        </script>
+    </div>
+    <hr />
+
+</div>
+
 
 <!-- [x] Current (approved) Jobs & Placements -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
@@ -126,7 +223,7 @@
                 </tr>
             </thead>
             <tbody id="approvedData">
-                <tr th:each="pos : ${approvedPositions}" th:if="${pos.approved}">
+                <tr th:each="pos : ${approvedPositions}" th:if="${pos.approved == true and pos.completed == false}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
@@ -410,6 +507,7 @@
                 <th>End Date</th>
                 <th>Description</th>
                 <th>Status</th>
+                <th>Review Status</th>
                 <th class="text-center">Manage</th>
             </tr>
             </thead>
@@ -420,6 +518,8 @@
                 <td th:text="${#dates.format(pla.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${pla.description}">Just a one month job</td>
                 <td th:text="${pla.approved ? 'Approved' : 'Pending'}">Approved</td>
+                <td th:text="${#strings.isEmpty(pla.review)? 'Unreviewed' : 'Reviewed' }">true</td>
+
                 <td style="display: flex;">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
@@ -450,8 +550,8 @@
                         let endDate = formatDate(partnerPlacementsList[i].endDate);
                         let description = partnerPlacementsList[i].description.toLowerCase();
                         let status = partnerPlacementsList[i].approved ? 'Approved' : 'Pending';
-
-                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value)) {
+                        let reviewStatus =   partnerPlacementsList[i].review == null ? "Unreviewed" : "Reviewed";
+                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value) || reviewStatus.toLowerCase().includes(value))   {
                             filteredData.push(partnerPlacementsList[i]);
                         }
                     }
@@ -465,8 +565,11 @@
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
+
+                                <td>${filteredData[i].review == null ? "Unreviewed" : "Reviewed"}</td>
                                 <td style="display: flex;">
-                                    <div class="mx-auto">
+                                    <div class="mx-auto">  
+                                        ${filteredData[i].completed && filteredData[i].review == null ? `<a class="btn btn-primary" href="/partner/add-review?type=Placement&id=${filteredData[i].id}">Review</a>` : ``}
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
                                     </div>

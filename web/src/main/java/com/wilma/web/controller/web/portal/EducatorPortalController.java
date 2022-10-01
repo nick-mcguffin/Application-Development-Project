@@ -2,6 +2,7 @@ package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.dto.*;
+import com.wilma.entity.positions.Placement;
 import com.wilma.entity.users.Educator;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -60,7 +61,8 @@ public class EducatorPortalController {
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "approvedPositions", positionService.findAll(),
-                "pendingPositions", positionService.pendingPositions()
+                "pendingPositions", positionService.pendingPositions(),
+                "ReviewPlacements", positionService.getPlacements()
         ));
         return "/educator/marketplace";
     }
@@ -73,8 +75,27 @@ public class EducatorPortalController {
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "approvedPositions", positionService.findAll(),
                 "pendingPositions", positionService.pendingPositions()
+
         ));
         return "redirect:marketplace";
+    }
+
+    @GetMapping("/view-review")
+    public String viewReview(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "id", id,
+                "placement", positionService.findById(id)
+        ));
+        return "/educator/view-review";
+    }
+
+    @PostMapping("/approve-review")
+    public String updateReview(@ModelAttribute Placement placement) throws IOException {
+        positionService.AcceptReview(placement);
+
+        return "redirect:/educator/marketplace";
     }
     //endregion
 
