@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head"></head>
-    <link th:href="@{~/css/portal-styles.css}" rel="stylesheet"/>
-    <body onload="hidePositionsPendingTableIfEmpty()">
-    <!-- Top Navigation Bar-->
-    <div th:replace="fragments/navigation :: top-navigation"></div>
-    <body class="bg-dark bg-opacity-10">
+
+    <body class="bg-dark bg-opacity-10" onload="hidePositionsPendingTableIfEmpty()">
+        <!-- Top Navigation Bar-->
+        <div th:replace="fragments/navigation :: top-navigation"></div>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar Menu -->
             <div th:replace="fragments/navigation :: sidebar"></div>
@@ -23,11 +22,7 @@
                     <h1 class="text-center m-3">Expressions of Interest</h1>
     
                     <div th:replace="fragments/expressions-of-interest-tables :: pending-expressions-of-interest"></div>
-                    <br>
-                    <h1 class="text-center m-3">Requests To Supply</h1>
-                    <div th:replace="fragments/expressions-of-interest-tables :: pending-requests-to-supply"></div>
-                    <br>
-                    <div th:replace="fragments/expressions-of-interest-tables :: accepted-requests-to-supply"></div>
+
                 </div>
             </div>
         </div>
