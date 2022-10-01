@@ -1,9 +1,7 @@
 package com.wilma.service.positions;
 
 import com.wilma.entity.docs.UserDocument;
-import com.wilma.entity.dto.ApplicationDTO;
-import com.wilma.entity.dto.JobDTO;
-import com.wilma.entity.dto.PlacementDTO;
+import com.wilma.entity.dto.*;
 import com.wilma.entity.positions.*;
 import com.wilma.entity.users.Partner;
 import com.wilma.repository.*;
@@ -84,7 +82,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
         var placement = new Placement(null,
-                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false, placementDTO.getReview());
+                (Partner) userService.getCurrentUser(), placementDTO.getStartDate(), placementDTO.getEndDate(), placementDTO.getPeriod(), placementDTO.getLocation(), placementDTO.getDescription(), false, false, false, null);
         return placementRepository.save(placement);
     }
 
@@ -117,13 +115,6 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return placementRepository.save(placement);
     }
 
-
-    public void AddReview(Placement updatedPlacement) {
-        var currentPlacement =(Placement) this.findById(updatedPlacement.getId());
-        currentPlacement.setReview(updatedPlacement.getReview());
-        var logPlacement = placementRepository.save(currentPlacement);
-        log.info("Placement updated: {}", logPlacement);
-    }
     /**
      * Submit an application for an available position
      * @param applicationDTO The data transfer object used to create a {@link PositionApplication}
@@ -168,6 +159,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
      */
     public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
         return applicationRepository.saveAll(applications);
+    }
+
+    public Position setApproved(Integer id) {
+        var pos = positionRepository.findById(id).orElseThrow();
+        pos.setApproved(true);
+        return positionRepository.save(pos);
+    }
+
+    public List<Position> pendingPositions(){
+        return positionRepository.findByApproved(false);
     }
 
     public ExpressionOfInterest getExpressionOfInterestById(Integer id) {
@@ -247,4 +248,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
                 .filter(pos -> !pos.isApproved())
                 .collect(Collectors.toList());
     }
+
+
+    public ExpressionOfInterest addEOIFromDTO(ExpressionOfInterestDTO eoiDTO) {
+        var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
+        return expressionOfInterestRepository.save(eoi);
+    }
+
+    public ExpressionOfInterest updateEOIFromDTO(ExpressionOfInterestDTO eoiDTO) {
+        var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
+        return expressionOfInterestRepository.save(eoi);
+    }
+}
 }

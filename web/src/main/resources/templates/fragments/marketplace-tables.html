@@ -1,7 +1,7 @@
 
 <!-- Jobs & Placements that are still pending approval -->
-<div th:fragment="pending-approval" id="pending-approval" xmlns:th="http://www.thymeleaf.org">
-    
+<div th:fragment="pending-approval" id="pending-approval" th:if="${ not #lists.isEmpty(pendingPositions)}" xmlns:th="http://www.thymeleaf.org">
+
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
             <h1 class="table-heading">Pending Approval</h1>
@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
-    
+
     <div class="row table-container">
         <table class="table table-sm table-danger table-striped table-hover">
             <thead>
@@ -36,7 +36,7 @@
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-approve">Done</span>
+                            <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <span class="material-symbols-rounded btn-delete">Delete</span>
                         </div>
@@ -44,7 +44,7 @@
                 </tr>
             </tbody>
         </table>
-    
+
         <script th:inline="javascript">
             /*<![CDATA[*/
             var data =
@@ -126,7 +126,7 @@
                 </tr>
             </thead>
             <tbody id="approvedData">
-                <tr th:each="pos : ${approvedPositions}">
+                <tr th:each="pos : ${approvedPositions}" th:if="${pos.approved}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
