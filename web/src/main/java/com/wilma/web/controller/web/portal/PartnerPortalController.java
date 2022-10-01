@@ -265,7 +265,7 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
-                "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false),
+                "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false, null),
                 "id", id
         ));
         return "/partner/new-placement-from-eoi";

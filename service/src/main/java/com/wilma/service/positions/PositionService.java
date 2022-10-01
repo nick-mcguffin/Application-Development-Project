@@ -115,6 +115,13 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return placementRepository.save(placement);
     }
 
+    public void AddReview(Placement updatedPlacement) {
+        var currentPlacement =(Placement) this.findById(updatedPlacement.getId());
+        currentPlacement.setReview(updatedPlacement.getReview());
+        var logPlacement = placementRepository.save(currentPlacement);
+        log.info("Placement updated: {}", logPlacement);
+    }
+
     /**
      * Submit an application for an available position
      * @param applicationDTO The data transfer object used to create a {@link PositionApplication}
@@ -259,5 +266,4 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         var eoi = new ExpressionOfInterest(null, eoiDTO.getCategory(), eoiDTO.getLocation(), eoiDTO.getDescription(), eoiDTO.getDate(), false);
         return expressionOfInterestRepository.save(eoi);
     }
-}
 }
