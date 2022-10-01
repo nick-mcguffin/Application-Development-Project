@@ -1,7 +1,8 @@
-package com.wilma.web.controller.api.v1;
+package com.wilma.web.controller.web.portal.api.v1;
 
 import com.wilma.config.web.UserDocumentConfiguration;
 import com.wilma.service.docs.DocumentService;
+import com.wilma.web.controller.api.v1.FIleAPI;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

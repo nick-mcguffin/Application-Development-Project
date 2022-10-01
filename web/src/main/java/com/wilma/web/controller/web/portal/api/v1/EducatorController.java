@@ -1,7 +1,8 @@
-package com.wilma.web.controller.api.v1;
+package com.wilma.web.controller.web.portal.api.v1;
 
 import com.wilma.entity.users.Educator;
 import com.wilma.service.UserService;
+import com.wilma.web.controller.api.v1.EducatorAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

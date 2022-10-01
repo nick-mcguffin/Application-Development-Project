@@ -101,6 +101,17 @@ public class PartnerPortalController {
         return "/partner/edit-position";
     }
 
+    @GetMapping("/add-review")
+    public String addReview(Model model, @RequestParam String type, @RequestParam Integer id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.partnerMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id)
+        ));
+        return "/partner/add-review";
+    }
     @PostMapping("/create-job")
     public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
         var newJob = positionService.addJobFromDTO(jobDTO);
@@ -151,6 +162,13 @@ public class PartnerPortalController {
 
         log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
+    }
+
+    @PostMapping("/update-review")
+    public String updateReview(@ModelAttribute Placement placement) throws IOException {
+       positionService.AddReview(placement);
+
+                return "redirect:/partner/marketplace";
     }
     //endregion
 
@@ -247,7 +265,7 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
-                "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false),
+                "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false, null),
                 "id", id
         ));
         return "/partner/new-placement-from-eoi";

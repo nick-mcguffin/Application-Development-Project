@@ -1,8 +1,6 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.dto.*;
 import com.wilma.entity.users.Educator;
 import com.wilma.service.UserService;
@@ -41,8 +39,6 @@ public class EducatorPortalController {
     @Autowired
     DocumentService documentService;
 
-    @Autowired
-    PositionService positionService;
     @Autowired
     EOIService eoiService;
 

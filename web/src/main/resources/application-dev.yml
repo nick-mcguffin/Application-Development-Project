@@ -4,7 +4,7 @@ spring:
 
   profiles:
     profile-name: DEV
-    dev-username: student
+    dev-username: partner
 
   h2:
     console:

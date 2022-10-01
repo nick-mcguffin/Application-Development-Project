@@ -1,4 +1,4 @@
 /**
  * Will contain a later release of API specifications
  */
-package com.wilma.web.controller.api.v2;
+package com.wilma.web.controller.web.portal.api.v2;

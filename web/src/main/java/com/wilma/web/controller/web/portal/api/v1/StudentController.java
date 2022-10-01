@@ -1,9 +1,8 @@
-package com.wilma.web.controller.api.v1;
+package com.wilma.web.controller.web.portal.api.v1;
 
-import com.wilma.config.web.UserDocumentConfiguration;
-import com.wilma.entity.users.Partner;
+import com.wilma.entity.users.Student;
 import com.wilma.service.UserService;
-import com.wilma.service.docs.DocumentService;
+import com.wilma.web.controller.api.v1.StudentAPI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,22 +14,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("${api.v1.context-path}/partners")
-public class PartnerController implements PartnerAPI {
+@RequestMapping("${api.v1.context-path}/students")
+public class StudentController implements StudentAPI {
 
-    @Value("${spring.application.domain}${api.v1.context-path}/partners/")
+    @Value("${spring.application.domain}${api.v1.context-path}/students/")
     protected String domain;
 
     @Autowired
     protected UserService userService;
-    @Autowired
-    protected DocumentService documentService;
-    @Autowired
-    protected UserDocumentConfiguration documentConfiguration;
 
     @Override
-    public ResponseEntity<Partner> add(Partner partner) {
-        var obj = (Partner) userService.add(partner);
+    public ResponseEntity<Student> add(Student student) {
+        var obj = (Student) userService.add(student);
         return ResponseEntity.created(
                         UriComponentsBuilder
                                 .fromUriString(domain)
@@ -41,24 +36,24 @@ public class PartnerController implements PartnerAPI {
 
     @Override
     public ResponseEntity<?> get(Integer id, String username) {
-        if (id != null) return ResponseEntity.ok((Partner) userService.findById(id));
-        else if (!username.isEmpty()) return ResponseEntity.ok((Partner) userService.findByUsername(username));
+        if (id != null) return ResponseEntity.ok((Student) userService.findById(id));
+        else if (!username.isEmpty()) return ResponseEntity.ok((Student) userService.findByUsername(username));
         else return ResponseEntity.badRequest().body("No ID or username was detected");
     }
 
     @Override
-    public ResponseEntity<Collection<Partner>> getAll() {
-        return ResponseEntity.ok(userService.findAllPartners());
+    public ResponseEntity<Collection<Student>> getAll() {
+        return ResponseEntity.ok(userService.findAllStudents());
     }
 
     @Override
-    public ResponseEntity<Partner> update(Partner partner) {
+    public ResponseEntity<Student> update(Student student) {
         return ResponseEntity.created(
                         UriComponentsBuilder
                                 .fromUriString(domain)
-                                .queryParam("id", partner.getUserId())
+                                .queryParam("id", student.getUserId())
                                 .build().toUri())
-                .body((Partner) userService.update(partner));
+                .body((Student) userService.update(student));
     }
 
     @Override
