@@ -568,7 +568,8 @@
 
                                 <td>${filteredData[i].review == null ? "Unreviewed" : "Reviewed"}</td>
                                 <td style="display: flex;">
-                                    <div class="mx-auto">
+                                    <div class="mx-auto">  
+                                        ${filteredData[i].completed && filteredData[i].review == null ? `<a class="btn btn-primary" href="/partner/add-review?type=Placement&id=${filteredData[i].id}">Review</a>` : ``}
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
                                     </div>
