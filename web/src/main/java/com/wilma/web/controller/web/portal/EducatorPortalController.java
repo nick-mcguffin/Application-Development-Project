@@ -1,11 +1,11 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
+import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.dto.JobDTO;
 import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
 import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
