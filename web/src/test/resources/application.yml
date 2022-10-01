@@ -1,28 +1,40 @@
 ### Common ###
 module:
-  name: TEST
+  name: WEB
 
 spring:
   application:
-    view-attachment-path: "http://localhost:8080/api/v1/partners/view-attachment/"
+    domain: http://localhost:8080
+    view-attachment-path: ${spring.application.domain}/api/v1/files/
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
     active: dev # Set this as either dev or prod
 
   mail:
-    # Credentials for the gmail smtp service will need to be added to your test run configuration
+    # Credentials for the gmail smtp service passed in run configurations
     site-email: wilmaproject.dev@gmail.com
     host: smtp.gmail.com
     port: 587
     username: wilmaproject.dev@gmail.com
-    password: qxnxokfdfwhqbnfd
+    password: bditlkfcuotzojpu
     properties:
       mail:
         smtp:
           connectiontimeout: 5000
           timeout: 5000
           writetimeout: 5000
+
+  http:
+    multipart:
+      upload-path: web/src/main/resources/uploads/
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 10MB
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 api:
   v1.context-path: /api/v1
