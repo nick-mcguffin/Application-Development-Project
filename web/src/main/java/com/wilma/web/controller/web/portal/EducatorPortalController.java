@@ -6,6 +6,7 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 
 import com.wilma.entity.positions.RequestToSupply;
+import com.wilma.entity.users.Educator;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -62,7 +63,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "positionData", positionService.findAll(),
+                "approvedPositions", positionService.findAll(),
                 "pendingPositions", positionService.pendingPositions()
         ));
         return "/educator/marketplace";
@@ -74,7 +75,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "positionData", positionService.findAll(),
+                "approvedPositions", positionService.findAll(),
                 "pendingPositions", positionService.pendingPositions()
         ));
         return "redirect:marketplace";

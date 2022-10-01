@@ -126,7 +126,7 @@
                 </tr>
             </thead>
             <tbody id="approvedData">
-                <tr th:each="pos : ${approvedPositions}">
+                <tr th:each="pos : ${approvedPositions}" th:if="${pos.approved}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
