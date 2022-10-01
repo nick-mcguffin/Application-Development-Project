@@ -7,6 +7,8 @@ import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Job;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.users.Student;
+import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
@@ -48,6 +50,9 @@ public class StudentPortalController {
     @Autowired
     PositionService positionService;
 
+    @Autowired
+    UserService userService;
+
     //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
@@ -67,7 +72,7 @@ public class StudentPortalController {
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "job", new Job(),
                 "placement", new Placement(),
-                "approvedPositions", positionService.findAll()
+                "allPositions", positionService.findAll()
         ));
         return "/student/marketplace";
     }
@@ -82,7 +87,7 @@ public class StudentPortalController {
                 "studentFiles", documentService.findAllForUser(),
                 "application", new ApplicationDTO()
                 ));
-        return "/student/marketplace";
+        return "redirect:marketplace";
     }
 
     @PostMapping("/apply")
@@ -169,7 +174,7 @@ public class StudentPortalController {
     @GetMapping("/resume-management")
     public String resumeManagement(Model model) {
         model.addAllAttributes(Map.of(
-                "currentPage", "Resume Management",
+                "currentPage", "resume-management",
                 "menuElements", UserPortalConfiguration.studentMenuElements,
                 "sizeLimit", userDocumentConfiguration.getUploadSizeLimit(),
                 "documents", documentService.findAllForUser()
@@ -222,12 +227,34 @@ public class StudentPortalController {
 
     //region Profile
     @GetMapping("/profile")
-    public String studentProfile(Model model) {
+    public String partnerProfile(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "profile",
-                "menuElements", UserPortalConfiguration.studentMenuElements
+                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "currentUser", userService.getCurrentUser(),
+                "inEditMode", false
         ));
         return "/student/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfile(Model model, HttpServletRequest request){
+        model.addAllAttributes(Map.of(
+                "currentPage", "profile",
+                "menuElements", UserPortalConfiguration.studentMenuElements,
+                "inEditMode", true,
+                "currentUser", userService.getCurrentUser()
+        ));
+        return "redirect:profile";
+    }
+
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute Student student, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        userService.updateStudentProfile(student, file.isEmpty() ?
+                ((Student) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
+        return "redirect:profile";
     }
     //endregion
 

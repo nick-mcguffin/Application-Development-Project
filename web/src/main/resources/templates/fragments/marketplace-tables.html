@@ -3,8 +3,13 @@
 <div th:fragment="pending-approval" id="pending-approval" th:if="${ not #lists.isEmpty(pendingPositions)}" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending Approval</h1></div>
-        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control" id="pendingApprovalFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Pending Approval</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="filterPendingApproval" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -21,8 +26,8 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="pendingPositionsData">
-                <tr th:each="pos : ${positionData}" th:if="${!pos.approved}">
+            <tbody id="pendingApprovalData">
+                <tr th:each="pos : ${pendingPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
@@ -42,14 +47,49 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var pendingPositions =
-                /*[[${positionData}]]*/
+            var data =
+                /*[[${pendingPositions}]]*/
                 /*]]>*/
-                $("#pendingApprovalFilter").on("keyup", function () {
+                $("#filterPendingApproval").on("keyup", function () {
+
                     var value = $(this).val();
-                    var table = document.getElementById("pendingPositionsData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
+
+                    let filteredData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        value = value.toLowerCase();
+                        let id = data[i].id;
+                        let type = data[i].type.toLowerCase();
+                        let provider = data[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(data[i].startDate);
+                        let endDate = formatDate(data[i].endDate);
+                        let description = data[i].description;
+
+                        if (id == value || type.includes(value) || provider.includes(value) ||
+                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                            filteredData.push(data[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("pendingApprovalData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                        <th scope="row">${filteredData[i].id}</th>
+                                        <td>${filteredData[i].type}</td>
+                                        <td>${filteredData[i].partner.businessName}</td>
+                                        <td>${formatDate(filteredData[i].startDate)}</td>
+                                        <td>${formatDate(filteredData[i].endDate)}</td>
+                                        <td>${filteredData[i].description}</td>
+                                        <td style="display: flex;">
+                                            <div class="mx-auto">
+                                                <span class="material-symbols-rounded btn-approve">Done</span>
+                                                <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
+                                                <span class="material-symbols-rounded btn-delete">Delete</span>
+                                            </div>
+                                        </td>
+                                        </tr>`;
+                        table.innerHTML += row;
+                    }
                 });
         </script>
     </div>
@@ -58,7 +98,7 @@
 </div>
 
 
-<!-- Current (approved) Jobs & Placements -->
+<!-- [x] Current (approved) Jobs & Placements -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -66,7 +106,9 @@
             <h1 class="table-heading">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="filterApproved" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -83,8 +125,8 @@
                     <th class="text-center">Manage</th>
                 </tr>
             </thead>
-            <tbody id="approvedPositionsData">
-            <tr th:each="pos : ${positionData}" th:if="${pos.approved}">
+            <tbody id="approvedData">
+                <tr th:each="pos : ${approvedPositions}">
                     <th scope="row" th:text="${pos.id}"></th>
                     <td th:text="${pos.type}">Job</td>
                     <td th:text="${pos.partner.businessName}">Microsoft</td>
@@ -103,20 +145,56 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
-                /*[[${positionData}]]*/
+            var data =
+                /*[[${approvedPositions}]]*/
                 /*]]>*/
-                $("#approvedFilter").on("keyup", function () {
+                $("#filterApproved").on("keyup", function () {
+
                     var value = $(this).val();
-                    var table = document.getElementById("approvedPositionsData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
+
+                    let filteredData = [];
+                    for (let i = 0; i < data.length; i++) {
+                        value = value.toLowerCase();
+                        let id = data[i].id;
+                        let type = data[i].type.toLowerCase();
+                        let provider = data[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(data[i].startDate);
+                        let endDate = formatDate(data[i].endDate);
+                        let description = data[i].description;
+
+                        if (id == value || type.includes(value) || provider.includes(value) ||
+                            startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                            filteredData.push(data[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("approvedData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                <th scope="row">${filteredData[i].id}</th>
+                                <td>${filteredData[i].type}</td>
+                                <td>${filteredData[i].partner.businessName}</td>
+                                <td>${formatDate(filteredData[i].startDate)}</td>
+                                <td>${formatDate(filteredData[i].endDate)}</td>
+                                <td>${filteredData[i].description}</td>
+                                <td style="display: flex;">
+                                    <div class="mx-auto">
+                                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                                        <span class="material-symbols-rounded btn-delete">delete</span>
+                                    </div>
+                                </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
                 });
         </script>
     </div>
 
 </div>
-<!-- current (approved) jobs & placements for students-->
+
+
+<!-- [x] current (approved) jobs & placements for students-->
 <div th:fragment="approvedStudent" id="approvedStudent" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -124,71 +202,113 @@
             <h1 class="table-heading">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="approvedStudentFilter" type="text" name="keyword"
-                   placeholder="Filter Positions..."/></div>
+            <input class="form-control" id="filterApprovedStudent" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
         <table class="table table-striped table-hover">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Provider</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Description</th>
-                <th class="text-center">View Job & Placement Details</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Provider</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                    <th class="text-center">View Job & Placement Details</th>
+                </tr>
             </thead>
-            <tbody id="approvedStudentPositionsData">
-            <tr th:each="pos : ${approvedPositions}">
-                <th scope="row" th:text="${pos.id}"></th>
-                <td th:text="${pos.type}">Job</td>
-                <td th:text="${pos.partner.businessName}">Microsoft</td>
-                <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                <td th:text="${pos.description}">Just a one month job</td>
-                <td style="display: flex;">
-                    <div class="mx-auto">
-                        <!-- Pass the position type and id in the link so the details can be displayed -->
-                        <a th:if="${pos.type == 'Placement'}" class='btn btn-primary'
-                              th:href="@{marketplace-details?type=placement&id={posId} (posId=${pos.id})}">View Placement</a>
-                        <a th:if="${pos.type == 'Job'}" class='btn btn-primary'
-                              th:href="@{marketplace-details?type=job&id={posId} (posId=${pos.id})}">View Job</a>
-                    </div>
-                </td>
-            </tr>
+            <tbody id="approvedStudentData">
+                <tr th:each="pos : ${allPositions}">
+                    <th scope="row" th:text="${pos.id}"></th>
+                    <td th:text="${pos.type}">Job</td>
+                    <td th:text="${pos.partner.businessName}">Microsoft</td>
+                    <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${pos.description}">Just a one month job</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <!-- Pass the position type and id in the link so the details can be displayed -->
+                            <a th:if="${#strings.toLowerCase(pos.type) == 'placement'}" class='btn btn-primary'
+                                th:href="@{marketplace-details?type=placement&id={posId} (posId=${pos.id})}">View
+                                Placement</a>
+                            <a th:if="${#strings.toLowerCase(pos.type) == 'job'}" class='btn btn-primary'
+                                th:href="@{marketplace-details?type=job&id={posId} (posId=${pos.id})}">View Job</a>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
-                /*[[${approvedPositions}]]*/
+            var approvedStudentDataList =
+                /*[[${allPositions}]]*/
                 /*]]>*/
-                $("#approvedStudentFilter").on("keyup", function () {
-                    var value = $(this).val();
-                    var table = document.getElementById("approvedStudentPositionsData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
-                });
+            $("#filterApprovedStudent").on("keyup", function () {
 
+                var value = $(this).val();
+
+                let filteredData = [];
+                for (let i = 0; i < approvedStudentDataList.length; i++) {
+                    value = value.toLowerCase();
+                    let id = approvedStudentDataList[i].id;
+                    let type = approvedStudentDataList[i].type.toLowerCase();
+                    let partner = approvedStudentDataList[i].partner.businessName.toLowerCase();
+                    let startDate = formatDate(approvedStudentDataList[i].startDate);
+                    let endDate = formatDate(approvedStudentDataList[i].endDate);
+                    let description = approvedStudentDataList[i].description.toLowerCase();
+
+                    if (id == value || type.includes(value) || partner.includes(value) ||
+                        startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
+                        filteredData.push(approvedStudentDataList[i]);
+                    }
+                }
+
+                var table = document.getElementById("approvedStudentData");
+                table.innerHTML = ``;
+                for (let i = 0; i < filteredData.length; i++) {
+                    let row = `<tr>
+                    <th scope="row">${filteredData[i].id}</th>
+                    <td>${filteredData[i].type}</td>
+                    <td>${filteredData[i].partner.businessName}</td>
+                    <td>${formatDate(filteredData[i].startDate)}</td>
+                    <td>${formatDate(filteredData[i].endDate)}</td>
+                    <td>${filteredData[i].description}</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <!-- Pass the position type and id in the link so the details can be displayed -->
+                            ${
+                                filteredData[i].type.toLowerCase() == 'placement'?
+                                `<a class="btn btn-primary" href="/student/marketplace-details?type=placement&id=${filteredData[i].id}">View Placement</a>` :
+                                `<a class="btn btn-primary" href="/student/marketplace-details?type=job&id=${filteredData[i].id}" > View Job</a >`
+                            }
+
+                        </div>
+                    </td>
+                    </tr>`;
+                    table.innerHTML += row;
+                }
+            });
         </script>
     </div>
 
 </div>
 
-<!-- Partner Jobs & Placements -->
-<div th:fragment="partner" id="partner" xmlns:th="http://www.thymeleaf.org">
+
+<!-- [x] Partner Jobs -->
+<!-- Fix: Add edit and delete button functionality -->
+<div th:fragment="partner-jobs" id="partner-jobs" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Your Jobs & Placements</h1>
+            <h1 class="table-heading">Your Jobs</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control" id="partnerJobFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
@@ -197,7 +317,6 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Type</th>
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Description</th>
@@ -205,18 +324,18 @@
                 <th class="text-center">Manage</th>
             </tr>
             </thead>
-            <tbody id="partnerPositionsData">
-            <tr th:each="pos : ${partnerPositions}">
-                <th scope="row" th:text="${pos.id}"></th>
-                <td th:text="${pos.type}">Job</td>
-                <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                <td th:text="${pos.description}">Just a one month job</td>
-                <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
+            <tbody id="partnerJobsData">
+            <tr th:each="job : ${partnerJobs}">
+                <th scope="row" th:text="${job.id}"></th>
+                <td th:text="${#dates.format(job.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                <td th:text="${#dates.format(job.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                <td th:text="${job.description}">Just a one month job</td>
+                <td th:text="${job.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td style="display: flex;">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
-                        <a th:href="@{'/partner/edit-position?type=' + ${pos.type}}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                        <!-- NB will need to pass id as well -->
+                        <a th:href="@{~/partner/edit-position?type=Job&id={jid}( jid=${job.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                         <span class="material-symbols-rounded btn-delete">delete</span>
                     </div>
                 </td>
@@ -226,22 +345,142 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
-                /*[[${partnerPositions}]]*/
+            var partnerDataList =
+                /*[[${partnerJobs}]]*/
                 /*]]>*/
-                $("#partnerFilter").on("keyup", function () {
+                $("#partnerJobFilter").on("keyup", function () {
                     var value = $(this).val();
-                    var table = document.getElementById("partnerPositionsData");
-                    var filteredData = partnerFilterPositions(value, positions);
-                    rebuildPartnerPositionsTable(filteredData, table);
-                });
 
+                    let filteredData = [];
+                    for (let i = 0; i < partnerDataList.length; i++) {
+                        value = value.toLowerCase();
+                        let id = partnerDataList[i].id;
+                        let startDate = formatDate(partnerDataList[i].startDate);
+                        let endDate = formatDate(partnerDataList[i].endDate);
+                        let description = partnerDataList[i].description.toLowerCase();
+                        let status = partnerDataList[i].approved ? 'Approved' : 'Pending';
+
+                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value)) {
+                            filteredData.push(partnerDataList[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("partnerJobsData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                <th scope="row">${filteredData[i].id}</th>
+                                <td>${formatDate(filteredData[i].startDate)}</td>
+                                <td>${formatDate(filteredData[i].endDate)}</td>
+                                <td>${filteredData[i].description}</td>
+                                <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
+                                <td style="display: flex;">
+                                    <div class="mx-auto">
+                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=${filteredData[i].type}"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
+                                        <span class="material-symbols-rounded btn-delete" > delete</span>
+                                    </div>
+                                </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
+                });
         </script>
     </div>
-
 </div>
 
-<!-- Partner Jobs & Placements -->
+
+<!-- [x] Partner Placements -->
+<!-- Fix: Add edit and delete button functionality -->
+<div th:fragment="partner-placements" id="partner-placements" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="row">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading">Your Placements</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6">
+            <input class="form-control" id="partnerPlacementsFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+        <div class="col-md-1 col-xl-3"></div>
+    </div>
+
+    <div class="row table-container">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th class="text-center">Manage</th>
+            </tr>
+            </thead>
+            <tbody id="partnerPlacementsData">
+            <tr th:each="pla : ${partnerPlacements}">
+                <th scope="row" th:text="${pla.id}"></th>
+                <td th:text="${#dates.format(pla.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                <td th:text="${#dates.format(pla.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                <td th:text="${pla.description}">Just a one month job</td>
+                <td th:text="${pla.approved ? 'Approved' : 'Pending'}">Approved</td>
+                <td style="display: flex;">
+                    <div class="mx-auto">
+                        <!-- link passes position type as a request param to dynamically load the edit page -->
+                        <!-- NB will need to pass id as well -->
+                        <a th:href="@{~/partner/edit-position?type=Placement&id={pid}( pid=${pla.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                        <span class="material-symbols-rounded btn-delete">delete</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <script th:inline="javascript">
+                /*<![CDATA[*/
+            var partnerPlacementsList =
+                /*[[${partnerPlacements}]]*/
+                /*]]>*/
+                $("#partnerPlacementsFilter").on("keyup", function () {
+
+                    var value = $(this).val();
+
+                    let filteredData = [];
+                    for (let i = 0; i < partnerPlacementsList.length; i++) {
+                        value = value.toLowerCase();
+                        let id = partnerPlacementsList[i].id;
+                        let startDate = formatDate(partnerPlacementsList[i].startDate);
+                        let endDate = formatDate(partnerPlacementsList[i].endDate);
+                        let description = partnerPlacementsList[i].description.toLowerCase();
+                        let status = partnerPlacementsList[i].approved ? 'Approved' : 'Pending';
+
+                        if (id == value || startDate.includes(value) || endDate.includes(value) || description.includes(value) || status.toLowerCase().includes(value)) {
+                            filteredData.push(partnerPlacementsList[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("partnerPlacementsData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                <th scope="row">${filteredData[i].id}</th>
+                                <td>${formatDate(filteredData[i].startDate)}</td>
+                                <td>${formatDate(filteredData[i].endDate)}</td>
+                                <td>${filteredData[i].description}</td>
+                                <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
+                                <td style="display: flex;">
+                                    <div class="mx-auto">
+                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
+                                        <span class="material-symbols-rounded btn-delete" > delete</span>
+                                    </div>
+                                </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
+                });
+        </script>
+    </div>
+</div>
+
+
+<!-- Partner EOIs -->
 <div th:fragment="partner-expression-of-interest" id="partner-expression-of-interest" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -249,54 +488,90 @@
             <h1 class="table-heading">Pending Expressions of Interest</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerPendingFilter" type="text" name="keyword"
-                   placeholder="Filter Positions..."/></div>
+            <input class="form-control" id="filterPartnerExpressionOfInterest" type="text" name="keyword"
+                placeholder="Filter Positions..." />
+        </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
         <table class="table table-striped table-hover">
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Type</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th class="text-center">Manage</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th class="text-center">Manage</th>
+                </tr>
             </thead>
-            <tbody id="partnerPendingPositionsData">
-            <tr th:each="pos : ${partnerPositions}">
-                <th scope="row" th:text="${pos.id}"></th>
-                <td th:text="${pos.type}">Job</td>
-                <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
-                <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
-                <td th:text="${pos.description}">Just a one month job</td>
-                <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
-                <td style="display: flex;">
-                    <div class="mx-auto">
-                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
-                        <span class="material-symbols-rounded btn-delete">delete</span>
-                    </div>
-                </td>
-            </tr>
+            <tbody id="partnerExpressionOfInterestData">
+                <tr th:each="pos : ${partnerEOIPositions}">
+                    <th scope="row" th:text="${pos.id}"></th>
+                    <td th:text="${pos.type}">Job</td>
+                    <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
+                    <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
+                    <td th:text="${pos.description}">Just a one month job</td>
+                    <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
+                    <td style="display: flex;">
+                        <div class="mx-auto">
+                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
+                            <span class="material-symbols-rounded btn-delete">delete</span>
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var positions =
-                /*[[${partnerPositions}]]*/
+            var partnerEOIPositionsList =
+                /*[[${partnerEOIPositions}]]*/
                 /*]]>*/
-                $("#partnerPendingFilter").on("keyup", function () {
-                    var value = $(this).val();
-                    var table = document.getElementById("partnerPendingPositionsData");
-                    var filteredData = partnerFilterPositions(value, positions);
-                    rebuildPartnerPositionsTable(filteredData, table);
-                });
+                $("#filterPartnerExpressionOfInterest").on("keyup", function () {
 
+                    var value = $(this).val();
+
+                    let filteredData = [];
+                    for (let i = 0; i < partnerEOIPositionsList.length; i++) {
+                        value = value.toLowerCase();
+                        let id = partnerEOIPositionsList[i].id;
+                        let type = partnerEOIPositionsList[i].type.toLowerCase();
+                        let startDate = formatDate(partnerEOIPositionsList[i].startDate);
+                        let endDate = formatDate(partnerEOIPositionsList[i].endDate);
+                        let description = partnerEOIPositionsList[i].description.toLowerCase();
+                        let status = partnerPlacementsList[i].approved ? 'Approved' : 'Pending';
+
+                        if (id == value || type.includes(value) || startDate.includes(value) || endDate.includes(value) ||
+                            description.includes(value)  || status.toLowerCase().includes(value)) {
+                            filteredData.push(partnerEOIPositionsList[i]);
+                        }
+                    }
+
+                    var table = document.getElementById("partnerExpressionOfInterestData");
+                    table.innerHTML = ``;
+                    for (let i = 0; i < filteredData.length; i++) {
+                        let row = `<tr>
+                                <th scope="row">${filteredData[i].id}</th>
+                                <td>${filteredData[i].type}</td>
+                                <td>${formatDate(filteredData[i].startDate)}</td>
+                                <td>${formatDate(filteredData[i].endDate)}</td>
+                                <td>${filteredData[i].description}</td>
+                                <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
+                                <td style="display: flex;">
+                                    <td style="display: flex;">
+                                    <div class="mx-auto">
+                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-expression-of-interest?id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
+                                        <span class="material-symbols-rounded btn-delete" > delete</span>
+                                    </div>
+                                </td>
+                                </td>
+                                </tr>`;
+                        table.innerHTML += row;
+                    }
+                });
         </script>
     </div>
 </div>
