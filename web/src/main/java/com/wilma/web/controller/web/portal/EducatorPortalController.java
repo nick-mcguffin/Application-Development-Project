@@ -2,6 +2,10 @@ package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
 import com.wilma.entity.positions.ExpressionOfInterest;
+import com.wilma.entity.Frequency;
+import com.wilma.entity.PayType;
+import com.wilma.entity.dto.JobDTO;
+import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 
@@ -45,6 +49,8 @@ public class EducatorPortalController {
     UserService userService;
     @Autowired
     DocumentService documentService;
+    @Autowired
+    PositionService positionService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -229,5 +235,48 @@ public class EducatorPortalController {
         return "redirect:profile";
     }
     //endregion
+
+    //region Position
+    @GetMapping("/edit-position")
+    public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id),
+                "job", positionService.findById(id)
+        ));
+        return "/educator/edit-position";
+    }
+
+    @PostMapping("/update-placement")
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "placement", placementDTO,
+                "id", id
+        ));
+
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/educator/marketplace");
+    }
+
+    @PostMapping("/update-job")
+    public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
+        var newJob = positionService.updateJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "job", jobDTO,
+                "id", id
+        ));
+
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
+        return new RedirectView("/educator/marketplace");
+    }
+    //end region
 
 }

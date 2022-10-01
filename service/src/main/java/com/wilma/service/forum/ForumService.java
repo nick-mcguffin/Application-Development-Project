@@ -1,5 +1,6 @@
 package com.wilma.service.forum;
 
+import com.wilma.entity.Tag;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.forum.ForumContent;
@@ -13,9 +14,11 @@ import com.wilma.service.CrudOpsImpl;
 import com.wilma.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -80,4 +83,33 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
     public Post getPostById(Integer postId) {
         return postRepository.findById(postId).orElse(null);
     }
+
+    public List<Reply> getReplies() {
+        return replyRepository.findAll();
+    }
+
+    public Tag addTag(Tag tag) {
+        return tagRepository.save(tag);
+    }
+
+    public Tag findTagById(Integer id) {
+        return tagRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public List<Tag> findAllTags() {
+        return tagRepository.findAll();
+    }
+
+    public Tag updateTag(Tag tag) {
+        return tagRepository.save(tag);
+    }
+
+    public HttpStatus deleteTagById(Integer id) {
+        if(tagRepository.existsById(id)){
+            tagRepository.deleteById(id);
+            return HttpStatus.NO_CONTENT;//Deleted
+        }
+        return HttpStatus.BAD_REQUEST;// Not deleted
+    }
+
 }

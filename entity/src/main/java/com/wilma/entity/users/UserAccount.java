@@ -36,7 +36,7 @@ public class UserAccount {
 
     @Column(name = "email")
     private String email;
-
+    
     @Lob
     @Column(name = "bio")
     private String bio;
@@ -68,6 +68,7 @@ public class UserAccount {
     public UserAccount(String username) {
         this.username = username;
     }
+
 
     public UserAccount(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles) {
         this.userId = userId;

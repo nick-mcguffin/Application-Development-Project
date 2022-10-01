@@ -1,15 +1,20 @@
 package com.wilma.web.controller.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.wilma.entity.contact.ContactForm;
+import com.wilma.entity.dto.UserDTO;
+import com.wilma.service.UserRegistrationService;
 import com.wilma.service.mail.Mailer;
 import com.wilma.service.positions.ApplicationNotificationService;
 
@@ -28,6 +33,9 @@ public class SiteController {
     @Autowired
     protected ApplicationNotificationService applicationNotificationService;
 
+    @Autowired 
+    protected UserRegistrationService userRegistrationService;
+
     @GetMapping("/")
     public String home(Model model) {
         model.addAllAttributes(Map.of(
@@ -40,8 +48,30 @@ public class SiteController {
     public String register(Model model) {
         model.addAllAttributes(Map.of(
             "currentPage", "Register",
-                "userOptions", List.of("Select...", "Educator", "Partner", "Student")));
+            "userOptions", List.of("Select...", "Educator", "Partner", "Student"),
+            "userDTO", new UserDTO()
+        ));
         return "/register";
+    }
+
+    @PostMapping("/register")
+    public RedirectView registerUser(@ModelAttribute UserDTO userDTO, Model model) {
+        model.addAllAttributes(Map.of(
+            "currentPage", "Register",
+            "userOptions", List.of("Select...", "Educator", "Partner", "Student"),
+            "userDTO", userDTO
+            ));
+            userRegistrationService.register(userDTO);
+            return new RedirectView("/");
+    }
+
+
+    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, Model model){
+        model.addAllAttributes(Map.of(
+            "currentPage", "Account Confirmation"));
+            var result = userRegistrationService.confirmEmailVerification(confirmationToken);
+            return result;
     }
 
     @GetMapping("/about")
@@ -68,16 +98,12 @@ public class SiteController {
 
         return "redirect:contact";
     }
-        //autowiring mailing interface
-        //call send email function to => 
-    // }
-    
+
     @RequestMapping("/login")
     public String login(Model model) {
         model.addAttribute("currentPage", "Login");
         return "/login";
     }
-
 
 }
 
