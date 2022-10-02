@@ -10,6 +10,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.wilma.entity.users.ConfirmationToken;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
@@ -69,5 +71,21 @@ public class MailerImpl implements Mailer {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public MailMessage sendConfirmationEmail(String to, ConfirmationToken confirmationToken) {
+        
+            var confirmationText = "To confirm your account, please click here: \n\n" +
+                                    "http://localhost:8080/confirm-account?token=" + confirmationToken.getConfirmationToken();
+            var message = new SimpleMailMessage();
+            message.setFrom(siteEmail);
+            message.setTo(to);
+            message.setSubject("WILMA Confirmation Email");
+            message.setText(confirmationText);
+
+            mailSender.send(message);
+            return message;
+
     }
 }

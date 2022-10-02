@@ -87,7 +87,7 @@ public class StudentPortalController {
                 "studentFiles", documentService.findAllForUser(),
                 "application", new ApplicationDTO()
                 ));
-        return "redirect:marketplace";
+        return "/student/marketplace";
     }
 
     @PostMapping("/apply")

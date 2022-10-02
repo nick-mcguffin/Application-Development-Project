@@ -4,7 +4,10 @@
 
 
         <label for="placement-review" class="form-label">Review</label>
-        <input class="form-floating user-input" id="placement-review" th:field="*{review}">
+
+        <textarea class="form-control" id="placement-review" rows="5" placeholder="Insert Review here"
+                  th:field="*{review}" required="required"></textarea>
+
     </div>
 
 </div>
@@ -15,10 +18,24 @@
         <a class="btn form-button btn-danger" th:href="@{/partner/marketplace}">Cancel</a>
     </div>
 </div>
-
+ <!-- review form control-->
 <div th:fragment="add-review-form" xmlns:th="http://www.thymeleaf.org" id="add-review-form">
     <form th:action="@{~/partner/update-review?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
         <div th:replace="fragments/review-forms  :: review-form"></div>
         <div th:replace="fragments/review-forms  :: submit-cancel"></div>
+    </form>
+</div>
+
+<!--view Review forms section -->
+<div th:fragment="submit-cancel-edu" xmlns:th="http://www.thymeleaf.org">
+    <div class="form-group mb-3 text-center">
+        <button type="submit" class="btn form-button btn-success">Accept Review</button>
+        <a class="btn form-button btn-danger" th:href="@{/partner/marketplace}">Cancel</a>
+    </div>
+</div>
+
+<div th:fragment="view-review-form" xmlns:th="http://www.thymeleaf.org" id="view-review-form">
+    <form th:action="@{~/educator/approve-review?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
+        <div th:replace="fragments/review-forms  :: submit-cancel-edu"></div>
     </form>
 </div>

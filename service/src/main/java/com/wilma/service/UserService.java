@@ -13,27 +13,45 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRepository> {
 
-    @Value("${spring.profiles.active}")
-    private String activeProfile;
-
     @Value("${spring.profiles.dev-username}")
-    private String currentDevUser;
+    protected String currentDevUser;
     @Autowired
-    private UserAccountRepository userRepository;
+    protected UserAccountRepository userRepository;
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    protected BCryptPasswordEncoder passwordEncoder;
 
     public UserAccount add(UserAccount userAccount){
-
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
-
         return userRepository.save(userAccount);
+    }
+
+    public Collection<Educator> findAllEducators(){
+        return userRepository.findAll().stream()
+                .filter(user -> user instanceof Educator)
+                .map(user ->(Educator) user)
+                .collect(Collectors.toSet());
+    }
+
+    public Collection<Partner> findAllPartners() {
+        return userRepository.findAll().stream()
+                .filter(user -> user instanceof Partner)
+                .map(user ->(Partner) user)
+                .collect(Collectors.toSet());
+    }
+
+    public Collection<Student> findAllStudents() {
+        return userRepository.findAll().stream()
+                .filter(user -> user instanceof Student)
+                .map(user ->(Student) user)
+                .collect(Collectors.toSet());
     }
 
     public UserAccount getCurrentUser(){

@@ -12,6 +12,7 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 @Getter
@@ -36,6 +37,7 @@ public class ExpressionOfInterest {
     private String description;
     
     @Column
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
 @Column(name = "is_filled")

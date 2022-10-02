@@ -144,7 +144,7 @@ private String siteEmail;
                 contactForm.getEmail(),
                 contactForm.getDetails()));
         
-Thread newThread = new Thread(() -> mailer.sendEmail(siteEmail, SUBJECT, sb.toString()));
+        Thread newThread = new Thread(() -> mailer.sendEmail(siteEmail, SUBJECT, sb.toString()));
         newThread.start();
 
     }

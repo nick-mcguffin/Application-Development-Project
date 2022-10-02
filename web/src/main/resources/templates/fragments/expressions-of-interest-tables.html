@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>
         <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingAcceptanceFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><button class="form-button center">+ New Expression of Interest</button></div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><a class="form-button center" th:href="@{~/educator/new-expression-of-interest}">+ New Expression of Interest</a></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
     
@@ -30,8 +30,8 @@
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
-                            <span class="material-symbols-rounded btn-delete">delete</span>
+                            <a th:href="@{~/educator/edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                            <a th:href="@{~/educator/delete-expression-of-interest?id={id}( id=${openEOI.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -172,7 +172,7 @@
 
 <!-- [x] Partner can view and apply for Expressions of Interest that are still open. -->
 <!-- Todo: Apply for EIO functionality -->
-<div th:fragment="partner-pending-expressions-of-interest" id="pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="partner-pending-expressions-of-interest" id="partner-pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
     
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>
@@ -201,7 +201,7 @@
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <button class="btn form-button">Apply</button>
+                            <a th:href="@{~/partner/new-placement-from-eoi?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Apply">Apply</a>
                         </div>
                     </td>
                 </tr>

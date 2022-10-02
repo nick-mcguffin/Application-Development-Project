@@ -1,21 +1,16 @@
 package com.wilma.web.controller.web.portal;
 
 import com.wilma.config.web.UserPortalConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
-import com.wilma.entity.dto.PostDTO;
-import com.wilma.entity.dto.ReplyDTO;
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.positions.Job;
+import com.wilma.entity.dto.*;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.positions.RequestToSupply;
 import com.wilma.entity.users.Educator;
-import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.EOIService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,9 +21,6 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.time.Period;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 @Slf4j
 @Controller
@@ -42,9 +34,14 @@ public class EducatorPortalController {
     @Autowired
     TagService tagService;
     @Autowired
+    PositionService positionService;
+    @Autowired
     UserService userService;
     @Autowired
     DocumentService documentService;
+
+    @Autowired
+    EOIService eoiService;
 
     //region Dashboard
     @GetMapping("/dashboard")
@@ -63,18 +60,98 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false,"")
-                ),
-                "pendingPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false,"")
-                )
+                "approvedPositions", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions(),
+                "ReviewPlacements", positionService.getPlacements()
         ));
         return "/educator/marketplace";
+    }
+
+    @GetMapping("/marketplace-approve")
+    public String marketplaceSetApproved(Model model, @RequestParam Integer posId) {
+        positionService.setApproved(posId);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "approvedPositions", positionService.findAll(),
+                "pendingPositions", positionService.pendingPositions()
+
+        ));
+        return "redirect:marketplace";
+    }
+
+    @GetMapping("/view-review")
+    public String viewReview(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "id", id,
+                "placement", positionService.findById(id)
+        ));
+        return "/educator/view-review";
+    }
+
+    @PostMapping("/approve-review")
+    public String updateReview(@ModelAttribute Placement placement) {
+        positionService.AcceptReview(placement);
+
+        return "redirect:/educator/marketplace";
+    }
+
+    @GetMapping("delete-position")
+    public String deletePosition(@RequestParam Integer positionId){
+        positionService.deleteById(positionId);
+        log.info("Position with id={} deleted by user {}", positionId, userService.getCurrentUser().getUsername());
+        return "redirect:marketplace";
+    }
+    //endregion
+
+    //region EOIs
+    @GetMapping("/new-expression-of-interest")
+    public String newExpressionOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", new ExpressionOfInterestDTO()
+        ));
+        return "/educator/new-expression-of-interest";
+    }
+
+    @GetMapping("/edit-expression-of-interest")
+    public String editExpressionOfInterest(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", eoiService.findEOIById(id),
+                "id", id
+        ));
+        return "/educator/edit-expression-of-interest";
+    }
+
+    @PostMapping("/update-expression-of-interest")
+    public RedirectView updatePlacement(@ModelAttribute ExpressionOfInterestDTO expressionOfInterestDTO, @RequestParam Integer id, Model model){
+        var newEOI = eoiService.updateEOIFromDTO(expressionOfInterestDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", expressionOfInterestDTO,
+                "id", id
+        ));
+
+        log.info("EOI updated from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
+    }
+
+    @PostMapping("/create-expression-of-interest")
+    public RedirectView createEOI(@ModelAttribute ExpressionOfInterestDTO eoiDTO, Model model){
+        var newEOI = eoiService.addEOIFromDTO(eoiDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", eoiDTO));
+
+        log.info("EOI created from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
     }
     //endregion
 
@@ -170,26 +247,16 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
             "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "openExpressionsOfInterest", List.of(
-                        new ExpressionOfInterest(1,"Software Development", "Brisbane", "Slavery with extra steps", new Date(), false),
-                        new ExpressionOfInterest(2,"Network", "Sydney", "A sample job", new Date(), false),
-                        new ExpressionOfInterest(3,"Project Management", "Melbourne", "Another sample job", new Date(), false)
-
-                ),
-                "pendingRequestsToSupply", List.of(
-                        new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                ),
-                "acceptedRequestsToSupply", List.of(
-                        new RequestToSupply(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", true, true),
-                        new RequestToSupply(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", true, true),
-                        new RequestToSupply(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", true, true),
-                        new RequestToSupply(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", true, true)
-                )
+                "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/educator/expressions-of-interest";
+    }
+
+    @GetMapping("delete-expression-of-interest")
+    public String deleteEOI(@RequestParam Integer id){
+        eoiService.deleteExpressionOfInterestById(id);
+        log.info("EOI with id={} deleted by user {}", id, userService.getCurrentUser().getUsername());
+        return "redirect:expressions-of-interest";
     }
     //endregion
 
@@ -225,5 +292,48 @@ public class EducatorPortalController {
         return "redirect:profile";
     }
     //endregion
+
+    //region Position
+    @GetMapping("/edit-position")
+    public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id),
+                "job", positionService.findById(id)
+        ));
+        return "/educator/edit-position";
+    }
+
+    @PostMapping("/update-placement")
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "placement", placementDTO,
+                "id", id
+        ));
+
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/educator/marketplace");
+    }
+
+    @PostMapping("/update-job")
+    public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
+        var newJob = positionService.updateJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "forum",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "job", jobDTO,
+                "id", id
+        ));
+
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
+        return new RedirectView("/educator/marketplace");
+    }
+    //end region
 
 }
