@@ -92,7 +92,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -101,7 +101,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -117,7 +117,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
-                                       th:field="*{username}">
+                                       th:field="*{username}" required>
                             </div>
                         </div>
 
@@ -137,7 +137,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
-                                       th:field="*{discipline}">
+                                       th:field="*{discipline}" required>
                             </div>
                         </div>
 
@@ -160,7 +160,7 @@
                     <div class="card" style="width: 58rem;">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -263,7 +263,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -272,7 +272,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -288,7 +288,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
-                                       th:field="*{username}">
+                                       th:field="*{username}" required>
                             </div>
                         </div>
 
@@ -308,7 +308,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.businessName}"
-                                       th:field="*{businessName}">
+                                       th:field="*{businessName}" required>
                             </div>
                         </div>
 
@@ -321,7 +321,7 @@
                     <div class="card" style="width: 58rem;">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
@@ -442,7 +442,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after theys are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -451,7 +451,7 @@
                         <br/>
                         <div class="text-center py-2">
                             <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after changes are saved</i></small>
+                            <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
@@ -467,7 +467,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
-                                       th:field="*{username}">
+                                       th:field="*{username}" required>
                             </div>
                         </div>
 
@@ -487,7 +487,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
-                                       th:field="*{discipline}">
+                                       th:field="*{discipline}" required>
                             </div>
                         </div>
 
@@ -507,7 +507,7 @@
                             </div>
                             <div class="col-8">
                                 <input type="date" class="w-100 h-auto my-1" th:value="${currentUser.expectedGraduationDate}"
-                                       th:field="*{expectedGraduationDate}" >
+                                       th:field="*{expectedGraduationDate}" required>
                             </div>
                         </div>
 
@@ -520,7 +520,7 @@
                     <div class="card" style="width: 58rem;">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}"></textarea>
+                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
