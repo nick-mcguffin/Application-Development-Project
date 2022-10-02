@@ -34,12 +34,18 @@
 
   <div class="row p-3 pt-0">
     <label for="job-pay-type" class="form-label">Pay Type</label>
-    <input class="form-floating user-input" id="job-pay-type" th:field="*{payType}" required>
+    <select class="form-floating user-input" id="job-pay-type" th:field="*{payType}">
+      <option th:each="type : ${T(com.wilma.entity.PayType).values()}"
+              th:value="${type}" th:text="${type}"></option>
+    </select>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="job-pay-frequency" class="form-label">Pay Frequency</label>
-    <input class="form-floating user-input" id="job-pay-frequency" th:field="*{payFrequency}" required>
+    <select class="form-floating user-input" id="job-pay-frequency" th:field="*{payFrequency}">
+      <option th:each="freq : ${T(com.wilma.entity.Frequency).values()}"
+              th:value="${freq}" th:text="${freq}"></option>
+    </select>
   </div>
 </div>
 
