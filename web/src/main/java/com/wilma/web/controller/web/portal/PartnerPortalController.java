@@ -6,6 +6,7 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Placement;
+import com.wilma.entity.positions.Position;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -16,6 +17,7 @@ import com.wilma.service.positions.EOIService;
 import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -169,6 +171,13 @@ public class PartnerPortalController {
        positionService.AddReview(placement);
 
                 return "redirect:/partner/marketplace";
+    }
+
+    @GetMapping("delete-position")
+    public String deletePosition(@RequestParam Integer positionId){
+        positionService.deleteById(positionId);
+        log.info("Position with id={} deleted by user {}", positionId, userService.getCurrentUser().getUsername());
+        return "redirect:marketplace";
     }
     //endregion
 

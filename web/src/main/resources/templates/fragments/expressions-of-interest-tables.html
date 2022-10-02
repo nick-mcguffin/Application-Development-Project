@@ -31,7 +31,7 @@
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <a th:href="@{~/educator/edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <span class="material-symbols-rounded btn-delete">delete</span>
+                            <a th:href="@{~/educator/delete-expression-of-interest?id={id}( id=${openEOI.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>

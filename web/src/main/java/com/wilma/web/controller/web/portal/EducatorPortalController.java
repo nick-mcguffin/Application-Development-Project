@@ -92,10 +92,17 @@ public class EducatorPortalController {
     }
 
     @PostMapping("/approve-review")
-    public String updateReview(@ModelAttribute Placement placement) throws IOException {
+    public String updateReview(@ModelAttribute Placement placement) {
         positionService.AcceptReview(placement);
 
         return "redirect:/educator/marketplace";
+    }
+
+    @GetMapping("delete-position")
+    public String deletePosition(@RequestParam Integer positionId){
+        positionService.deleteById(positionId);
+        log.info("Position with id={} deleted by user {}", positionId, userService.getCurrentUser().getUsername());
+        return "redirect:marketplace";
     }
     //endregion
 
@@ -243,6 +250,13 @@ public class EducatorPortalController {
                 "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/educator/expressions-of-interest";
+    }
+
+    @GetMapping("delete-expression-of-interest")
+    public String deleteEOI(@RequestParam Integer id){
+        eoiService.deleteExpressionOfInterestById(id);
+        log.info("EOI with id={} deleted by user {}", id, userService.getCurrentUser().getUsername());
+        return "redirect:expressions-of-interest";
     }
     //endregion
 
