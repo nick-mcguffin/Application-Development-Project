@@ -83,19 +83,19 @@
 <div th:fragment="eoi-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="eoi-category" class="form-label">Category</label>
-    <input class="form-floating user-input" id="eoi-category" th:field="*{category}">
+    <input class="form-floating user-input" id="eoi-category" th:field="*{category}" required>
   </div>
   <div class="row p-3 pt-0">
     <label for="eoi-location" class="form-label">Location</label>
-    <input class="form-floating user-input" id="eoi-location" th:field="*{location}">
+    <input class="form-floating user-input" id="eoi-location" th:field="*{location}" required>
   </div>
   <div class="row p-3 pt-0">
     <label for="eoi-description" class="form-label">Description</label>
-    <input class="form-floating user-input" id="eoi-description" th:field="*{description}">
+    <input class="form-floating user-input" id="eoi-description" th:field="*{description}" required>
   </div>
   <div class="row p-3 pt-0">
     <label for="eoi-date" class="form-label">Date</label>
-    <input type="date" class="form-floating user-input" id="eoi-date" th:field="*{date}">
+    <input type="date" class="form-floating user-input" id="eoi-date" th:field="*{date}" required>
   </div>
 </div>
 
