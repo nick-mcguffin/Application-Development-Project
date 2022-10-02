@@ -13,19 +13,20 @@
 
       <!-- breadcrumb -->
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb mt-2">
           <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
           <li class="breadcrumb-item"><a th:href="@{/educator/marketplace}">Marketplace</a></li>
           <li class="breadcrumb-item active" aria-current="page">Edit Position</li>
         </ol>
       </nav>
-
-      <h1 class="text-center m-3" th:text="'Edit ' + ${type} + ': ' + ${id}">Title</h1>
+      <div class="form-border center-form mb-3">
+      <h1 class="text-center m-3 text-style" th:text="'Edit ' + ${type} + ': ' + ${id}">Title</h1>
 
       <!-- Edit position forms -->
       <div id="edit-position-forms" th:switch="${#strings.toLowerCase(type)}">
         <div th:case="job" th:insert="fragments/position-forms  :: educator-edit-job-form"></div>
         <div th:case="placement" th:insert="fragments/position-forms  :: educator-edit-placement-form"></div>
+      </div>
       </div>
     </div>
   </div>
