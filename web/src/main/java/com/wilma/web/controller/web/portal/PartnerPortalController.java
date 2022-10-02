@@ -6,7 +6,6 @@ import com.wilma.entity.dto.PlacementDTO;
 import com.wilma.entity.dto.PostDTO;
 import com.wilma.entity.dto.ReplyDTO;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.positions.Position;
 import com.wilma.entity.users.Partner;
 import com.wilma.service.UserService;
 import com.wilma.service.docs.DocumentService;
@@ -17,7 +16,6 @@ import com.wilma.service.positions.EOIService;
 import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,25 +30,18 @@ import java.util.Map;
 @Controller
 @RequestMapping ("/partner")
 public class PartnerPortalController {
-
     @Autowired
     CategoryService categoryService;
-
     @Autowired
     ForumService forumService;
-    
     @Autowired
     TagService tagService;
-
     @Autowired
     PositionService positionService;
-    
     @Autowired
     UserService userService;
-
     @Autowired
     DocumentService documentService;
-
     @Autowired
     EOIService eoiService;
 
@@ -118,7 +109,7 @@ public class PartnerPortalController {
     public RedirectView createJob(@ModelAttribute JobDTO jobDTO, Model model){
         var newJob = positionService.addJobFromDTO(jobDTO);
         model.addAllAttributes(Map.of(
-                "currentPage", "forum",
+                "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "job", jobDTO));
 
@@ -130,7 +121,7 @@ public class PartnerPortalController {
     public RedirectView createPlacement(@ModelAttribute PlacementDTO placementDTO, Model model){
         var newPlacement = positionService.addPlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
-                "currentPage", "forum",
+                "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "placement", placementDTO));
 
@@ -142,7 +133,7 @@ public class PartnerPortalController {
     public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
         var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
         model.addAllAttributes(Map.of(
-                "currentPage", "forum",
+                "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "placement", placementDTO,
                 "id", id
@@ -156,12 +147,11 @@ public class PartnerPortalController {
     public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
         var newJob = positionService.updateJobFromDTO(jobDTO);
         model.addAllAttributes(Map.of(
-                "currentPage", "forum",
+                "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "job", jobDTO,
                 "id", id
         ));
-
         log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
         return new RedirectView("/partner/marketplace");
     }
@@ -169,8 +159,7 @@ public class PartnerPortalController {
     @PostMapping("/update-review")
     public String updateReview(@ModelAttribute Placement placement) throws IOException {
        positionService.AddReview(placement);
-
-                return "redirect:/partner/marketplace";
+        return "redirect:/partner/marketplace";
     }
 
     @GetMapping("delete-position")
@@ -262,7 +251,6 @@ public class PartnerPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
-
                 "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/partner/expressions-of-interest";
@@ -272,7 +260,7 @@ public class PartnerPortalController {
     public String newPlacementFromEOI (Model model, @RequestParam Integer id) {
         var eoi = eoiService.findEOIById(id);
         model.addAllAttributes(Map.of(
-                "currentPage", "marketplace",
+                "currentPage", "expressions-of-interest",
                 "menuElements", UserPortalConfiguration.partnerMenuElements,
                 "placement", new Placement(null, null, eoi.getDate(), eoi.getDate(), null, eoi.getLocation(), "(EOI: " + eoi.getId() + ", Category: " + eoi.getCategory() + ") " + eoi.getDescription(), false, false,false, null),
                 "id", id

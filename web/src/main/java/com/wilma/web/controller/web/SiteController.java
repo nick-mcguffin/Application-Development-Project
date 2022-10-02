@@ -70,8 +70,7 @@ public class SiteController {
     public ModelAndView confirmUserAccount(ModelAndView modelAndView, @RequestParam("token")String confirmationToken, Model model){
         model.addAllAttributes(Map.of(
             "currentPage", "Account Confirmation"));
-            var result = userRegistrationService.confirmEmailVerification(confirmationToken);
-            return result;
+        return userRegistrationService.confirmEmailVerification(confirmationToken);
     }
 
     @GetMapping("/about")
