@@ -245,7 +245,7 @@ public class StudentPortalController {
                 "inEditMode", true,
                 "currentUser", userService.getCurrentUser()
         ));
-        return "redirect:profile";
+        return "/student/profile";
     }
 
     @PostMapping("/update-profile")
