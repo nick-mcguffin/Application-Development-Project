@@ -36,7 +36,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/student")
 public class StudentPortalController {
-
     @Autowired
     CategoryService categoryService;
     @Autowired
@@ -49,7 +48,6 @@ public class StudentPortalController {
     UserDocumentConfiguration userDocumentConfiguration;
     @Autowired
     PositionService positionService;
-
     @Autowired
     UserService userService;
 
