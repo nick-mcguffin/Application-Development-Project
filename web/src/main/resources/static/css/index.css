@@ -24,3 +24,8 @@
     height: 70%;
     width: 50%;
 }
+
+.tinted {
+    background-color: rgb(0 48 87 / 75%);
+    border-radius: 5px 40px 5px 40px;
+}
