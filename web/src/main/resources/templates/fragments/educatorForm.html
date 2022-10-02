@@ -15,38 +15,38 @@
             <div class="col-12"></div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="educatorUsername" class="form-label">Username</label>
-                <input type="text" th:field="*{username}" class="form-control" id="educatorUsername" aria-describedby="educatorUsername">
+                <input type="text" th:field="*{username}" class="form-control" id="educatorUsername" aria-describedby="educatorUsername" required minlength="6" maxlength="20">
             </div>
             <div class="col-md-6"></div>
             <div class="col-5 ms-5 me-3">
                 <label for="educatorEmail" class="form-label">E-mail</label>
-                <input type="email" th:field="*{email}" class="form-control" id="educatorEmail" aria-describedby="educatorEmail">
+                <input type="email" th:field="*{email}" class="form-control" id="educatorEmail" aria-describedby="educatorEmail" required>
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div class="col-5 ms-5 m-3">
                 <label for="educatorPassword" class="form-label">Password</label>
-                <input type="password" th:field="*{password}" class="form-control" id="educatorPassword" aria-describedby="educatorPassword">
+                <input type="password" th:field="*{password}" class="form-control" id="educatorPassword" aria-describedby="educatorPassword" required minlength="8" maxlength="20">
                 <small id="passwordHelp" class="form-text text-muted">
                     Must be 8-20 characters long.
                 </small>
             </div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="educatorFirstName" class="form-label">First Name</label>
-                <input type="text" th:field="*{firstName}"class="form-control" id="educatorFirstName" aria-describedby="educatorFirstName">
+                <input type="text" th:field="*{firstName}"class="form-control" id="educatorFirstName" aria-describedby="educatorFirstName" required maxlength="20">
             </div>
 
             <div class="col-md-5 ms-5 m-3">
                 <label for="educatorLastName" class="form-label">Last Name</label>
-                <input type="text" th:field="*{lastName}" class="form-control" id="educatorLastName" aria-describedby="educatorLastName">
+                <input type="text" th:field="*{lastName}" class="form-control" id="educatorLastName" aria-describedby="educatorLastName" required maxlength="30">
             </div>
             <div class="col-md-3 ms-5 m-3">
                 <label for="educatorPhone" class="form-label">Contact Number</label>
-                <input type="text" th:field="*{contactNumber}"class="form-control" id="educatorPhone" aria-describedby="educatorPhone">
+                <input type="text" th:field="*{contactNumber}"class="form-control" id="educatorPhone" aria-describedby="educatorPhone" required>
             </div>
 
             <div class="col-md-4 ms-5 m-3">
                 <label for="educatorDiscipline" class="form-label">Discipline</label>
-                <select class="form-select" th:field="*{discipline}" id="educatorDiscipline" aria-label="educatorDiscipline">
+                <select class="form-select" th:field="*{discipline}" id="educatorDiscipline" aria-label="educatorDiscipline" required>
                     <option selected value="">Select...</option>
                     <option value="Software Development">Software Development</option>
                     <option value="Networking">Networking</option>
@@ -56,7 +56,7 @@
             </div>
             <div class="col-md-2 ms-5 m-3">
                 <label for="staffId" class="form-label">CQU Staff ID</label>
-                <input type="text" th:field="*{staffId}"class="form-control" id="staffId" aria-describedby="staffId">
+                <input type="text" th:field="*{staffId}"class="form-control" id="staffId" aria-describedby="staffId" required maxlength="10">
             </div>
             <div class="form-group mb-3 text-center">
                 <button type="submit" class="btn form-button">Register</button>
