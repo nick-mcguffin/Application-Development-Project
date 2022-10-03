@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/head"></head>
+
+  <body class="bg-dark bg-opacity-10">
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+    <div class="container py-5">
+        <h3 class="center">Woah now hold up there... That's not something we can do</h3>
+        <p class="center"><span th:text="${message}"></span></p>
+        <img src="/assets/lion-159448_1280.png" class="d-block w-25 mx-auto" />
+    </div>
+    
+  </body>
+</html>

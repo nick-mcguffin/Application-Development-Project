@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+
+<body class="bg-dark bg-opacity-10">
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+    <div class="container py-5">
+        <h3 class="center">Oops... We can't seem to find that page</h3>
+        <h3 class="center"><span th:text="${message}"></span></h3>
+        <img src="/assets/magnifying-4340698_640.jpg" class="d-block w-25 mx-auto"/>
+    </div>
+
+</body>
+</html>
