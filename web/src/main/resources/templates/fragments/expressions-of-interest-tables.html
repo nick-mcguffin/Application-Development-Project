@@ -28,7 +28,7 @@
                     <td th:text="${openEOI.location}">Brisbane</td>
                     <td th:text="${openEOI.description}">Slavery with extra steps</td>
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{~/educator/edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <a th:href="@{~/educator/delete-expression-of-interest?id={id}( id=${openEOI.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
@@ -81,9 +81,9 @@
                     <th scope="row" th:text="${openEOI.id}"></th>
                     <td th:text="${openEOI.category}">Microsoft</td>
                     <td th:text="${openEOI.location}">Brisbane</td>
-                    <td th:text="${openEOI.description}">Slavey with extra steps</td>
+                    <td th:text="${openEOI.description}">Slavery with extra steps</td>
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{~/partner/new-placement-from-eoi?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Apply">Apply</a>
                         </div>
@@ -125,7 +125,7 @@
                                         <td>${filteredData[i].location}</td>
                                         <td>${filteredData[i].description}</td>
                                         <td>${formatDate(filteredData[i].date)}</td>
-                                        <td style="display: flex;">
+                                        <td class="text-center align-middle">
                                             <div class="mx-auto">
                                                 ${`<a class="btn form-button" href="/partner/apply-for-expression-of-interest?id=${filteredData[i].id}" title="Apply">Apply</a>`}
                                             </div>

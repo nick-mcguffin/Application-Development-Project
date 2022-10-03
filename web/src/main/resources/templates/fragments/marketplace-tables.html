@@ -34,7 +34,7 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
@@ -80,7 +80,7 @@
                                         <td>${formatDate(filteredData[i].startDate)}</td>
                                         <td>${formatDate(filteredData[i].endDate)}</td>
                                         <td>${filteredData[i].description}</td>
-                                        <td style="display: flex;">
+                                        <td class="text-center align-middle">
                                             <div class="mx-auto">
                                                 <span class="material-symbols-rounded btn-approve">Done</span>
                                                 <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
@@ -131,7 +131,7 @@
                 <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                 <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${pos.description}">Just a one month job</td>
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${pos.id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                         <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
@@ -178,7 +178,7 @@
                                         <td>${formatDate(filteredData[i].startDate)}</td>
                                         <td>${formatDate(filteredData[i].endDate)}</td>
                                         <td>${filteredData[i].description}</td>
-                                        <td style="display: flex;">
+                                        <td class="text-center align-middle">
                                             <div class="mx-auto">
                                             {`<a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${filteredData[i].id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>`}
                                                 <span class="material-symbols-rounded btn-delete">Delete</span>
@@ -230,7 +230,7 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
@@ -275,7 +275,7 @@
                                 <td>${formatDate(filteredData[i].startDate)}</td>
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
-                                <td style="display: flex;">
+                                <td class="text-center align-middle">
                                     <div class="mx-auto">
                                         <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
                                         <span class="material-symbols-rounded btn-delete">delete</span>
@@ -325,7 +325,7 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <!-- Pass the position type and id in the link so the details can be displayed -->
                             <a th:if="${#strings.toLowerCase(pos.type) == 'placement'}" class='btn btn-primary'
@@ -374,7 +374,7 @@
                     <td>${formatDate(filteredData[i].startDate)}</td>
                     <td>${formatDate(filteredData[i].endDate)}</td>
                     <td>${filteredData[i].description}</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <!-- Pass the position type and id in the link so the details can be displayed -->
                             ${
@@ -426,7 +426,7 @@
                 <td th:text="${#dates.format(job.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${job.description}">Just a one month job</td>
                 <td th:text="${job.approved ? 'Approved' : 'Pending'}">Approved</td>
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
@@ -469,7 +469,7 @@
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
-                                <td style="display: flex;">
+                                <td class="text-center align-middle">
                                     <div class="mx-auto">
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=${filteredData[i].type}"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
@@ -518,7 +518,7 @@
                 <td th:text="${pla.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td th:text="${#strings.isEmpty(pla.review)? 'Unreviewed' : 'Reviewed' }">true</td>
 
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
@@ -565,7 +565,7 @@
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
 
                                 <td>${filteredData[i].review == null ? "Unreviewed" : "Reviewed"}</td>
-                                <td style="display: flex;">
+                                <td class="text-center align-middle">
                                     <div class="mx-auto">  
                                         ${filteredData[i].completed && filteredData[i].review == null ? `<a class="btn btn-primary" href="/partner/add-review?type=Placement&id=${filteredData[i].id}">Review</a>` : ``}
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
@@ -616,7 +616,7 @@
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
                             <span class="material-symbols-rounded btn-delete">delete</span>
@@ -661,8 +661,8 @@
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
-                                <td style="display: flex;">
-                                    <td style="display: flex;">
+                                <td class="text-center align-middle">
+                                    <td class="text-center align-middle">
                                     <div class="mx-auto">
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-expression-of-interest?id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>
