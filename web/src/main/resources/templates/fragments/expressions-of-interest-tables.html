@@ -2,14 +2,15 @@
 <!-- [ ] Expressions of Interest that are still open to be filled by a Partner -->
 <div th:fragment="pending-expressions-of-interest" id="pending-expressions-of-interest" xmlns:th="http://www.thymeleaf.org">
     
-    <div class="row">
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>
-        <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingAcceptanceFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
-        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><a class="form-button center" th:href="@{~/educator/new-expression-of-interest}">+ New Expression of Interest</a></div>
-        <div class="col-md-1 col-xl-3"></div>
+    <div class="row mb-1">
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3">
+            <h1 class="table-heading text-style">Pending</h1>
+        </div>
+        <div class="col-12 col-md-7 col-lg-8 col-xl-6"><input class="form-control form-border" id="pendingAcceptanceFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
+        <div class="col-12 col-md-4 col-lg-4 col-xl-3"><a class="form-button center p-2" th:href="@{~/educator/new-expression-of-interest}" style="text-decoration: none;"> Add New Expression of Interest</a></div>
     </div>
     
-    <div class="row table-container">
+    <div class="row table-container m-2">
         <table class="table table-sm table-primary table-striped table-hover">
             <thead>
                 <tr>
@@ -176,12 +177,12 @@
     
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3"><h1 class="table-heading">Pending</h1></div>
-        <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control" id="pendingEOIFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
+        <div class="col-12 col-md-6 col-lg-6 col-xl-6"><input class="form-control form-border" id="pendingEOIFilter" type="text" name="keyword" placeholder="Filter Expressions of Interest..." /> </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
     
     <div class="row table-container">
-        <table class="table table-sm table-primary table-striped table-hover">
+        <table class="table table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -193,15 +194,15 @@
                 </tr>
             </thead>
             <tbody id="partnerOpenExpressionsOfInterestData">
-                <tr th:each="openEOI : ${openExpressionsOfInterest}">
+                <tr th:each="openEOI : ${openExpressionsOfInterest}" class="m-2">
                     <th scope="row" th:text="${openEOI.id}"></th>
                     <td th:text="${openEOI.category}">Microsoft</td>
                     <td th:text="${openEOI.location}">Brisbane</td>
-                    <td th:text="${openEOI.description}">Slavey with extra steps</td>
+                    <td th:text="${openEOI.description}">Slavery with extra steps</td>
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td style="display: flex;">
                         <div class="mx-auto">
-                            <a th:href="@{~/partner/new-placement-from-eoi?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Apply">Apply</a>
+                            <a th:href="@{~/partner/new-placement-from-eoi?id={eid}( eid=${openEOI.id} )}" class="form-button p-2" title="Submit Application">Submit Application</a>
                         </div>
                     </td>
                 </tr>

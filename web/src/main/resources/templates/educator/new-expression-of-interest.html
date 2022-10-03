@@ -14,17 +14,18 @@
 
       <!-- breadcrumb -->
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb mt-2">
           <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
           <li class="breadcrumb-item"><a th:href="@{/educator/expressions-of-interest}">Expressions Of Interest</a></li>
           <li class="breadcrumb-item active" aria-current="page">New EOI</li>
         </ol>
       </nav>
-
-      <h1 class="text-center m-3" th:text="'New Expression Of Interest'">Title</h1>
+      <div class="form-border center-form mb-3">
+      <h1 class="text-center m-3 text-style" th:text="'New Expression Of Interest'">Title</h1>
 
       <div id="eoi-form" th:replace="fragments/position-forms  :: new-eoi-form"></div>
 
+      </div>
     </div>
   </div>
 </div>
