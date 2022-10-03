@@ -10,7 +10,7 @@
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
@@ -99,7 +99,7 @@
                         <br/>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
                         <br/>
                         <div class="text-center">
                             <input type="file" name="file"/>
@@ -192,7 +192,7 @@
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
@@ -272,7 +272,7 @@
                     </br>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
                         <div class="text-center">
                             <input type="file" name="file"/>
                             <small><i>Changes will take effect after they are saved</i></small>
@@ -354,7 +354,7 @@
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
@@ -452,7 +452,7 @@
                     </br>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
                     </br>
                         <div class="text-center">
                             <input type="file" name="file"/><br/>
