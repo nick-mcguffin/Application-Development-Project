@@ -61,6 +61,7 @@ public class UserAccount {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<Role> roles = new java.util.LinkedHashSet<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
     @ToString.Exclude
     private Collection<UserDocument> userDocuments = new LinkedList<>();
