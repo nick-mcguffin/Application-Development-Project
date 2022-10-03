@@ -2,42 +2,42 @@
 
 <!-- Create a new post button -->
 <div th:fragment="create-post-button" xmlns:th="http://www.thymeleaf.org">
+    <div class="center-forum">
     <a th:href="@{forum-content?type=post}" class="btn new-post-button">
         <span class="material-symbols-outlined">chat</span>
         <span>Post a New Question</span>
     </a>
 </div>
+</div>
 
 <!-- Forum category overview (home view) -->
 <div th:fragment="category-overview" xmlns:th="http://www.thymeleaf.org">
-
-    <div class="accordion" id="categoryAccordion" th:each="category : ${categoryList}">
-        <div class="accordion-item">
-            <h2 class="accordion-header" th:id="|heading${category.id}|">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#collapse${category.id}"
-                        aria-expanded="true" th:aria-controls="|collapse${category.id}" th:text="${category.name}">
-                </button>
-            </h2>
-            <div th:id="|collapse${category.id}" class="accordion-collapse collapse show" th:aria-labelledby="|heading${category.id}|"
-                 data-bs-parent="#categoryAccordion">
-                <div class="accordion-body">
-                    <a class="view-category mx-auto" th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
-                    <p th:text="${category.description}">Category Description</p>
-
-                    <!-- Iterate recent posts for the current category -->
-                    <div class="recent-posts">
-                        <h2>Recent Posts:</h2>
-                        <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
-                            <li class="post-preview">
-                                <a th:href="|@{forum-thread?category={cat}(cat=${category.name})}#post${post.id}|" th:text="${post.title}">Post Title</a>
-                            </li>
-                        </ul>
+    <div class="center-forum mb-3">
+        <div class="accordion" id="categoryAccordion" th:each="category : ${categoryList}">
+            <div class="accordion-item mb-3">
+                <h2 class="accordion-header" th:id="|heading${category.id}|">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#collapse${category.id}"
+                            aria-expanded="true" th:aria-controls="|collapse${category.id}" th:text="${category.name}">
+                    </button>
+                </h2>
+                <div th:id="|collapse${category.id}" class="accordion-collapse collapse show accordion-border" th:aria-labelledby="|heading${category.id}|"
+                    data-bs-parent="#categoryAccordion">
+                    <a class="view-category mx-auto " th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
+                    <div class="accordion-body">
+                        <p th:text="${category.description}" class="text-style">Category Description</p>
+                        <!-- Iterate recent posts for the current category -->
+                        <div class="recent-posts text-style form-border">
+                            <h2 class="m-2">Recent Posts:</h2>
+                            <ul class="preview-list" th:if="${post.category == category}" th:each=" post : ${recentPosts} ">
+                                <li class="post-preview m-2">
+                                    <a th:href="|@{forum-thread?category={cat}(cat=${category.name})}#post${post.id}|" th:text="${post.title}">Post Title</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
 </div>
 
