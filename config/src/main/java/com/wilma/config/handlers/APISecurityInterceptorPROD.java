@@ -2,7 +2,6 @@ package com.wilma.config.handlers;
 
 import com.wilma.repository.RemoteClientRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,7 +20,7 @@ import java.util.Set;
 public class APISecurityInterceptorPROD implements HandlerInterceptor {
 
     private final RemoteClientRepository remoteClientRepository;
-    @Value("${api.unsecured-endpoints}")
+
     private final Set<String> unsecuredEndpoints;
 
     /*
