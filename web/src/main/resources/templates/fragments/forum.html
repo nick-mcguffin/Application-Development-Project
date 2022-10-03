@@ -22,7 +22,9 @@
                 </h2>
                 <div th:id="|collapse${category.id}" class="accordion-collapse collapse show accordion-border" th:aria-labelledby="|heading${category.id}|"
                     data-bs-parent="#categoryAccordion">
-                    <a class="view-category mx-auto " th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
+                    <div class="mt-2 mx-2">
+                        <a class="view-category" th:href="@{forum-thread?category={cat}(cat=${category.name})}">View All<span class="material-symbols-outlined">open_in_new</span></a>
+                    </div>
                     <div class="accordion-body">
                         <p th:text="${category.description}" class="text-style">Category Description</p>
                         <!-- Iterate recent posts for the current category -->
@@ -44,23 +46,23 @@
 <!-- Category thread is shown when a user explores a forum category, it shows all the posts (and their replies) that have the chosen category -->
 <div th:fragment="category-thread" xmlns:th="http://www.thymeleaf.org">
 
-    <h1 class="text-center" th:text="${categoryName}">Category Title</h1>
+    <h1 class="text-center text-style mb-3" th:text="${categoryName}">Category Title</h1>
 
     <div class="pt-5 text-center text-muted" th:if="${#lists.isEmpty(postsByCategory)}">
         <h2>Oops... It appears there are no posts to display ＞﹏＜</h2>
     </div>
-    <div class="accordion" id="categoryThread" th:each=" post : ${postsByCategory}">
+    <div class="accordion center-forum" id="categoryThread" th:each=" post : ${postsByCategory}">
         <!-- Category Thread -->
-        <div class="accordion-item">
+        <div class="accordion-item mb-3">
             <h2 class="accordion-header" th:id="|post${post.id}|">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="|#post${post.id}Comments|" aria-expanded="true" th:aria-controls="|post${post.id}Comments|" th:text="${post.title}">
                     Post Title
                 </button>
             </h2>
-            <div th:id="|post${post.id}Comments|" class="accordion-collapse collapse show" th:aria-labelledby="|post${post.id}|"
+            <div th:id="|post${post.id}Comments|" class="accordion-collapse collapse show"  th:aria-labelledby="|post${post.id}|"
                  data-bs-parent="#categoryThread">
-                <div class="accordion-body">
-                    <div>
+                <div class="accordion-body accordion-border">
+                    <div class="mb-2">
                         <small th:each="tag : ${post.tags}" class="tag" th:text="${tag.name}"></small>
                     </div>
                     <div class="subtitle">
@@ -97,11 +99,11 @@
 <!-- Form for creating a new forum post -->
 <div th:fragment="post-form" th:class="${contentType == 'post'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
 
-    <h1 class="text-center">Post</h1>
+    <div class="form-border center-form mb-3">
+    <h1 class="text-center text-style">New Post</h1>
     <form th:action="@{create-post}" th:object="${post}" method="post">
         <script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
         <link th:href="@{~/css/forum.css}" rel="stylesheet"/>
-
         <div class="row p-3 pb-0">
             <div class="col-6">
                 <label for="categoryOptions" class="form-label">Category</label>
@@ -141,15 +143,16 @@
             <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
         </div>
     </form>
+    </div>
 </div>
 
 <!-- Form for creating a new reply -->
 <div th:fragment="reply-form" th:class="${contentType == 'reply'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org">
-
-    <h1 class="text-center">Reply</h1>
+    <div class="form-border center-form mb-3">
+    <h1 class="text-center">Add Reply</h1>
     <form th:action="@{reply-to-post?type=reply&postId={pid}( pid=${postId} )}" th:object="${reply}" method="post">
         <div class="row p-3 pt-0">
-            <label for="reply-content" class="form-label"><b>Reply</b></label>
+            <label for="reply-content" class="form-label">Reply</label>
             <textarea class="post-content form-floating" id="reply-content" rows="5" th:field="*{body}" required></textarea>
         </div>
 
@@ -158,4 +161,5 @@
             <input  class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;" />
         </div>
     </form>
+    </div>
 </div>
