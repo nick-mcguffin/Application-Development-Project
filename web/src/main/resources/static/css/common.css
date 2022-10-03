@@ -66,6 +66,17 @@
     line-height: 100px;
 }
 
+.dropbox-border {
+    border-color: #003057 !important;
+    border-style: solid;
+    border-width: 2px;
+}
+
+.upload-table-center {
+    margin: auto;
+    width: 60%;
+    padding: 10px;
+}
 #form-container {
     width: 100%;
     text-align: center;
@@ -82,7 +93,7 @@ textarea:invalid {
     border: 1px dashed red;
 }
 
-.sidebar-border {
+.sidebar-border .edit-profile-border{
     border-color: #003057 !important;
     border-style: solid;
     border-width: 2px;
