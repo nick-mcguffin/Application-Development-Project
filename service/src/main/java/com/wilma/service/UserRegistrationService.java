@@ -1,26 +1,19 @@
 package com.wilma.service;
+
+import com.wilma.entity.dto.USER_TYPE;
+import com.wilma.entity.dto.UserDTO;
+import com.wilma.entity.users.*;
+import com.wilma.repository.ConfirmationTokenRepository;
+import com.wilma.repository.RoleRepository;
+import com.wilma.repository.UserAccountRepository;
+import com.wilma.service.mail.MailerImpl;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.wilma.entity.dto.USER_TYPE;
-import com.wilma.entity.dto.UserDTO;
-import com.wilma.entity.users.ConfirmationToken;
-import com.wilma.entity.users.Educator;
-import com.wilma.entity.users.Partner;
-import com.wilma.entity.users.Role;
-import com.wilma.entity.users.Student;
-import com.wilma.entity.users.UserAccount;
-import com.wilma.repository.ConfirmationTokenRepository;
-import com.wilma.repository.RoleRepository;
-import com.wilma.repository.UserAccountRepository;
-import com.wilma.service.mail.Mailer;
-import com.wilma.service.mail.MailerImpl;
+import java.util.Set;
 
 @Slf4j
 @Service

@@ -15,7 +15,7 @@
             <div class="col-12"></div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="partnerUsername" class="form-label">Username</label>
-                <input type="text" th:field="*{username}" class="form-control" required minlength="6" maxlength="20">
+                <input type="text" id="partnerUsername" th:field="*{username}" class="form-control" required minlength="6" maxlength="20">
             </div>
             <div class="col-md-6"></div>
             <div class="col-5 ms-5 me-3">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="firstName" class="form-label">First Name</label>
-                <input type="text" th:field="*{firstName}"class="form-control" id="firstName" aria-describedby="partnerFirstName" required maxlength="20">
+                <input type="text" th:field="*{firstName}" class="form-control" id="firstName" aria-describedby="partnerFirstName" required maxlength="20">
             </div>
 
             <div class="col-md-5 ms-5 m-3">
