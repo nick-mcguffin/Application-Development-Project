@@ -29,18 +29,16 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
     private UserDocumentRepository userDocumentRepository;
     @Autowired
     private UserService userService;
-
     @Value("${spring.profiles.active}")
     private String activeProfile;
-
     @Value("${spring.servlet.multipart.max-file-size}")
     private String uploadSizeLimit;
-
     @Value("${spring.http.multipart.upload-path}")
     private String uploadPath;
 
     /**
      * Find all documents for a given user
+     *
      * @return A list of documents
      */
     public List<UserDocument> findAllForUser() {
@@ -49,6 +47,7 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
 
     /**
      * Upload a document/file to the system's file directory
+     *
      * @param file The resume, cover letter, or reference etc
      * @return The uploaded file
      * @throws IOException File input output exceptions
@@ -62,6 +61,7 @@ public class DocumentService extends CrudOpsImpl<UserDocument, Integer, UserDocu
 
     /**
      * Delete the given document/file
+     *
      * @param file The file to be deleted
      */
     public void deleteFile(UserDocument file) {

@@ -76,7 +76,7 @@ public class SeedDataService {
         initPositions();
     }
 
-    public void initPositions(){
+    public void initPositions() {
         var partners = userRepository.findAll().stream()
                 .filter(userAccount -> userAccount instanceof Partner)
                 .map(userAccount -> (Partner) userAccount)
@@ -91,30 +91,32 @@ public class SeedDataService {
         initDocuments();
     }
 
-    public void initDocuments(){
+    public void initDocuments() {
         var student = userRepository.findByUsername("student");
         var docs = List.of(
-            new UserDocument(null, new Date(), "resume1.docx", uploadPath + "resume1.docx", student),
-            new UserDocument(null, new Date(), "resume2.docx", uploadPath + "resume2.docx", student),
-            new UserDocument(null, new Date(), "cover-letter-1.pdf",uploadPath + "cover-letter-1.pdf", student)
+                new UserDocument(null, new Date(), "resume1.docx", uploadPath + "resume1.docx", student),
+                new UserDocument(null, new Date(), "resume2.docx", uploadPath + "resume2.docx", student),
+                new UserDocument(null, new Date(), "cover-letter-1.pdf", uploadPath + "cover-letter-1.pdf", student)
         );
         docs.forEach(document -> {
-            if(! userDocumentRepository.existsByFilepath(document.getFilepath())){
+            if (!userDocumentRepository.existsByFilepath(document.getFilepath())) {
                 userDocumentRepository.save(document);
             }
         });
 
     }
-    public void initReplies(){
+
+    public void initReplies() {
         //(Integer id, UserAccount author, Date timestamp, String body, Post post)
         var google = userRepository.findByUsername("google");
         var post = postRepository.findByTitleIgnoreCase("Working with Microsoft");
         var reply1 = new Reply(null, google, new Date(), "Can we come work for you?", post);
-        if(!replyRepository.existsByUid(reply1.getUid())){
+        if (!replyRepository.existsByUid(reply1.getUid())) {
             replyRepository.save(reply1);
         }
     }
-    public void initPosts(){
+
+    public void initPosts() {
         var category1 = categoryRepository.findByNameIgnoreCase("Job FAQ");
         var category2 = categoryRepository.findByNameIgnoreCase("General Discussion");
         var tag1 = tagRepository.findByNameIgnoreCase("Remote Work");
@@ -150,13 +152,13 @@ public class SeedDataService {
                 )
         );
         posts.forEach(post -> {
-            if(!postRepository.existsByUid(post.getUid())){
+            if (!postRepository.existsByUid(post.getUid())) {
                 postRepository.save(post);
             }
         });
     }
 
-    public void initAuthors(){
+    public void initAuthors() {
         var authors = List.of(
                 new Partner("microsoft", "Microsoft"),
                 new Partner("google", "Google"),
@@ -164,13 +166,13 @@ public class SeedDataService {
                 new Partner("translink", "Translink")
         );
         authors.forEach(partner -> {
-            if(!userRepository.existsByUsername(partner.getUsername())){
+            if (!userRepository.existsByUsername(partner.getUsername())) {
                 userRepository.save(partner);
             }
         });
     }
 
-    public void initTags(){
+    public void initTags() {
         var tags = List.of(
                 new Tag(null, "Java"),
                 new Tag(null, "JavaScript"),
@@ -182,21 +184,21 @@ public class SeedDataService {
                 new Tag(null, "Remote Work")
         );
         tags.forEach(tag -> {
-            if(!tagRepository.existsByName(tag.getName())){
+            if (!tagRepository.existsByName(tag.getName())) {
                 tagRepository.save(tag);
             }
         });
     }
 
-    public void initCategories(){
+    public void initCategories() {
         var categories = List.of(
                 new ForumCategory(null, "General Discussion", "Anything goes"),
                 new ForumCategory(null, "Resume Q&A", "Help with your resume"),
                 new ForumCategory(null, "Placement FAQ", "Frequently asked questions about placements"),
                 new ForumCategory(null, "Job FAQ", "Frequently asked questions about jobs"),
-                new ForumCategory(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host")        );
+                new ForumCategory(null, "Improving your feedback", "Tips to get the best feedback possible from your placement host"));
         categories.forEach(forumCategory -> {
-            if(!categoryRepository.existsByName(forumCategory.getName())){
+            if (!categoryRepository.existsByName(forumCategory.getName())) {
                 categoryRepository.save(forumCategory);
             }
         });
@@ -228,7 +230,7 @@ public class SeedDataService {
 
     public void initUsers() {
         Calendar graduationDate = Calendar.getInstance();
-        graduationDate.set(2023, Calendar.NOVEMBER,7);
+        graduationDate.set(2023, Calendar.NOVEMBER, 7);
         var users = List.of(
                 new Educator(
                         null,

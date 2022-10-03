@@ -22,41 +22,41 @@ import java.util.stream.Collectors;
 public class UserService extends CrudOpsImpl<UserAccount, Integer, UserAccountRepository> {
 
     @Value("${spring.profiles.dev-username}")
-    protected String currentDevUser;
+    private String currentDevUser;
     @Autowired
-    protected UserAccountRepository userRepository;
+    private UserAccountRepository userRepository;
     @Autowired
-    protected BCryptPasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
-    public UserAccount add(UserAccount userAccount){
+    public UserAccount add(UserAccount userAccount) {
         userAccount.setPassword(passwordEncoder.encode(userAccount.getPassword()));
         return userRepository.save(userAccount);
     }
 
-    public Collection<Educator> findAllEducators(){
+    public Collection<Educator> findAllEducators() {
         return userRepository.findAll().stream()
                 .filter(user -> user instanceof Educator)
-                .map(user ->(Educator) user)
+                .map(user -> (Educator) user)
                 .collect(Collectors.toSet());
     }
 
     public Collection<Partner> findAllPartners() {
         return userRepository.findAll().stream()
                 .filter(user -> user instanceof Partner)
-                .map(user ->(Partner) user)
+                .map(user -> (Partner) user)
                 .collect(Collectors.toSet());
     }
 
     public Collection<Student> findAllStudents() {
         return userRepository.findAll().stream()
                 .filter(user -> user instanceof Student)
-                .map(user ->(Student) user)
+                .map(user -> (Student) user)
                 .collect(Collectors.toSet());
     }
 
-    public UserAccount getCurrentUser(){
+    public UserAccount getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication instanceof AnonymousAuthenticationToken)
+        if (authentication instanceof AnonymousAuthenticationToken)
             return this.findByUsername(Objects.requireNonNull(currentDevUser));
         return this.findByUsername(authentication.getName());
     }

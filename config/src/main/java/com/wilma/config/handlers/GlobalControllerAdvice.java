@@ -16,16 +16,16 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleEntityNotFoundException(Exception e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity Not Found Exception: "+ e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Entity Not Found Exception: " + e.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(Exception e) {
-        return ResponseEntity.badRequest().body("Illegal Argument Exception: "+ e.getMessage());
+        return ResponseEntity.badRequest().body("Illegal Argument Exception: " + e.getMessage());
     }
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<String> handleAuthenticationException(Exception e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorised: "+ e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorised: " + e.getMessage());
     }
 }

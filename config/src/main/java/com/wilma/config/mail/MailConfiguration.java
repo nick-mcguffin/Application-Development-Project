@@ -29,7 +29,7 @@ public class MailConfiguration {
     private String password;
 
     @Bean
-    public JavaMailSender getJavaMailSender(){
+    public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(this.getHost());
         mailSender.setPort(this.getPort());

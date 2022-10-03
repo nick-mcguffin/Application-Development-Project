@@ -27,30 +27,22 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     @Autowired
     private DocumentService documentService;
-
     @Autowired
     private PositionApplicationRepository applicationRepository;
-
     @Autowired
     private UserService userService;
-
     @Autowired
-    protected PlacementRepository placementRepository;
-
+    private PlacementRepository placementRepository;
     @Autowired
-    PositionRepository positionRepository;
-
+    private PositionRepository positionRepository;
     @Autowired
-    JobRepository jobRepository;
-
+    private JobRepository jobRepository;
     @Autowired
     private ExpressionOfInterestRepository expressionOfInterestRepository;
-
     @Autowired
-    protected PositionCategoryRepository positionCategoryRepository;
-
+    private PositionCategoryRepository positionCategoryRepository;
     @Autowired
-    protected PositionApplicationRepository positionApplicationRepository;
+    private PositionApplicationRepository positionApplicationRepository;
 
     public Job addJobFromDTO(JobDTO jobDTO) {
         var job = new Job(null, (Partner) userService.getCurrentUser(), jobDTO.getStartDate(), jobDTO.getEndDate(), jobDTO.getPeriod(), jobDTO.getLocation(), jobDTO.getDescription(), false, false, jobDTO.getPayRate(), jobDTO.getPayType(), jobDTO.getPayFrequency());
@@ -74,10 +66,10 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return jobRepository.save(job);
     }
 
-    public List<Job> getJobs(){
+    public List<Job> getJobs() {
         return jobRepository.findAll().stream()
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     public Placement addPlacementFromDTO(PlacementDTO placementDTO) {
@@ -86,10 +78,10 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return placementRepository.save(placement);
     }
 
-    public List<Placement> getPlacements(){
+    public List<Placement> getPlacements() {
         return placementRepository.findAll().stream()
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList());
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     public List<ExpressionOfInterest> getExpressionsOfInterest() {
@@ -98,7 +90,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
                 .collect(Collectors.toList());
     }
 
-    public ExpressionOfInterest addExpressionOfInterest(ExpressionOfInterest eoi){
+    public ExpressionOfInterest addExpressionOfInterest(ExpressionOfInterest eoi) {
         return expressionOfInterestRepository.save(eoi);
     }
 
@@ -114,9 +106,12 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         placement.setCompleted(placementDTO.isCompleted());
         return placementRepository.save(placement);
     }
-   /** add a review */
+
+    /**
+     * add a review
+     */
     public void AddReview(Placement updatedPlacement) {
-        var currentPlacement =(Placement) this.findById(updatedPlacement.getId());
+        var currentPlacement = (Placement) this.findById(updatedPlacement.getId());
         currentPlacement.setReview(updatedPlacement.getReview());
         var logPlacement = placementRepository.save(currentPlacement);
         log.info("Placement updated: {}", logPlacement);
@@ -124,13 +119,15 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
 
     public void AcceptReview(Placement updatedPlacement) {
-        var currentPlacement =(Placement) this.findById(updatedPlacement.getId());
+        var currentPlacement = (Placement) this.findById(updatedPlacement.getId());
         currentPlacement.setReviewViewed(true);
         var logPlacement = placementRepository.save(currentPlacement);
         log.info("Placement updated: {}", logPlacement);
     }
+
     /**
      * Submit an application for an available position
+     *
      * @param applicationDTO The data transfer object used to create a {@link PositionApplication}
      */
     public void submitApplicationFromDTO(ApplicationDTO applicationDTO) {
@@ -143,15 +140,16 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
                 false
         );
         application = applicationRepository.save(application);
-        log.info("Application with id "+ application.getId() +" submitted successfully for user with id "+ application.getApplicant().getUserId());
+        log.info("Application with id " + application.getId() + " submitted successfully for user with id " + application.getApplicant().getUserId());
     }
 
     /**
      * Filter a user's documents only keeping those with the given ids
+     *
      * @param applicationDTO The application transfer object containing the list of document ids
      * @return The filtered list of user documents
      */
-    public Set<UserDocument> getFilteredUserDocuments(ApplicationDTO applicationDTO){
+    public Set<UserDocument> getFilteredUserDocuments(ApplicationDTO applicationDTO) {
         return documentService.findAllForUser().stream()
                 .distinct()
                 .filter(doc -> applicationDTO.getFileIds().contains(doc.getId()))
@@ -160,6 +158,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     /**
      * Get a distinct collection of all {@link PositionApplication}s with {@link PositionApplication#isViewed()} = false
+     *
      * @return A set on un-viewed applications
      */
     public Set<PositionApplication> getAllUnViewedApplications() {
@@ -168,10 +167,11 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
 
     /**
      * Updates a collection of {@link PositionApplication}s
+     *
      * @param applications A collection of applications with unsaved changes
      * @return A collection of updated applications
      */
-    public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications){
+    public Collection<PositionApplication> updateAllApplications(Collection<PositionApplication> applications) {
         return applicationRepository.saveAll(applications);
     }
 
@@ -181,7 +181,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return positionRepository.save(pos);
     }
 
-    public List<Position> pendingPositions(){
+    public List<Position> pendingPositions() {
         return positionRepository.findByApproved(false);
     }
 
@@ -194,7 +194,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public HttpStatus deleteExpressionOfInterestById(Integer id) {
-        if(expressionOfInterestRepository.existsById(id)){
+        if (expressionOfInterestRepository.existsById(id)) {
             expressionOfInterestRepository.deleteById(id);
             return HttpStatus.NO_CONTENT;//Deleted
         }
@@ -220,7 +220,7 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public HttpStatus deletePositionCategoryById(Integer id) {
-        if(positionCategoryRepository.existsById(id)){
+        if (positionCategoryRepository.existsById(id)) {
             positionCategoryRepository.deleteById(id);
             return HttpStatus.NO_CONTENT;//Deleted
         }
@@ -244,12 +244,13 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
     }
 
     public HttpStatus deletePositionApplicationById(Integer id) {
-        if(positionApplicationRepository.existsById(id)){
+        if (positionApplicationRepository.existsById(id)) {
             positionApplicationRepository.deleteById(id);
             return HttpStatus.NO_CONTENT;//Deleted
         }
         return HttpStatus.BAD_REQUEST;// Not deleted
     }
+
     public Object getApprovedPositions() {
 
         return positionRepository.findAll().stream()

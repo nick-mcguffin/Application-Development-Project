@@ -28,26 +28,26 @@ import java.util.stream.Collectors;
 public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumContentRepository> {
 
     @Autowired
-    ForumContentRepository forumContentRepository;
+    private ForumContentRepository forumContentRepository;
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
     @Autowired
-    ReplyRepository replyRepository;
+    private ReplyRepository replyRepository;
     @Autowired
-    TagRepository tagRepository;
+    private TagRepository tagRepository;
     @Autowired
-    CategoryService categoryService;
+    private CategoryService categoryService;
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
-    public List<Post> getPosts(){
+    public List<Post> getPosts() {
         return postRepository.findAll();
     }
 
-    public List<Post> getPostByCategoryName(String categoryName){
+    public List<Post> getPostByCategoryName(String categoryName) {
         var category = categoryService.findByName(categoryName);
         return postRepository.findAll().stream()
                 .filter(post -> post.getCategory() == category)
@@ -63,10 +63,10 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
     public Post addPostFromDTO(PostDTO postDTO) {
         var category = categoryService.findByName(postDTO.getCategory());
         var tags = Arrays.stream(postDTO.getTags()).map(t ->
-                tagRepository.findById(Integer.valueOf(t)).orElse(null))
+                        tagRepository.findById(Integer.valueOf(t)).orElse(null))
                 .collect(Collectors.toSet());
 
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
+        var currentUser = activeProfile.equalsIgnoreCase("prod") ?
                 userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
         var post = new Post(null, currentUser, new Date(), postDTO.getTitle(), postDTO.getBody(), category, tags);
         return postRepository.save(post);
@@ -74,7 +74,7 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
 
     public Reply addReplyFromDTO(ReplyDTO replyDTO) {
         var post = postRepository.findById(replyDTO.getPostId()).orElse(null);
-        var currentUser = activeProfile.equalsIgnoreCase("prod")?
+        var currentUser = activeProfile.equalsIgnoreCase("prod") ?
                 userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()) : userService.findByUsername("educator");
         var reply = new Reply(null, currentUser, new Date(), replyDTO.getBody(), post);
         return replyRepository.save(reply);
@@ -105,7 +105,7 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
     }
 
     public HttpStatus deleteTagById(Integer id) {
-        if(tagRepository.existsById(id)){
+        if (tagRepository.existsById(id)) {
             tagRepository.deleteById(id);
             return HttpStatus.NO_CONTENT;//Deleted
         }
