@@ -19,56 +19,64 @@
           <li class="breadcrumb-item active" aria-current="page">Resume Management</li>
         </ol>
       </nav>
-      <div class="container ">
+      <div class="container">
         <div class="row">
             <!-- Dropzone -->
-
-            <div class="w-50 mx-auto pt-5">
-              <h1>File Upload</h1>
-
-              <div id="dropzone">
-                <form th:action="@{/student/resume-management}" class="dropzone needsclick" id="drop-form">
-                  <div class="dz-message needsclick">
-                    <button type="button" class="dz-button">Drop files here or click to upload.</button>
-                    <br />
+                <div class="w-50 mx-auto pt-5 mb-3">
+                  <h1 class="text-style center">File Upload</h1>
+                  <div id="dropzone">
+                    <div class="dropbox-border">
+                    <form th:action="@{/student/resume-management}" class="dropzone needsclick" id="drop-form">
+                      <div class="dz-message needsclick ">
+                        <button type="button" class="dz-button">Drop files here or click to upload.</button>
+                        <br />
+                      </div>
+                      </div>
+                    </form>
+                    <small class="text-center" th:text="| Maximum file size: ${sizeLimit}|"></small>
+                    <div class="mt-2 center">
+                      <button class ="form-button" onClick="window.location.reload();">Upload</button>
+                    </div>
                   </div>
-                </form>
-                <button onClick="window.location.reload();">Done</button>
+                </div>
               </div>
-
-                <small class="text-center" th:text="| Maximum file size: ${sizeLimit}|"></small>
             </div>
+          </br>
             <!-- Dropzone -->
 
 
             <!-- file table-->
+            <div class="upload-table-center">
           <div class="row">
             <div class="row table-container">
-              <table class="table table-sm  table-striped table-hover">
+              <table class="table table-sm table-primary table-striped table-hover">
                 <thead>
                 <tr>
-                  <th>File Name</th>
-                  <th>Upload Date</th>
-                  <th>Open/Download/Delete</th>
+                  <th class="text-center">File Name</th>
+                  <th class="text-center">Upload Date</th>
+                  <th class="text-center">Open</th>
+                  <th class="text-center">Download</th>
+                  <th class="text-center">Delete</th>
                 </tr>
                 </thead>
-                <thead>
-                <tr th:each="doc : ${documents}">
-                  <td><span th:text="${doc.filename}"> name </span></td>
-                  <td th:text="${#dates.format(doc.uploadDate, 'dd/MM/yyyy')}"></td>
-                  <td style="display: flex;">
-                      <a role="button" th:target="_blank" th:href="@{open?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Open">
+                <tr th:each="doc : ${documents}" class="text-center">
+                  <td><span th:text="${doc.filename}"  class="text-center"> name </span></td>
+                  <td th:text="${#dates.format(doc.uploadDate, 'dd/MM/yyyy')}" class="mt-2"></td>
+                  <td class="text-center">
+                      <a role="button" th:target="_blank" th:href="@{open?documentId={id}(id=${doc.id})}" class="btn btn-default btn" title="Open">
                           <span class="material-symbols-rounded ">open_in_new</span>
                       </a>
-
-                      <a role="button" th:href="@{download?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Download">
+                  </td>
+                  <td class="text-center">
+                      <a role="button" th:href="@{download?documentId={id}(id=${doc.id})}" class="btn btn-default btn" title="Download">
                           <span class="material-symbols-rounded" aria-hidden="true">Download</span>
                       </a>
-
-                      <a role="button" th:href="@{delete?documentId={id}(id=${doc.id})}" class="btn btn-default btn-lg mx-2" title="Delete">
+                  </td>
+                  <td class="text-center">
+                      <a role="button" th:href="@{delete?documentId={id}(id=${doc.id})}" class="btn btn-default btn" title="Delete">
                           <span class="material-symbols-rounded" aria-hidden="true">Delete</span>
                       </a>
-
+                  </td>
                   </td>
                 </tr>
               </table>
@@ -77,8 +85,9 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
+    </div>
+    </body>
+
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>

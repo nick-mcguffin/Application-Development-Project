@@ -14,19 +14,19 @@
 
                 <!-- breadcrumb -->
                 <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+                    <ol class="breadcrumb mt-2">
                         <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Marketplace</li>
                     </ol>
                 </nav>
 
-                <h1 class="text-center m-3">Jobs & Placements</h1>
-
+                <h1 class="text-center m-3 text-style">Jobs & Placements</h1>
                 <div th:replace="fragments/marketplace-tables :: pending-approval"></div>
-
+                </br>
                 <div th:replace="fragments/marketplace-tables :: approved"></div>
-
+                </br>
                 <div th:replace="fragments/marketplace-tables :: pending-review"></div>
+                </br>
             </div>
         </div>
     </div>

@@ -14,18 +14,20 @@
 
             <!-- breadcrumb -->
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb mt-2">
                     <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                     <li class="breadcrumb-item"><a th:href="@{/partner/marketplace}">Marketplace</a></li>
                     <li class="breadcrumb-item active" aria-current="page">New Position</li>
                 </ol>
             </nav>
+            <div class="form-border center-form mb-3">
+            <h1 class="text-center m-3 text-style" th:text="'New ' + ${type}">Title</h1>
 
-            <h1 class="text-center m-3" th:text="'New ' + ${type}">Title</h1>
-
+            
             <div id="new-position-forms" th:switch="${#strings.toLowerCase(type)}">
                 <div th:case="job" th:insert="fragments/position-forms  :: new-job-form"></div>
                 <div th:case="placement" th:insert="fragments/position-forms  :: new-placement-form"></div>
+            </div>
             </div>
 
         </div>

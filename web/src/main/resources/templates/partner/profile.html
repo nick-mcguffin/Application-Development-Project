@@ -14,15 +14,15 @@
         <div class="container-fluid">
             <!-- breadcrumb -->
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
+                <ol class="breadcrumb mt-2">
                     <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Profile</li>
                 </ol>
             </nav>
         </div>
         <!-- Page Content -->
-        <div class="container ">
-            <div class="row no-gutters d-flex justify-content-center">
+        <div class="container">
+            <div class="row no-gutters d-flex justify-content-center form-border mb-3">
 
                 <div th:if="${ not inEditMode }" th:insert="fragments/profile-forms  :: partner-profile"></div>
                 <div th:if="${ inEditMode }" th:insert="fragments/profile-forms  :: edit-partner-profile"></div>
