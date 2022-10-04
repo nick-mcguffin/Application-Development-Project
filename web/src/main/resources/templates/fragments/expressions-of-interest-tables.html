@@ -31,8 +31,8 @@
                     <td th:text="${#dates.format(openEOI.date, 'dd/MM/yyyy')}">01/01/2022</td>
                     <td class="text-center align-middle">
                         <div class="mx-auto">
-                            <a th:href="@{~/educator/edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <a th:href="@{~/educator/delete-expression-of-interest?id={id}( id=${openEOI.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
+                            <a th:href="@{edit-expression-of-interest?id={eid}( eid=${openEOI.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                            <a th:href="@{delete-expression-of-interest?id={id}( id=${openEOI.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -41,15 +41,47 @@
     
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var pendingExpressionsOfInterest =
-                /*[[${pendingExpressionsOfInterest}]]*/
-                /*]]>*/
-                $("#pendingAcceptanceFilter").on("keyup", function () {
-                    var value = $(this).val();
-                    var table = document.getElementById("openExpressionOfInterestData");
-                    var filteredData = educatorFilterPositions(value, positions);
-                    rebuildEducatorPositionsTable(filteredData, table);
-                });
+                var openExpressionsOfInterestList =
+                    /*[[${openExpressionsOfInterest}]]*/
+                    /*]]>*/
+                    $("#pendingAcceptanceFilter").on("keyup", function () {
+
+                        var value = $(this).val();
+
+                        let filteredData = [];
+                        for (let i = 0; i < openExpressionsOfInterestList.length; i++) {
+                            value = value.toLowerCase();
+                            let id = openExpressionsOfInterestList[i].id;
+                            let category = openExpressionsOfInterestList[i].category.toLowerCase();
+                            let location = openExpressionsOfInterestList[i].location.toLowerCase();
+                            let description = openExpressionsOfInterestList[i].description.toLowerCase();
+                            let date = formatDate(openExpressionsOfInterestList[i].date);
+
+
+                            if (id == value || category.includes(value) || location.includes(value) || description.includes(value) || date.includes(value)) {
+                                filteredData.push(openExpressionsOfInterestList[i]);
+                            }
+                        }
+
+                        var table = document.getElementById("openExpressionsOfInterestData");
+                        table.innerHTML = ``;
+                        for (let i = 0; i < filteredData.length; i++) {
+                            let row = `<tr>
+                                        <th scope="row">${filteredData[i].id}</th>
+                                        <td>${filteredData[i].category}</td>
+                                        <td>${filteredData[i].location}</td>
+                                        <td>${filteredData[i].description}</td>
+                                        <td>${formatDate(filteredData[i].date)}</td>
+                                        <td class="text-center align-middle">
+                                            <div class="mx-auto">
+                                                ${`<a class="material-symbols-rounded btn-edit" href="edit-expression-of-interest?id=${filteredData[i].id}" title="Edit">Edit</a>`}
+                                                ${`<a class="material-symbols-rounded btn-delete" href="delete-expression-of-interest?id=${filteredData[i].id}" title="Delete">Delete</a>`}
+                                            </div>
+                                        </td>
+                                        </tr>`;
+                            table.innerHTML += row;
+                        }
+                    });
         </script>
     </div>
     <hr/>
@@ -128,7 +160,7 @@
                                         <td>${formatDate(filteredData[i].date)}</td>
                                         <td class="text-center align-middle">
                                             <div class="mx-auto">
-                                                ${`<a class="btn form-button" href="/partner/apply-for-expression-of-interest?id=${filteredData[i].id}" title="Apply">Apply</a>`}
+                                                ${`<a class="form-button p-2" href="new-placement-from-eoi?id=${filteredData[i].id}" title="Submit Application">Submit Application</a>`}
                                             </div>
                                         </td>
                                         </tr>`;
