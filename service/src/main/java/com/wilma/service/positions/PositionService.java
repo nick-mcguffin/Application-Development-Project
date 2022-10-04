@@ -251,14 +251,14 @@ public class PositionService extends CrudOpsImpl<Position, Integer, PositionRepo
         return HttpStatus.BAD_REQUEST;// Not deleted
     }
 
-    public Object getApprovedPositions() {
+    public List<Position> getApprovedPositions() {
 
         return positionRepository.findAll().stream()
                 .filter(Position::isApproved)
                 .collect(Collectors.toList());
     }
 
-    public Object getPendingPositions() {
+    public List<Position> getPendingPositions() {
         return positionRepository.findAll().stream()
                 .filter(pos -> !pos.isApproved())
                 .collect(Collectors.toList());
