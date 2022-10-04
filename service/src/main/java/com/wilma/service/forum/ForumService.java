@@ -41,10 +41,19 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
     @Value("${spring.profiles.active}")
     private String activeProfile;
 
+    /**
+     * Get a list of all forum posts
+     * @return A list of posts
+     */
     public List<Post> getPosts() {
         return postRepository.findAll();
     }
 
+    /**
+     * Get a list of only those posts having the given category
+     * @param categoryName The category to filter the posts by
+     * @return A list of posts having the given category
+     */
     public List<Post> getPostByCategoryName(String categoryName) {
         var category = categoryService.findByName(categoryName);
         return postRepository.findAll().stream()
@@ -52,12 +61,22 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Get a list of only those post replies having the given category
+     * @param categoryName The category to filter the replies by
+     * @return A list of replies having the given category
+     */
     public List<Reply> getPostRepliesByCategory(String categoryName) {
         return replyRepository.findAll().stream()
                 .filter(reply -> reply.getPost().getCategory().getName().equalsIgnoreCase(categoryName))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Create and return a new {@link Post} using data from the given {@link PostDTO}
+     * @param postDTO The post DTO
+     * @return a new Post from the given DTO
+     */
     public Post addPostFromDTO(PostDTO postDTO) {
         var category = categoryService.findByName(postDTO.getCategory());
         var tags = Arrays.stream(postDTO.getTags()).map(t ->
@@ -70,6 +89,11 @@ public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumConten
         return postRepository.save(post);
     }
 
+    /**
+     * Create and return a new {@link Reply} using data from the given {@link ReplyDTO}
+     * @param replyDTO The reply DTO
+     * @return a new Reply from the given DTO
+     */
     public Reply addReplyFromDTO(ReplyDTO replyDTO) {
         var post = postRepository.findById(replyDTO.getPostId()).orElse(null);
         var currentUser = activeProfile.equalsIgnoreCase("prod") ?

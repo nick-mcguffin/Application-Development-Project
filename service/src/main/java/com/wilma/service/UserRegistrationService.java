@@ -30,6 +30,11 @@ public class UserRegistrationService {
     @Autowired
     private MailerImpl mailer;
 
+    /**
+     * Verifies a user account by the given token. If successful, the new user account will be enabled allowing the user to sign in.
+     * @param confirmationToken A unique token that verifies a users ownership of the given email address
+     * @return A model containing a response message and a view to display the message to the user
+     */
     public ModelAndView confirmEmailVerification(String confirmationToken) {
         ModelAndView modelAndView = new ModelAndView();
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
@@ -50,6 +55,11 @@ public class UserRegistrationService {
         return modelAndView;
     }
 
+    /**
+     * Creates a new {@link Student}, {@link Partner}, or {@link Educator} based on the completed registration form
+     * @param userDTO A data transfer object containing the registration form data
+     * @return The resulting user account
+     */
     public UserAccount register(UserDTO userDTO) {
         if (userDTO.getUserType().equalsIgnoreCase(USER_TYPE.EDUCATOR.name()))
             return createEducatorFromUserDTO(userDTO);
@@ -61,6 +71,11 @@ public class UserRegistrationService {
             throw new UnsupportedOperationException("User type '" + userDTO.getUserType() + "' could not be identified.\nSupported types are 'educator', 'partner', and 'student'");
     }
 
+    /**
+     * Creates a new Educator from the DTO
+     * @param userDTO A data transfer object containing the registration form data
+     * @return A new educator
+     */
     private Educator createEducatorFromUserDTO(UserDTO userDTO) {
         UserAccount existingUser = userRepository.findByEmail(userDTO.getEmail());
         UserAccount existingUsername = userRepository.findByUsername(userDTO.getUsername());
@@ -86,6 +101,11 @@ public class UserRegistrationService {
         }
     }
 
+    /**
+     * Creates a new Partner from the DTO
+     * @param userDTO A data transfer object containing the registration form data
+     * @return a new partner
+     */
     public Partner createPartnerFromUserDTO(UserDTO userDTO) {
         UserAccount existingUser = userRepository.findByEmail(userDTO.getEmail());
         UserAccount existingUsername = userRepository.findByUsername(userDTO.getUsername());
@@ -112,6 +132,11 @@ public class UserRegistrationService {
         }
     }
 
+    /**
+     * Creates a new Student from the DTO
+     * @param userDTO A data transfer object containing the registration form data
+     * @return a new student
+     */
     private Student createStudentFromUserDTO(UserDTO userDTO) {
         UserAccount existingUser = userRepository.findByEmail(userDTO.getEmail());
         UserAccount existingUsername = userRepository.findByUsername(userDTO.getUsername());
