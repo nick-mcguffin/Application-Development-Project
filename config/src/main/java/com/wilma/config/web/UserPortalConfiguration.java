@@ -17,7 +17,7 @@ public class UserPortalConfiguration {
             new SidebarMenuElement("expressions-of-interest", "expressions-of-interest", "file_present", "Expressions Of Interest"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
-    //Todo
+
     public final static List<SidebarMenuElement> partnerMenuElements = List.of(
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
             new SidebarMenuElement("marketplace", "marketplace", "business_center", "Jobs & Placements"),
@@ -25,7 +25,7 @@ public class UserPortalConfiguration {
             new SidebarMenuElement("expressions-of-interest", "expressions-of-interest", "file_present", "Expressions Of Interest"),
             new SidebarMenuElement("profile", "profile", "manage_accounts", "Profile")
     );
-    //Todo
+
     public final static List<SidebarMenuElement> studentMenuElements = List.of(
             new SidebarMenuElement("dashboard", "dashboard", "house", "Dashboard"),
             new SidebarMenuElement("marketplace", "marketplace", "business_center", "Jobs & Placements"),

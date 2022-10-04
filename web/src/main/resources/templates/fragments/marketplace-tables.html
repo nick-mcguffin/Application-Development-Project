@@ -4,17 +4,17 @@
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Pending Approval</h1>
+            <h1 class="table-heading text-style">Pending Approval</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="filterPendingApproval" type="text" name="keyword"
+            <input class="form-control form-border" id="filterPendingApproval" type="text" name="keyword"
                 placeholder="Filter Positions..." />
         </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-sm table-danger table-striped table-hover">
+        <table class="table table-sm table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -93,7 +93,6 @@
                 });
         </script>
     </div>
-    <hr />
 
 </div>
 
@@ -101,17 +100,17 @@
 <div th:fragment="pending-review" id="pending-review" xmlns:th="http://www.thymeleaf.org" th:if="${ReviewPlacements.?[review == null].isEmpty() and ReviewPlacements.?[reviewViewed == true].isEmpty() }">
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Pending review</h1>
+            <h1 class="table-heading text-style">Pending Review</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="filterPendingReview" type="text" name="keyword"
+            <input class="form-control form-border" id="filterPendingReview" type="text" name="keyword"
                    placeholder="Filter Positions..." />
         </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-sm table-danger table-striped table-hover">
+        <table class="table table-sm table-primary table-striped table-hover">
             <thead>
             <tr>
                 <th>ID</th>
@@ -190,7 +189,6 @@
                 });
         </script>
     </div>
-    <hr />
 
 </div>
 
@@ -200,17 +198,17 @@
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Current</h1>
+            <h1 class="table-heading text-style">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="filterApproved" type="text" name="keyword"
+            <input class="form-control form-border" id="filterApproved" type="text" name="keyword"
                 placeholder="Filter Positions..." />
         </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-sm table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -295,17 +293,17 @@
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Current</h1>
+            <h1 class="table-heading text-style">Current</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="filterApprovedStudent" type="text" name="keyword"
+            <input class="form-control form-border" id="filterApprovedStudent" type="text" name="keyword"
                 placeholder="Filter Positions..." />
         </div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-sm table-primary table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -328,10 +326,10 @@
                     <td style="display: flex;">
                         <div class="mx-auto">
                             <!-- Pass the position type and id in the link so the details can be displayed -->
-                            <a th:if="${#strings.toLowerCase(pos.type) == 'placement'}" class='btn btn-primary'
+                            <a th:if="${#strings.toLowerCase(pos.type) == 'placement'}" class='btn form-button'
                                 th:href="@{marketplace-details?type=placement&id={posId} (posId=${pos.id})}">View
                                 Placement</a>
-                            <a th:if="${#strings.toLowerCase(pos.type) == 'job'}" class='btn btn-primary'
+                            <a th:if="${#strings.toLowerCase(pos.type) == 'job'}" class='btn form-button'
                                 th:href="@{marketplace-details?type=job&id={posId} (posId=${pos.id})}">View Job</a>
                         </div>
                     </td>
@@ -400,15 +398,15 @@
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Your Jobs</h1>
+            <h1 class="table-heading text-style">Your Jobs</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerJobFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control form-border" id="partnerJobFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-primary table-striped table-hover">
             <thead>
             <tr>
                 <th>ID</th>
@@ -489,15 +487,15 @@
 
     <div class="row">
         <div class="col-12 col-md-4 col-lg-4 col-xl-3">
-            <h1 class="table-heading">Your Placements</h1>
+            <h1 class="table-heading text-style">Your Placements</h1>
         </div>
         <div class="col-12 col-md-7 col-lg-8 col-xl-6">
-            <input class="form-control" id="partnerPlacementsFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
+            <input class="form-control form-border" id="partnerPlacementsFilter" type="text" name="keyword" placeholder="Filter Positions..." /></div>
         <div class="col-md-1 col-xl-3"></div>
     </div>
 
     <div class="row table-container">
-        <table class="table table-striped table-hover">
+        <table class="table table-primary table-striped table-hover">
             <thead>
             <tr>
                 <th>ID</th>

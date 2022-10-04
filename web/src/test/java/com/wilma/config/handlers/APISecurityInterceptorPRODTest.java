@@ -9,8 +9,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 
 import javax.naming.AuthenticationException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class APISecurityInterceptorPRODTest {
 
@@ -28,6 +27,13 @@ class APISecurityInterceptorPRODTest {
         var request = new MockHttpServletRequest();
         request.setRequestURI("/api/v1/educator");
         Exception exception = assertThrows( AuthenticationException.class, () -> aPISecurityInterceptorPROD.preHandle(request, new MockHttpServletResponse(), "handler"));
-        assertEquals("No API ky was provided", exception.getMessage());
+        assertEquals("No API key was provided", exception.getMessage());
+    }
+
+    @Test
+    void testAbleToViewFilesWithoutAPIKey() throws Exception {
+        var request = new MockHttpServletRequest();
+        request.setRequestURI("/api/v1/files/38");
+        assertTrue(aPISecurityInterceptorPROD.preHandle(request, new MockHttpServletResponse(), "handler"));
     }
 }
