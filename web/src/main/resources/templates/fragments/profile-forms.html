@@ -2,52 +2,52 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="educator-profile">
     <div th:object="${currentUser}">
         <div class="container ">
-            <div class="row no-gutters d-flex justify-content-center ">
-
+            <div class="row no-gutters d-flex justify-content-center">
+                <h1 class="text-center text-style m-3"> Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto m-3">
                     <div th:if="${currentUser.profileImageId == null}">
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
-                    <div class="container ">
+                <div class="col-sm-6 m-3">
+                    <div class="container">
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Name: </p>
+                                <p class="text-style">Name: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.username}">Username</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Email Address: </p>
+                                <p class="text-style">Email Address: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.email}">Email Address</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Discipline: </p>
+                                <p class="text-style">Discipline: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.discipline}">Discipline</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>CQU Educator ID: </p>
+                                <p class="text-style">CQU Educator ID: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.staffId}">Staff ID</p>
@@ -60,8 +60,8 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
-                        <div class="card-body">
+                    <div class="card center">
+                        <div class="card-body form-border">
                             <h5 class="card-title">Bio</h5>
                             <p class="card-text" th:text="${currentUser.bio}">Bio</p>
                         </div>
@@ -70,7 +70,7 @@
             </div>
 
             <div class="text-center">
-                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+                <a type="submit" th:href="@{edit-profile}" class="btn form-button m-3">Edit Profile</a>
             </div>
 
         </div>
@@ -84,23 +84,25 @@
 
         <div class="container">
             <div class="row no-gutters d-flex justify-content-center ">
-
+                <h1 class="text-center text-style m-3">Edit Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto center mt-2" >
                     <div th:if="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <div class="center">
+                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
                         <br/>
-                        <div class="text-center py-2">
+                        </div>
+                        <div class="text-center">
                             <input type="file" name="file"/><br/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
                         <br/>
-                        <div class="text-center py-2">
-                            <input type="file" name="file"/><br/>
+                        <div class="text-center">
+                            <input type="file" name="file"/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
@@ -108,45 +110,45 @@
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-2">
                     <div class="container ">
 
-                        <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Name: </p>
+                        <div class="row border-bottom mt-3">
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Name: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.username}"
                                        th:field="*{username}" required minlength="6" maxlength="20">
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Email Address: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Email Address: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.email}"
                                        th:field="*{email}" disabled>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Discipline: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Discipline: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.discipline}"
                                        th:field="*{discipline}" required>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>CQU Educator ID: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">CQU Educator ID: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.staffId}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.staffId}"
                                        th:field="*{staffId}" disabled>
                             </div>
                         </div>
@@ -157,18 +159,18 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
+                    <div class="card center border-0">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
+                            <textarea class="w-100 p-2" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+            <div class="text-center m-3">
+                <button type="submit" class="btn form-button">Update</button>
+                <button class="btn form-button" th:onclick="'window.history.go(-1); return false;'">Cancel
                 </button>
             </div>
 
@@ -182,43 +184,43 @@
 <div xmlns:th="http://www.thymeleaf.org" th:fragment="partner-profile">
     <div th:object="${currentUser}">
         <div class="container ">
-            <div class="row no-gutters d-flex justify-content-center ">
-
+            <div class="row no-gutters d-flex justify-content-center">
+                <h1 class="text-center text-style m-3"> Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto m-3" >
                     <div th:if="${currentUser.profileImageId == null}">
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
+                <div class="col-sm-6 m-3">
                     <div class="container ">
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Name: </p>
+                                <p class="text-style">Name: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.username}">Username</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Email Address: </p>
+                                <p class="text-style">Email Address: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.email}">Email Address</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Business Name: </p>
+                                <p class="text-style">Business Name: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.businessName}">Business Name</p>
@@ -231,9 +233,9 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Bio</h5>
+                    <div class="card center">
+                        <div class="card-body form-border">
+                            <h5 class="card-title text-style">Bio</h5>
                             <p class="card-text" th:text="${currentUser.bio}">Bio</p>
                         </div>
                     </div>
@@ -241,7 +243,7 @@
             </div>
 
             <div class="text-center">
-                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+                <a type="submit" th:href="@{edit-profile}" class="btn form-button m-3">Edit Profile</a>
             </div>
 
         </div>
@@ -255,23 +257,24 @@
 
         <div class="container">
             <div class="row no-gutters d-flex justify-content-center ">
-
+                <h1 class="text-center text-style m-3">Edit Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto center mt-2" >
                     <div th:if="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
-                        <br/>
-                        <div class="text-center py-2">
-                            <input type="file" name="file"/><br/>
+                        <div class="center">
+                            <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        </br>
+                        </div>
+                        <div class="text-center">
+                            <input class="center" type="file" name="file"/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
-                        <br/>
+                    </br>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
-                        <br/>
-                        <div class="text-center py-2">
-                            <input type="file" name="file"/><br/>
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        <div class="text-center">
+                            <input type="file" name="file"/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
                         <br/>
@@ -279,35 +282,35 @@
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
-                    <div class="container ">
+                <div class="col-sm-6 mt-2">
+                    <div class="container">
 
-                        <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Name: </p>
+                        <div class="row border-bottom mt-3">
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Name: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1 edit-profile-border p-1" th:value="${currentUser.username}"
                                        th:field="*{username}" required minlength="6" maxlength="20">
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Email Address: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Email Address: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.email}"
                                        th:field="*{email}" disabled>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Business Name: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Business Name: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.businessName}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.businessName}"
                                        th:field="*{businessName}" required>
                             </div>
                         </div>
@@ -318,18 +321,18 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
+                    <div class="card center border-0">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
+                            <textarea class="w-100 p-2" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+            <div class="text-center m-3">
+                <button type="submit" class="btn form-button">Update</button>
+                <button class="btn form-button" th:onclick="'window.history.go(-1); return false;'">Cancel
                 </button>
             </div>
 
@@ -344,60 +347,60 @@
     <div th:object="${currentUser}">
         <div class="container ">
             <div class="row no-gutters d-flex justify-content-center ">
-
+                <h1 class="text-center text-style m-3"> Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto m-3" >
                     <div th:if="${currentUser.profileImageId == null}">
                         <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
                     </div>
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
+                <div class="col-sm-6 m-3">
                     <div class="container ">
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Name: </p>
+                                <p class="text-style">Name: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.username}">Username</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Email Address: </p>
+                                <p class="text-style">Email Address: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.email}">Email Address</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Discipline: </p>
+                                <p class="text-style">Discipline: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.discipline}">Discipline</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom  mt-2">
                             <div class="col-4">
-                                <p>CQU Student ID: </p>
+                                <p class="text-style">CQU Student ID: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${currentUser.studentId}">Student ID</p>
                             </div>
                         </div>
 
-                        <div class="row border-bottom">
+                        <div class="row border-bottom mt-2">
                             <div class="col-4">
-                                <p>Expected Graduation: </p>
+                                <p class="text-style">Expected Graduation: </p>
                             </div>
                             <div class="col-5">
                                 <p th:text="${#dates.format(currentUser.expectedGraduationDate, 'MMM yyyy')}">Expected Graduation Date</p>
@@ -410,9 +413,9 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
-                        <div class="card-body">
-                            <h5 class="card-title">Bio</h5>
+                    <div class="card center">
+                        <div class="card-body form-border">
+                            <h5 class="card-title text-style">Bio</h5>
                             <p class="card-text" th:text="${currentUser.bio}">Bio</p>
                         </div>
                     </div>
@@ -420,7 +423,7 @@
             </div>
 
             <div class="text-center">
-                <a type="submit" th:href="@{edit-profile}" class="btn btn-primary">Edit Profile</a>
+                <a type="submit" th:href="@{edit-profile}" class="btn form-button m-3">Edit Profile</a>
             </div>
 
         </div>
@@ -434,79 +437,81 @@
 
         <div class="container">
             <div class="row no-gutters d-flex justify-content-center ">
-
+                <h1 class="text-center text-style m-3">Edit Profile Information</h1>
                 <!-- Profile Picture -->
-                <div class="col-md-auto " >
+                <div class="col-md-auto center mt-2" >
                     <div th:if="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
-                        <br/>
-                        <div class="text-center py-2">
-                            <input type="file" name="file"/><br/>
-                            <small><i>Changes will take effect after they are saved</i></small>
+                        <div class="center">
+                            <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                        </br>
                         </div>
-                        <br/>
+                    <div class="text-center">
+                        <input type="file" name="file"/><br/>
+                        <small><i>Changes will take effect after theys are saved</i></small>
+                    </div>
+                    </br>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
-                        <img th:src="@{~/api/v1/files/view-file/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded" src="" width="250px" height="auto">
-                        <br/>
-                        <div class="text-center py-2">
+                        <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
+                    </br>
+                        <div class="text-center">
                             <input type="file" name="file"/><br/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
-                        <br/>
+                    </br>
                     </div>
                 </div>
 
                 <!-- Profile information -->
-                <div class="col-sm-6">
+                <div class="col-sm-6 mt-2">
                     <div class="container ">
 
-                        <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Name: </p>
+                        <div class="row border-bottom mt-3">
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Name: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.username}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.username}"
                                        th:field="*{username}" required minlength="6" maxlength="20">
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Email Address: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Email Address: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.email}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.email}"
                                        th:field="*{email}" disabled>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Discipline: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Discipline: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.discipline}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.discipline}"
                                        th:field="*{discipline}" required>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>CQU Student ID: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">CQU Student ID: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="text" class="w-100 h-auto my-1" th:value="${currentUser.studentId}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="text" class="w-100 h-auto m-1 p-1" th:value="${currentUser.studentId}"
                                        th:field="*{studentId}" disabled>
                             </div>
                         </div>
 
                         <div class="row border-bottom">
-                            <div class="col-4">
-                                <p>Expected Graduation: </p>
+                            <div class="col-4 mt-2 pt-2 pb-1">
+                                <p class="text-style">Expected Graduation: </p>
                             </div>
-                            <div class="col-8">
-                                <input type="date" class="w-100 h-auto my-1" th:value="${currentUser.expectedGraduationDate}"
+                            <div class="col-8 mt-2 mb-1">
+                                <input type="date" class="w-100 h-auto m-1 p-1" th:value="${currentUser.expectedGraduationDate}"
                                        th:field="*{expectedGraduationDate}" required>
                             </div>
                         </div>
@@ -517,18 +522,18 @@
 
             <div class="row no-gutters d-flex justify-content-center ">
                 <div class="col-sm-9 ">
-                    <div class="card" style="width: 58rem;">
+                    <div class="card center border-0">
                         <div class="card-body">
                             <h5 class="card-title">Bio</h5>
-                            <textarea class="w-100" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
+                            <textarea class="w-100 p-2" rows="9" th:value="${currentUser.bio}" th:field="*{bio}" required></textarea>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary">Update</button>
-                <button class="btn btn-outline-primary" th:onclick="'window.history.go(-1); return false;'">Cancel
+            <div class="text-center m-3">
+                <button type="submit" class="btn form-button">Update</button>
+                <button class="btn form-button" th:onclick="'window.history.go(-1); return false;'">Cancel
                 </button>
             </div>
 
