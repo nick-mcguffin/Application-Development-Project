@@ -263,13 +263,13 @@
                     <div th:if="${currentUser.profileImageId == null}">
                         <div class="center">
                             <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
-                        </br>
+                            <br/>
                         </div>
                         <div class="text-center">
                             <input class="center" type="file" name="file"/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
-                    </br>
+                        <br/>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
                         <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
@@ -443,22 +443,22 @@
                     <div th:if="${currentUser.profileImageId == null}">
                         <div class="center">
                             <img th:src="@{~/assets/marketplace.jpg}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
-                        </br>
+                            <br/>
                         </div>
                     <div class="text-center">
                         <input type="file" name="file"/><br/>
-                        <small><i>Changes will take effect after theys are saved</i></small>
+                        <small><i>Changes will take effect after they are saved</i></small>
                     </div>
-                    </br>
+                        <br/>
                     </div>
                     <div th:unless="${currentUser.profileImageId == null}">
                         <img th:src="@{~/api/v1/files/{id} (id=${currentUser.profileImageId})}" alt="Card image cap" class="rounded center m-3" src="" width="250px" height="auto">
-                    </br>
+                        <br/>
                         <div class="text-center">
                             <input type="file" name="file"/><br/>
                             <small><i>Changes will take effect after they are saved</i></small>
                         </div>
-                    </br>
+                        <br/>
                     </div>
                 </div>
 

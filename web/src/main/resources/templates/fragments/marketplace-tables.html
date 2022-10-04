@@ -37,8 +37,8 @@
                     <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
-                            <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete"title="Delete">Delete</a>
+                            <a th:href="@{~/educator/edit-position?type={pType}&id={pid}( pid=${pos.id}, pType=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -192,8 +192,7 @@
 
 </div>
 
-
-<!-- [x] Current (approved) Jobs & Placements -->
+<!-- Current (approved) Jobs & Placements -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -288,7 +287,7 @@
 
 </div>
 
-<!-- [x] current (approved) jobs & placements for students-->
+<!-- current (approved) jobs & placements for students-->
 <div th:fragment="approvedStudent" id="approvedStudent" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -392,8 +391,7 @@
 
 </div>
 
-
-<!-- [x] Partner Jobs -->
+<!-- Partner Jobs -->
 <div th:fragment="partner-jobs" id="partner-jobs" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -482,7 +480,7 @@
 </div>
 
 
-<!-- [x] Partner Placements -->
+<!-- Partner Placements -->
 <div th:fragment="partner-placements" id="partner-placements" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -577,7 +575,6 @@
         </script>
     </div>
 </div>
-
 
 <!-- Partner EOIs -->
 <div th:fragment="partner-expression-of-interest" id="partner-expression-of-interest" xmlns:th="http://www.thymeleaf.org">

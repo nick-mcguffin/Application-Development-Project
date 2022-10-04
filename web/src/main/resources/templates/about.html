@@ -1,36 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/head"></head>
+<head th:replace="fragments/head"></head>
 
-    <body class="bg-dark bg-opacity-10">
-        <div th:replace="fragments/navigation :: top-navigation"></div>
-        <div class="container py-5">
-            <div class="row h-100 align-items-center py-5 form container">
-                <div class="col-lg-6">
-                    <h1 class="display-4 header-style center">About Us</h1>
-                    <p>
-                        We are a group of students from Central Queensland University completing our final 
-                        capstone project, marking the end of a 3-year Bachelor of Information Technology degree.
-                        <br>
-                        <br>
-                        This application is an example of our ability to design, develop and implement a high
-                        quality application while working cohesively as a team. 
-                        <br>
-                        <br>
-                        The WILMA application aims to help educators and industry partners of CQU collaborate
-                        to provide work placement and job opportunities for students completing their studies.
-                        <p>
-                            <hr>
-                            <p class="center">Nicholas McGuffin - nicholas.mcguffin@cqumail.com</p>
-                            <p class="center">Nathan Snow - nathan.snow@cqumail.com</p>
-                            <p class="center">Rory Allen - rory.allen@cqumail.com</p>
-                            <p class="center">Nathan Downes - nathan.downes@cqumail.com</p>
-                            <hr>
-                        </p>
-                    </p>
+<body class="bg-dark bg-opacity-10">
+<div th:replace="fragments/navigation :: top-navigation"></div>
+<div class="container py-5">
+    <div class="row h-100 align-items-center py-5 form container">
+        <div class="col-lg-6">
+            <h1 class="display-4 header-style center">About Us</h1>
+            <div>
+                We are a group of students from Central Queensland University completing our final
+                capstone project, marking the end of a 3-year Bachelor of Information Technology degree.
+                <br>
+                <br>
+                This application is an example of our ability to design, develop and implement a high
+                quality application while working cohesively as a team.
+                <br>
+                <br>
+                The WILMA application aims to help educators and industry partners of CQU collaborate
+                to provide work placement and job opportunities for students completing their studies.
+                <div>
+                    <hr>
+                    <p class="center">Nicholas McGuffin - nicholas.mcguffin@cqumail.com</p>
+                    <p class="center">Nathan Snow - nathan.snow@cqumail.com</p>
+                    <p class="center">Rory Allen - rory.allen@cqumail.com</p>
+                    <p class="center">Nathan Downes - nathan.downes@cqumail.com</p>
+                    <hr>
                 </div>
-                <div class="col-lg-6 d-none d-lg-block"><img src="assets/collaborating.jpg" alt="coding image" class="img-fluid"></div>
             </div>
-        </div>      
-    </body>
+        </div>
+        <div class="col-lg-6 d-none d-lg-block"><img src="assets/collaborating.jpg" alt="coding image"
+                                                     class="img-fluid"></div>
+    </div>
+</div>
+</body>
 </html>

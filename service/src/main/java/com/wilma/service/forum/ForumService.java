@@ -28,8 +28,6 @@ import java.util.stream.Collectors;
 public class ForumService extends CrudOpsImpl<ForumContent, Integer, ForumContentRepository> {
 
     @Autowired
-    private ForumContentRepository forumContentRepository;
-    @Autowired
     private PostRepository postRepository;
     @Autowired
     private ReplyRepository replyRepository;
