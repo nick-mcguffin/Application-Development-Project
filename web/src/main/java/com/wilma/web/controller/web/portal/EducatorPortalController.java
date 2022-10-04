@@ -58,7 +58,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "approvedPositions", positionService.findAll(),
+                "approvedPositions", positionService.getApprovedPositions(),
                 "pendingPositions", positionService.pendingPositions(),
                 "ReviewPlacements", positionService.getPlacements()
         ));
@@ -71,7 +71,7 @@ public class EducatorPortalController {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
                 "menuElements", UserPortalConfiguration.educatorMenuElements,
-                "approvedPositions", positionService.findAll(),
+                "approvedPositions", positionService.getApprovedPositions(),
                 "pendingPositions", positionService.pendingPositions()
 
         ));
