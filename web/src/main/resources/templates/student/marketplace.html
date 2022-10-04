@@ -15,13 +15,22 @@
             <div class="container-fluid">
 
                 <!-- breadcrumb -->
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb mt-2">
+                <nav aria-label="breadcrumb" th:switch="${#strings.toLowerCase(type)}">
+                    <ol th:case="null" class="breadcrumb mt-2">
                         <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Marketplace</li>
                     </ol>
+                    <ol th:case="job" class="breadcrumb mt-2">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{marketplace}">Marketplace</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Job Details</li>
+                    </ol>
+                    <ol th:case="placement" class="breadcrumb mt-2">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{marketplace}">Marketplace</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Placement Details</li>
+                    </ol>
                 </nav>
-                
                 <h1 class="text-center m-3 text-style">Jobs & Placements</h1>
 
                 <!-- Switch fragment depending on the position type -->
