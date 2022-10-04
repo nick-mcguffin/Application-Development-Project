@@ -68,7 +68,6 @@
                     <div class="subtitle">
                     <p th:text="${post.body}"></p>
                         <div class="row">
-                            <!-- Todo: Implement post replies -->
                             <a class="w-auto" th:href="@{forum-content?type=reply&postId={pid} (pid=${post.id})}" title="Reply"><span class="material-symbols-outlined">reply</span>Reply</a>
                             <a class="w-auto" th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" th:href="@{delete-post/{postId}?category={cat} (postId=${post.id}, cat=${categoryName})}" title="Delete"><span class="material-symbols-outlined">delete</span>Delete</a>
                             <div class="ml-3 w-auto">

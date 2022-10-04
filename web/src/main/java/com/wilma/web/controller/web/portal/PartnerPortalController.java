@@ -157,7 +157,7 @@ public class PartnerPortalController {
     }
 
     @PostMapping("/update-review")
-    public String updateReview(@ModelAttribute Placement placement) throws IOException {
+    public String updateReview(@ModelAttribute Placement placement) {
        positionService.AddReview(placement);
         return "redirect:/partner/marketplace";
     }

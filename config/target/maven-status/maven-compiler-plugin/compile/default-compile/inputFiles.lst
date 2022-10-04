@@ -1,9 +1,11 @@
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\handlers\GlobalControllerAdvice.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\web\WebMvcConfigPROD.java
+C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\web\UserPortalConfiguration.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\security\SecurityConfigDEV.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\handlers\APISecurityInterceptorPROD.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\handlers\CustomAccessDeniedHandler.java
+C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\mail\MailConfiguration.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\handlers\LoginSuccessHandler.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\web\WebMvcConfigDEV.java
 C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\security\SecurityConfigPROD.java
-C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\web\UserConfiguration.java
+C:\Users\natha\Google Drive (nathan.snow@cqumail.com)\T2_2022\Application Development Project\Application-Development-Project\config\src\main\java\com\wilma\config\web\UserDocumentConfiguration.java

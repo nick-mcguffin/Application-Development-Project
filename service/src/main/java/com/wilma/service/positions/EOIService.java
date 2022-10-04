@@ -7,56 +7,23 @@ import com.wilma.entity.positions.Placement;
 import com.wilma.entity.positions.Position;
 import com.wilma.repository.*;
 import com.wilma.service.CrudOpsImpl;
-import com.wilma.service.UserService;
-import com.wilma.service.docs.DocumentService;
-
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 public class EOIService extends CrudOpsImpl<Position, Integer, PositionRepository> {
 
     @Autowired
-    private DocumentService documentService;
-
-    @Autowired
-    private PositionApplicationRepository applicationRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
     private ExpressionOfInterestRepository eoiRepository;
-
     @Autowired
-    protected PlacementRepository placementRepository;
-
-    @Autowired
-    JobRepository jobRepository;
-
+    private PlacementRepository placementRepository;
     @Autowired
     private ExpressionOfInterestRepository expressionOfInterestRepository;
-
-    @Autowired
-    protected PositionCategoryRepository positionCategoryRepository;
-
-    @Autowired
-    protected PositionApplicationRepository positionApplicationRepository;
-
-    @Autowired
-    protected PositionRepository positionRepository;
-
-
     public List<ExpressionOfInterest> getExpressionsOfInterest() {
         return expressionOfInterestRepository.findAll().stream()
                 .filter(eoi -> !eoi.isFilled())
@@ -76,13 +43,13 @@ public class EOIService extends CrudOpsImpl<Position, Integer, PositionRepositor
         return placementRepository.save(placement);
     }
 
-    public ExpressionOfInterest findEOIById(Integer id){
+    public ExpressionOfInterest findEOIById(Integer id) {
         return expressionOfInterestRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
 
     public HttpStatus deleteExpressionOfInterestById(Integer id) {
-        if(expressionOfInterestRepository.existsById(id)){
+        if (expressionOfInterestRepository.existsById(id)) {
             expressionOfInterestRepository.deleteById(id);
             return HttpStatus.NO_CONTENT;//Deleted
         }

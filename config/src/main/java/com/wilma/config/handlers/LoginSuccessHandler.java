@@ -24,8 +24,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     /**
      * On authentication success is run each time a user successfully logs in via the web platform
-     * @param request The scope servlet request
-     * @param response The scope servlet response
+     *
+     * @param request        The scope servlet request
+     * @param response       The scope servlet response
      * @param authentication The authentication principal
      * @throws IOException Can be thrown by {@link LoginSuccessHandler#handle(HttpServletRequest, HttpServletResponse, Authentication)}
      */
@@ -40,8 +41,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     /**
      * Handle the request
-     * @param request The scope servlet request
-     * @param response The scope servlet response
+     *
+     * @param request        The scope servlet request
+     * @param response       The scope servlet response
      * @param authentication The authentication principal
      * @throws IOException Thrown by redirect exceptions
      */
@@ -55,6 +57,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     /**
      * Determine target post login redirection URL for the user
+     *
      * @param authentication Authentication instance for the user
      * @return The appropriate redirection endpoint based on the user's role
      */
@@ -67,7 +70,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         final Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         for (final GrantedAuthority grantedAuthority : authorities) {
             String authorityName = grantedAuthority.getAuthority();
-            if(roleTargetUrlMap.containsKey(authorityName)) {
+            if (roleTargetUrlMap.containsKey(authorityName)) {
                 log.info(String.format("Target URL determined as %s", roleTargetUrlMap.get(authorityName)));
                 return roleTargetUrlMap.get(authorityName);
             }
@@ -77,6 +80,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     /**
      * Clear authentication session attributes
+     *
      * @param request The http servlet request for the current context
      */
     protected void clearAuthenticationAttributes(HttpServletRequest request) {

@@ -20,15 +20,17 @@ public class SecurityConfigDEV {
 
     /**
      * Instantiates an instance of a custom user details service which can then be auto-wired throughout the application
+     *
      * @return A custom user details service implementation
      */
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
 
     /**
      * Instantiates an instance of the chosen password encoder which can then be auto-wired throughout the application
+     *
      * @return The chosen password encoder implementation
      */
     @Bean
@@ -38,6 +40,7 @@ public class SecurityConfigDEV {
 
     /**
      * Defines security filters to be implemented by the application
+     *
      * @param http The http security builder
      * @return A security filter chain containing the defined filers
      * @throws Exception Multiple exception possibilities

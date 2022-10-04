@@ -34,11 +34,11 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{marketplace-approve?posId={posId} (posId = ${pos.id})}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
-                            <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete"title="Delete">Delete</a>
+                            <a th:href="@{edit-position?type={pType}&id={pid}( pid=${pos.id}, pType=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                            <a th:href="@{delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                         </div>
                     </td>
                 </tr>
@@ -47,7 +47,7 @@
 
         <script th:inline="javascript">
             /*<![CDATA[*/
-            var data =
+            var pendingData =
                 /*[[${pendingPositions}]]*/
                 /*]]>*/
                 $("#filterPendingApproval").on("keyup", function () {
@@ -55,18 +55,18 @@
                     var value = $(this).val();
 
                     let filteredData = [];
-                    for (let i = 0; i < data.length; i++) {
+                    for (let i = 0; i < pendingData.length; i++) {
                         value = value.toLowerCase();
-                        let id = data[i].id;
-                        let type = data[i].type.toLowerCase();
-                        let provider = data[i].partner.businessName.toLowerCase();
-                        let startDate = formatDate(data[i].startDate);
-                        let endDate = formatDate(data[i].endDate);
-                        let description = data[i].description;
+                        let id = pendingData[i].id;
+                        let type = pendingData[i].type.toLowerCase();
+                        let provider = pendingData[i].partner.businessName.toLowerCase();
+                        let startDate = formatDate(pendingData[i].startDate);
+                        let endDate = formatDate(pendingData[i].endDate);
+                        let description = pendingData[i].description;
 
                         if (id == value || type.includes(value) || provider.includes(value) ||
                             startDate.includes(value) || endDate.includes(value) || description.includes(value)) {
-                            filteredData.push(data[i]);
+                            filteredData.push(pendingData[i]);
                         }
                     }
 
@@ -80,11 +80,13 @@
                                         <td>${formatDate(filteredData[i].startDate)}</td>
                                         <td>${formatDate(filteredData[i].endDate)}</td>
                                         <td>${filteredData[i].description}</td>
-                                        <td style="display: flex;">
-                                            <div class="mx-auto">
-                                                <span class="material-symbols-rounded btn-approve">Done</span>
-                                                <span class="material-symbols-rounded btn-edit" title="Edit">Edit</span>
-                                                <span class="material-symbols-rounded btn-delete">Delete</span>
+                                        <td class="text-center align-middle">
+                                        <div class="mx-auto">
+                                            ${` 
+                                                <a href="marketplace-approve?posId=${filteredData[i].id}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
+                                                <a href="edit-position?type=${filteredData[i].type}&id=${filteredData[i].id}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                                                <a href="delete-position?positionId=${filteredData[i].id}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
+                                            `}
                                             </div>
                                         </td>
                                         </tr>`;
@@ -130,13 +132,11 @@
                 <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                 <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${pos.description}">Just a one month job</td>
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${pos.id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
                         <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                     </div>
-
-
                 </td>
             </tr>
             </tbody>
@@ -177,11 +177,11 @@
                                         <td>${formatDate(filteredData[i].startDate)}</td>
                                         <td>${formatDate(filteredData[i].endDate)}</td>
                                         <td>${filteredData[i].description}</td>
-                                        <td style="display: flex;">
-                                            <div class="mx-auto">
-                                            {`<a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${filteredData[i].id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>`}
-                                                <span class="material-symbols-rounded btn-delete">Delete</span>
-                                            </div>
+                                        <td class="text-center align-middle">
+                                        <div class="mx-auto">
+                                            <a  th:href="@{~/educator/view-review?type=Placement&id={pid}( pid=${pos.id} )}" class="material-symbols-rounded btn-edit" title="Done"><span class="material-symbols-rounded btn-approve">Done</span></a>
+                                            <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
+                                        </div>
                                         </td>
                                         </tr>`;
                         table.innerHTML += row;
@@ -192,8 +192,7 @@
 
 </div>
 
-
-<!-- [x] Current (approved) Jobs & Placements -->
+<!-- Current (approved) Jobs & Placements -->
 <div th:fragment="approved" id="approved" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -228,7 +227,7 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <a th:href="@{~/educator/edit-position?type={ptype}&id={pid}( pid=${pos.id}, ptype=${pos.type} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
                             <a th:href="@{~/educator/delete-position?positionId={id}( id=${pos.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
@@ -273,11 +272,13 @@
                                 <td>${formatDate(filteredData[i].startDate)}</td>
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
-                                <td style="display: flex;">
+                                <td class="text-center align-middle">
                                     <div class="mx-auto">
-                                        <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
-                                        <span class="material-symbols-rounded btn-delete">delete</span>
-                                    </div>
+                                        ${` 
+                                            <a href="edit-position?type=${filteredData[i].type}&id=${filteredData[i].id}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                                            <a href="delete-position?positionId=${filteredData[i].id}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
+                                        `}
+                                        </div>
                                 </td>
                                 </tr>`;
                         table.innerHTML += row;
@@ -288,7 +289,7 @@
 
 </div>
 
-<!-- [x] current (approved) jobs & placements for students-->
+<!-- current (approved) jobs & placements for students-->
 <div th:fragment="approvedStudent" id="approvedStudent" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -323,7 +324,7 @@
                     <td th:text="${#dates.format(pos.startDate, 'dd/MM/yyyy')}">1/12/2022</td>
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <!-- Pass the position type and id in the link so the details can be displayed -->
                             <a th:if="${#strings.toLowerCase(pos.type) == 'placement'}" class='btn form-button'
@@ -372,15 +373,12 @@
                     <td>${formatDate(filteredData[i].startDate)}</td>
                     <td>${formatDate(filteredData[i].endDate)}</td>
                     <td>${filteredData[i].description}</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
-                            <!-- Pass the position type and id in the link so the details can be displayed -->
-                            ${
-                                filteredData[i].type.toLowerCase() == 'placement'?
-                                `<a class="btn btn-primary" href="/student/marketplace-details?type=placement&id=${filteredData[i].id}">View Placement</a>` :
-                                `<a class="btn btn-primary" href="/student/marketplace-details?type=job&id=${filteredData[i].id}" > View Job</a >`
+                            ${filteredData[i].type.toLowerCase() == 'placement' ?
+                                `<a class='btn form-button' href="marketplace-details?type=placement&id=${filteredData[i].id}">View Placement</a>` :
+                                `<a class='btn form-button' href="marketplace-details?type=job&id=${filteredData[i].id}">View Job</a>`
                             }
-
                         </div>
                     </td>
                     </tr>`;
@@ -392,8 +390,7 @@
 
 </div>
 
-
-<!-- [x] Partner Jobs -->
+<!-- Partner Jobs -->
 <div th:fragment="partner-jobs" id="partner-jobs" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -424,7 +421,7 @@
                 <td th:text="${#dates.format(job.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                 <td th:text="${job.description}">Just a one month job</td>
                 <td th:text="${job.approved ? 'Approved' : 'Pending'}">Approved</td>
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
@@ -467,10 +464,10 @@
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
-                                <td style="display: flex;">
+                                <td class="text-center align-middle">
                                     <div class="mx-auto">
-                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=${filteredData[i].type}"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
-                                        <span class="material-symbols-rounded btn-delete" > delete</span>
+                                        ${`<a class="material-symbols-rounded btn-edit" href="edit-position?type=Job&id=${filteredData[i].id}" title="Edit">Edit</a>`}
+	                                    ${`<a class="material-symbols-rounded btn-delete" href="delete-position?positionId=${filteredData[i].id}" title="Delete">Delete</a>`}
                                     </div>
                                 </td>
                                 </tr>`;
@@ -482,7 +479,7 @@
 </div>
 
 
-<!-- [x] Partner Placements -->
+<!-- Partner Placements -->
 <div th:fragment="partner-placements" id="partner-placements" xmlns:th="http://www.thymeleaf.org">
 
     <div class="row">
@@ -516,13 +513,13 @@
                 <td th:text="${pla.approved ? 'Approved' : 'Pending'}">Approved</td>
                 <td th:text="${#strings.isEmpty(pla.review)? 'Unreviewed' : 'Reviewed' }">true</td>
 
-                <td style="display: flex;">
+                <td class="text-center align-middle">
                     <div class="mx-auto">
                         <!-- link passes position type as a request param to dynamically load the edit page -->
                         <!-- NB will need to pass id as well -->
-                        <a th:if="${pla.completed} == true AND ${pla.review} == null" th:href="@{~/partner/add-review?type=Placement&id={pid}( pid=${pla.id} )}" class="btn btn-primary" >Review</a>
-                        <a th:href="@{~/partner/edit-position?type=Placement&id={pid}( pid=${pla.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
-                        <a th:href="@{~/partner/delete-position?positionId={id}( id=${pla.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
+                        <a th:if="${pla.completed} == true AND ${pla.review} == null" th:href="@{add-review?type=Placement&id={pid}( pid=${pla.id} )}" class="btn form-button" >Review</a>
+                        <a th:href="@{edit-position?type=Placement&id={pid}( pid=${pla.id} )}" class="material-symbols-rounded btn-edit" title="Edit">edit</a>
+                        <a th:href="@{delete-position?positionId={id}( id=${pla.id} )}" class="material-symbols-rounded btn-delete" title="Delete">Delete</a>
                     </div>
                 </td>
             </tr>
@@ -563,11 +560,11 @@
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
 
                                 <td>${filteredData[i].review == null ? "Unreviewed" : "Reviewed"}</td>
-                                <td style="display: flex;">
-                                    <div class="mx-auto">  
-                                        ${filteredData[i].completed && filteredData[i].review == null ? `<a class="btn btn-primary" href="/partner/add-review?type=Placement&id=${filteredData[i].id}">Review</a>` : ``}
-                                        ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
-                                        <span class="material-symbols-rounded btn-delete" > delete</span>
+                                <td class="text-center align-middle">
+                                    <div class="mx-auto">
+                                        ${filteredData[i].completed && filteredData[i].review == null ? `<a class="btn form-button" href="add-review?type=Placement&id=${filteredData[i].id}">Review</a>` : ``}
+                                        ${`<a class="material-symbols-rounded btn-edit" href="edit-position?type=type=Placement&id=${filteredData[i].id}" title="Edit">Edit</a>`}
+                                        ${`<a class="material-symbols-rounded btn-delete" href="delete-position?positionId=${filteredData[i].id}" title="Delete">Delete</a>`}
                                     </div>
                                 </td>
                                 </tr>`;
@@ -577,7 +574,6 @@
         </script>
     </div>
 </div>
-
 
 <!-- Partner EOIs -->
 <div th:fragment="partner-expression-of-interest" id="partner-expression-of-interest" xmlns:th="http://www.thymeleaf.org">
@@ -614,7 +610,7 @@
                     <td th:text="${#dates.format(pos.endDate, 'dd/MM/yyyy')}">24/12/2022</td>
                     <td th:text="${pos.description}">Just a one month job</td>
                     <td th:text="${pos.approved ? 'Approved' : 'Pending'}">Approved</td>
-                    <td style="display: flex;">
+                    <td class="text-center align-middle">
                         <div class="mx-auto">
                             <span class="material-symbols-rounded btn-edit" title="Edit">edit</span>
                             <span class="material-symbols-rounded btn-delete">delete</span>
@@ -659,8 +655,8 @@
                                 <td>${formatDate(filteredData[i].endDate)}</td>
                                 <td>${filteredData[i].description}</td>
                                 <td>${filteredData[i].approved ? 'Approved' : 'Pending'}</td>
-                                <td style="display: flex;">
-                                    <td style="display: flex;">
+                                <td class="text-center align-middle">
+                                    <td class="text-center align-middle">
                                     <div class="mx-auto">
                                         ${`<a class="material-symbols-rounded btn-edit" href="/partner/edit-expression-of-interest?id=${filteredData[i].id}" title="Edit"><span class="material-symbols-rounded btn-edit" > edit</span></a>`}
                                         <span class="material-symbols-rounded btn-delete" > delete</span>

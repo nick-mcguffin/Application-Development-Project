@@ -16,9 +16,4 @@ public class WebMvcConfigDEV implements WebMvcConfigurer {
     @Autowired
     RemoteClientRepository remoteClientRepository;
 
-    //Login page not implemented yet
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/login").setViewName("login");
-//    }
 }

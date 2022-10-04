@@ -25,6 +25,6 @@ class CustomAccessDeniedHandlerTest {
     void redirectUserOnAccessDeniedException() throws IOException {
         var response = new MockHttpServletResponse();
         customAccessDeniedHandler.handle(new MockHttpServletRequest(), response, new AccessDeniedException("Access Denied"));
-        assertEquals("/accessDenied", response.getRedirectedUrl());
+        assertEquals("/access-denied", response.getRedirectedUrl());
     }
 }

@@ -17,10 +17,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfigPROD implements WebMvcConfigurer {
 
     @Autowired
-    RemoteClientRepository remoteClientRepository;
+    private RemoteClientRepository remoteClientRepository;
 
     /**
      * Registers custom interceptors
+     *
      * @param registry The interceptor registry
      */
     @Override

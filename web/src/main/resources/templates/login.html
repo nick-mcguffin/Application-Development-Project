@@ -1,39 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"></head>
-<link th:href="@{~/css/login.css}" rel="stylesheet" />
+<link th:href="@{~/css/login.css}" rel="stylesheet"/>
 <body class="bg-dark bg-opacity-10">
 <!-- Top Navigation Bar -->
 <div th:replace="fragments/navigation :: top-navigation"></div>
 
 <div class="container">
     <h1 class="form-style m-3">Login</h1>
-
-<form name='f' action="login" method='POST'>
-
-
-            <div class="txt_field">
-
+    <form name='f' action="login" method='POST'>
+        <div class="txt_field">
             <input type='text' name='username' value='' required>
-                <span> </span>
-                <Label>Username</Label>
-            </div>
-
-            <div class="txt_field">
-
-           <input type='password' name='password' value='' required/>
-                <span> </span>
-                <Label>Password</Label>
-            </div>
-
-          <input name="submit" type="submit" value="Submit"/>
-
-            <div class="signup">
+            <span> </span>
+            <Label>Username</Label>
+        </div>
+        <div class="txt_field">
+            <input type='password' name='password' value='' required/>
+            <span> </span>
+            <Label>Password</Label>
+        </div>
+        <input name="submit" type="submit" value="Submit"/>
+        <div class="signup">
             Not signed up? <a th:href="@{/register}">Register</a>
-            </div>
-
-
-</form>
+        </div>
+    </form>
 </div>
 <div th:replace="fragments/scripts"></div>
 </body>

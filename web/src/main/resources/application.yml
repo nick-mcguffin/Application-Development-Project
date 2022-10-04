@@ -9,7 +9,7 @@ spring:
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
-    active: dev # Set this as either dev or prod
+    active: prod # Set this as either dev or prod
 
   mail:
     # Credentials for the gmail smtp service passed in run configurations

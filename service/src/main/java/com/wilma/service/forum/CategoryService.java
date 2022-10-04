@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CategoryService extends CrudOpsImpl<ForumCategory, Integer, CategoryRepository> {
 
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public ForumCategory findByName(String categoryName) {
         return categoryRepository.findByNameIgnoreCase(categoryName);

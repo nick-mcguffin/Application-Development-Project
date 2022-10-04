@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/head"></head>
-    <div th:replace="fragments/navigation :: top-navigation"></div>
+<head th:replace="fragments/head"></head>
+<div th:replace="fragments/navigation :: top-navigation"></div>
+
+<body class="bg-dark bg-opacity-10">
     <div class="w-70 mx-auto">
-        <body class="bg-dark bg-opacity-10">
         <div class="container py-5">
             <div class="row h-100 align-items-center py-5 form container">
                 <div class="col-lg-6" style="text-align: center">
-                    <img
-                        src="assets/wilma-outline.png"
-                        alt="WILMA image"
-                        style="height: 180px"
-                    />
+                    <img src="assets/wilma-outline.png"  alt="WILMA image" style="height: 180px" />
                     <p class="center">
-                    <br />Contact the team for help with any enquiries.
+                        <br/>Contact the team for help with any enquiries.
                     </p>
                     <hr/>
                     <span class="center"><img src="assets/icons/telephone.svg" class="icon-size"/></span>
@@ -23,50 +20,29 @@
                     <hr/>
                 </div>
                 <div class="col-lg-6 d-none d-lg-block">
-                    <form id="contact-us" 
-                    class="row g-3 form-border mt-3" 
-                    th:action="@{/submit}"
-                    method="post"
-                    th:object="${contactForm}"><!-- Bind the object we want to use -->
-                    <h1 class="display-4 header-style center">Contact Us</h1>
-                    <div class="col-md-10 ms-5 mt-3">
-                        <label for="name" class="form-label">Name</label>
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="name"
-                            name="name"
-                        th:field="*{name}"/><!-- Refers to contactForm.name -->
-                        <br/>
-                    </div>
-                    <div class="col-md-10 ms-5 mt-2">
-                        <label for="email" class="form-label">E-mail</label>
-                        <input
-                        type="email"
-                        class="form-control"
-                        id="email"
-                        aria-describedby="email"
-                        name="name"
-                        th:field="*{email}"/>
-                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                    </div>
-                    <div class="col-md-10 ms-5 mt-2">
-                        <label for="details" class="form-label">Details</label>
-                        <textarea
-                        class="form-control"
-                        id="details"
-                        rows="8"
-                        columns="50"
-                        name="details"
-                        th:field="*{details}"></textarea>
-                    </div>
-                    <div class="form-group mb-3 mt-2 text-center">
-                    <button type="submit" class="btn form-button">Submit</button>
-                    </div>
-                </form>
+                    <form id="contact-us" class="row g-3 form-border mt-3" th:action="@{/submit}" method="post" th:object="${contactForm}"><!-- Bind the object we want to use -->
+                        <h1 class="display-4 header-style center">Contact Us</h1>
+                        <div class="col-md-10 ms-5 mt-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" th:field="*{name}"/><!-- Refers to contactForm.name -->
+                            <br/>
+                        </div>
+                        <div class="col-md-10 ms-5 mt-2">
+                            <label for="email" class="form-label">E-mail</label>
+                            <input type="email" class="form-control" id="email" aria-describedby="email" name="name" th:field="*{email}"/>
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="col-md-10 ms-5 mt-2">
+                            <label for="details" class="form-label">Details</label>
+                            <textarea class="form-control" id="details" rows="8" name="details" th:field="*{details}"></textarea>
+                        </div>
+                        <div class="form-group mb-3 mt-2 text-center">
+                            <button type="submit" class="btn form-button">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </body>
     </div>
+</body>
 </html>
