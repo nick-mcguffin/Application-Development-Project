@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.Period;
@@ -28,9 +29,11 @@ public class Position {
     private Partner partner;
 
     @Column(name = "start_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date startDate;
 
     @Column(name = "end_date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date endDate;
 
     private Period period;
@@ -40,7 +43,6 @@ public class Position {
 
     private boolean approved;
 
-    @Transient
     private String type;
 
 

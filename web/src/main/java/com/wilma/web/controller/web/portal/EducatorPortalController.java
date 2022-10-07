@@ -1,48 +1,52 @@
 package com.wilma.web.controller.web.portal;
 
-import com.wilma.config.web.UserConfiguration;
-import com.wilma.entity.Frequency;
-import com.wilma.entity.PayType;
-import com.wilma.entity.positions.ExpressionOfInterest;
-import com.wilma.entity.dto.PostDTO;
-import com.wilma.entity.dto.ReplyDTO;
-
-import com.wilma.entity.positions.Job;
-
+import com.wilma.config.web.UserPortalConfiguration;
+import com.wilma.entity.dto.*;
 import com.wilma.entity.positions.Placement;
-import com.wilma.entity.users.Partner;
+import com.wilma.entity.users.Educator;
+import com.wilma.service.UserService;
+import com.wilma.service.docs.DocumentService;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.EOIService;
+import com.wilma.service.positions.PositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.Period;
-import java.util.Date;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 @Slf4j
 @Controller
 @RequestMapping("/educator")
 public class EducatorPortalController {
-
     @Autowired
     CategoryService categoryService;
     @Autowired
     ForumService forumService;
     @Autowired
     TagService tagService;
+    @Autowired
+    PositionService positionService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    DocumentService documentService;
+    @Autowired
+    EOIService eoiService;
 
     //region Dashboard
     @GetMapping("/dashboard")
     public String dashboard(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "dashboard",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "menuElements", UserPortalConfiguration.educatorMenuElements
         ));
         return "/educator/dashboard";
     }
@@ -53,19 +57,90 @@ public class EducatorPortalController {
     public String marketplace(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "marketplace",
-                "menuElements", UserConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-                ),
-                "pendingPositions", List.of(
-                        new Job(1, new Partner("microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, true, 25.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Job(2, new Partner("google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "A 2nd sample job", false, true, 27.50, PayType.WAGE, Frequency.WEEKLY),
-                        new Placement(3, new Partner("apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, true, false)
-                )
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "approvedPositions", positionService.getApprovedPositions(),
+                "pendingPositions", positionService.pendingPositions(),
+                "ReviewPlacements", positionService.getPlacements()
         ));
         return "/educator/marketplace";
+    }
+
+    @GetMapping("/marketplace-approve")
+    public String marketplaceSetApproved(Model model, @RequestParam Integer posId) {
+        positionService.setApproved(posId);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "approvedPositions", positionService.getApprovedPositions(),
+                "pendingPositions", positionService.pendingPositions()
+
+        ));
+        return "redirect:marketplace";
+    }
+
+    @GetMapping("/view-review")
+    public String viewReview(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "id", id,
+                "placement", positionService.findById(id)
+        ));
+        return "/educator/view-review";
+    }
+
+    @PostMapping("/approve-review")
+    public String updateReview(@ModelAttribute Placement placement) {
+        positionService.AcceptReview(placement);
+        return "redirect:/educator/marketplace";
+    }
+
+    @GetMapping("delete-position")
+    public String deletePosition(@RequestParam Integer positionId){
+        positionService.deleteById(positionId);
+        log.info("Position with id={} deleted by user {}", positionId, userService.getCurrentUser().getUsername());
+        return "redirect:marketplace";
+    }
+
+    @GetMapping("/edit-position")
+    public String editPosition (Model model, @RequestParam String type, @RequestParam Integer id) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "type", type,
+                "id", id,
+                "placement", positionService.findById(id),
+                "job", positionService.findById(id)
+        ));
+        return "/educator/edit-position";
+    }
+
+    @PostMapping("/update-placement")
+    public RedirectView updatePlacement(@ModelAttribute PlacementDTO placementDTO, @RequestParam Integer id, Model model){
+        var newPlacement = positionService.updatePlacementFromDTO(placementDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "placement", placementDTO,
+                "id", id
+        ));
+
+        log.info("Placement updated from DTO: "+ newPlacement);
+        return new RedirectView("/educator/marketplace");
+    }
+
+    @PostMapping("/update-job")
+    public RedirectView updateJob(@ModelAttribute JobDTO jobDTO, @RequestParam Integer id, Model model){
+        var newJob = positionService.updateJobFromDTO(jobDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "marketplace",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "job", jobDTO,
+                "id", id
+        ));
+
+        log.info("Job: {} updated from DTO: {}", newJob, jobDTO);
+        return new RedirectView("/educator/marketplace");
     }
     //endregion
 
@@ -74,7 +149,7 @@ public class EducatorPortalController {
     public String forumOverview(Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryList", categoryService.findAll(),
                 "recentPosts", forumService.getPosts()
         ));
@@ -85,7 +160,7 @@ public class EducatorPortalController {
     public String forumContent(@RequestParam String type, Model model, @RequestParam(required = false) Integer postId) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "contentType", type,
@@ -102,7 +177,7 @@ public class EducatorPortalController {
         var categoryName = reply.getPost().getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "postId", postId,
                 "categoryName", categoryName,
                 "postsByCategory", forumService.getPostByCategoryName(categoryName),
@@ -118,7 +193,7 @@ public class EducatorPortalController {
         var categoryName = newPost.getCategory().getName();
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "availableCategories", categoryService.findAll(),
                 "availableTags", tagService.findAll(),
                 "categoryName", categoryName,
@@ -135,7 +210,7 @@ public class EducatorPortalController {
     public String forumThread(@RequestParam String category, Model model) {
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -147,7 +222,7 @@ public class EducatorPortalController {
         forumService.deleteById(postId);
         model.addAllAttributes(Map.of(
                 "currentPage", "forum",
-                "menuElements", UserConfiguration.educatorMenuElements,
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
                 "categoryName", category,
                 "postsByCategory", forumService.getPostByCategoryName(category),
                 "repliesForPosts", forumService.getPostRepliesByCategory(category)));
@@ -159,22 +234,65 @@ public class EducatorPortalController {
     @GetMapping("/expressions-of-interest")
     public String expressionsOfInterest(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "expressions-of-interest",
-                "menuElements", UserConfiguration.educatorMenuElements,
-                "approvedPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                ),
-                "pendingPositions", List.of(
-                        new ExpressionOfInterest(1, new Partner("Microsoft", "Microsoft"), new Date(), new Date(), Period.of(0,0,1), "Brisbane", "A sample job", false, false),
-                        new ExpressionOfInterest(2, new Partner("Google", "Google"), new Date(), new Date(), Period.of(0,11,1), "Perth", "Another sample job", false, false),
-                        new ExpressionOfInterest(3, new Partner("Apple", "Apple"), new Date(), new Date(), Period.of(1,0,0), "Sydney", "A placement example", false, false),
-                        new ExpressionOfInterest(4, new Partner("Amazon", "Amazon"), new Date(), new Date(), Period.of(1,1,1), "Melbourne", "Slavery with extra steps", false, false)
-                )
+            "currentPage", "expressions-of-interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "openExpressionsOfInterest", eoiService.getExpressionsOfInterest()
         ));
         return "/educator/expressions-of-interest";
+    }
+
+    @GetMapping("delete-expression-of-interest")
+    public String deleteEOI(@RequestParam Integer id){
+        eoiService.deleteExpressionOfInterestById(id);
+        log.info("EOI with id={} deleted by user {}", id, userService.getCurrentUser().getUsername());
+        return "redirect:expressions-of-interest";
+    }
+
+    @GetMapping("/new-expression-of-interest")
+    public String newExpressionOfInterest(Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "expressions-of-interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", new ExpressionOfInterestDTO()
+        ));
+        return "/educator/new-expression-of-interest";
+    }
+
+    @GetMapping("/edit-expression-of-interest")
+    public String editExpressionOfInterest(@RequestParam Integer id, Model model) {
+        model.addAllAttributes(Map.of(
+                "currentPage", "expressions-of-interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", eoiService.findEOIById(id),
+                "id", id
+        ));
+        return "/educator/edit-expression-of-interest";
+    }
+
+    @PostMapping("/update-expression-of-interest")
+    public RedirectView updatePlacement(@ModelAttribute ExpressionOfInterestDTO expressionOfInterestDTO, @RequestParam Integer id, Model model){
+        var newEOI = eoiService.updateEOIFromDTO(expressionOfInterestDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "expressions-of-interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", expressionOfInterestDTO,
+                "id", id
+        ));
+
+        log.info("EOI updated from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
+    }
+
+    @PostMapping("/create-expression-of-interest")
+    public RedirectView createEOI(@ModelAttribute ExpressionOfInterestDTO eoiDTO, Model model){
+        var newEOI = eoiService.addEOIFromDTO(eoiDTO);
+        model.addAllAttributes(Map.of(
+                "currentPage", "expressions-of-interest",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "eoi", eoiDTO));
+
+        log.info("EOI created from DTO: "+ newEOI);
+        return new RedirectView("/educator/expressions-of-interest");
     }
     //endregion
 
@@ -182,10 +300,32 @@ public class EducatorPortalController {
     @GetMapping("/profile")
     public String EducatorProfile(Model model) {
         model.addAllAttributes(Map.of(
-"currentPage", "profile",
-                "menuElements", UserConfiguration.educatorMenuElements
+                "currentPage", "profile",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "currentUser", userService.getCurrentUser(),
+                "inEditMode", false
         ));
         return "/educator/profile";
+    }
+
+    @GetMapping("/edit-profile")
+    public String editProfile(Model model, HttpServletRequest request){
+        model.addAllAttributes(Map.of(
+                "currentPage", "profile",
+                "menuElements", UserPortalConfiguration.educatorMenuElements,
+                "inEditMode", true,
+                "currentUser", userService.getCurrentUser()
+        ));
+        return "/educator/profile";
+    }
+
+    @PostMapping("/update-profile")
+    public String updateProfile(@ModelAttribute Educator educator, @RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
+        userService.updateEducatorProfile(educator, file.isEmpty() ?
+                ((Educator) userService.getCurrentUser()).getProfileImageId() :
+                documentService.uploadFile(file).getId()
+        );
+        return "redirect:profile";
     }
     //endregion
 

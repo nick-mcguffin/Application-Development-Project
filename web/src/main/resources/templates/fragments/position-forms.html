@@ -1,46 +1,46 @@
-<!-- Fields for creating a new placement -->
+<!-- Fields for creating a new position -->
 <div th:fragment="position-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="position-start-date" class="form-label">Start Date</label>
-    <input class="form-floating user-input" id="position-start-date">
+    <input type="date" class="form-floating user-input" id="position-start-date" th:field="*{startDate}" required>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-end-date" class="form-label">End Date</label>
-    <input class="form-floating user-input" id="position-end-date">
-  </div>
-
-  <div class="row p-3 pt-0">
-    <label for="position-period" class="form-label">Period</label>
-    <input class="form-floating user-input" id="position-period">
+    <input type="date" class="form-floating user-input" id="position-end-date" th:field="*{endDate}" required>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-location" class="form-label">Location</label>
-    <input class="form-floating user-input" id="position-location">
+    <input class="form-floating user-input" id="position-location" th:field="*{location}" required>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="position-description" class="form-label">Description</label>
-    <textarea class="form-floating user-input" id="position-description" rows="5"></textarea>
-  </div>
+    <textarea id="position-description" rows="5" th:field="*{description}" required></textarea></div>
 </div>
 
 <!-- Fields for creating a new job -->
 <div th:fragment="job-form" xmlns:th="http://www.thymeleaf.org">
   <div class="row p-3 pt-0">
     <label for="job-pay-rate" class="form-label">Pay Rate</label>
-    <input class="form-floating user-input" id="job-pay-rate">
+    <input class="form-floating user-input" id="job-pay-rate" th:field="*{payRate}" required>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="job-pay-type" class="form-label">Pay Type</label>
-    <input class="form-floating user-input" id="job-pay-type">
+    <select class="form-floating user-input" id="job-pay-type" th:field="*{payType}">
+      <option th:each="type : ${T(com.wilma.entity.PayType).values()}"
+              th:value="${type}" th:text="${type}"></option>
+    </select>
   </div>
 
   <div class="row p-3 pt-0">
     <label for="job-pay-frequency" class="form-label">Pay Frequency</label>
-    <input class="form-floating user-input" id="job-pay-frequency">
+    <select class="form-floating user-input" id="job-pay-frequency" th:field="*{payFrequency}">
+      <option th:each="freq : ${T(com.wilma.entity.Frequency).values()}"
+              th:value="${freq}" th:text="${freq}"></option>
+    </select>
   </div>
 </div>
 
@@ -49,7 +49,7 @@
   <div class="row p-3 pt-0">
     <div class="form-group col">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="filledCheck">
+        <input class="form-check-input" type="checkbox" id="filledCheck" th:field="*{filled}">
         <label class="form-check-label" for="filledCheck">
           Filled
         </label>
@@ -57,7 +57,7 @@
     </div>
     <div class="form-group col">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="approvedCheck">
+        <input class="form-check-input" type="checkbox" id="approvedCheck" th:field="*{approved}">
         <label class="form-check-label" for="approvedCheck">
           Approved
         </label>
@@ -71,7 +71,7 @@
   <div class="row p-3 pt-0">
     <div class="form-group col">
       <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="completedCheck">
+        <input class="form-check-input" type="checkbox" id="completedCheck" th:field="*{completed}">
         <label class="form-check-label" for="completedCheck">
           Completed
         </label>
@@ -80,19 +80,51 @@
   </div>
 </div>
 
+<!-- fields for creating EOI -->
+<div th:fragment="eoi-form" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <label for="eoi-category" class="form-label">Category</label>
+    <input class="form-floating user-input" id="eoi-category" th:field="*{category}" required>
+  </div>
+  <div class="row p-3 pt-0">
+    <label for="eoi-location" class="form-label">Location</label>
+    <input class="form-floating user-input" id="eoi-location" th:field="*{location}" required>
+  </div>
+  <div class="row p-3 pt-0">
+    <label for="eoi-description" class="form-label">Description</label>
+    <input class="form-floating user-input" id="eoi-description" th:field="*{description}" required>
+  </div>
+  <div class="row p-3 pt-0">
+    <label for="eoi-date" class="form-label">Date</label>
+    <input type="date" class="form-floating user-input" id="eoi-date" th:field="*{date}" required>
+  </div>
+</div>
+
+<!-- field for editing EOI -->
+<div th:fragment="edit-eoi-field" xmlns:th="http://www.thymeleaf.org">
+  <div class="row p-3 pt-0">
+    <div class="form-group col">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="eoiFilledCheck" th:field="*{filled}">
+        <label class="form-check-label" for="eoiFilledCheck">
+          Filled
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- submit/cancel buttons -->
 <div th:fragment="submit-cancel" xmlns:th="http://www.thymeleaf.org">
-  <form>
     <div class="form-group mb-3 text-center">
       <button type="submit" class="btn form-button btn-success">Submit</button>
-      <a class="btn form-button btn-danger" th:href="@{/partner/marketplace}">Cancel</a>
+      <input class="btn form-button btn-danger" type="button" value="Cancel" onclick="window.history.go(-1); return false;">
     </div>
-  </form>
 </div>
 
 <!-- Form for creating a new job -->
 <div th:fragment="new-job-form" xmlns:th="http://www.thymeleaf.org" id="new-job-form">
-  <form>
+  <form th:action="@{create-job}" th:object="${job}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
@@ -101,15 +133,15 @@
 
 <!-- Form for creating a new placement -->
 <div th:fragment="new-placement-form" xmlns:th="http://www.thymeleaf.org" id="new-placement-form">
-  <form>
+  <form th:action="@{create-placement}" th:object="${placement}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
   </form>
 </div>
 
-<!-- Form for editing job -->
-<div th:fragment="edit-job-form" th:class="${positionType == 'Job'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-job-form">
-  <form>
+<!-- Form for editing job (partner) -->
+<div th:fragment="partner-edit-job-form" xmlns:th="http://www.thymeleaf.org" id="partner-edit-job-form">
+  <form th:action="@{~/partner/update-job?id={jid}( jid=${id} )}" th:object="${job}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: job-form"></div>
     <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
@@ -117,12 +149,50 @@
   </form>
 </div>
 
-<!-- Form for editing a placement -->
-<div th:fragment="edit-placement-form" th:class="${positionType == 'Placement'}? '' : 'hidden'" xmlns:th="http://www.thymeleaf.org" id="edit-placement-form">
-  <form>
+<!-- Form for editing a placement (partner) -->
+<div th:fragment="partner-edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="partner-edit-placement-form">
+  <form th:action="@{~/partner/update-placement?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
     <div th:replace="fragments/position-forms  :: position-form"></div>
     <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
     <div th:replace="fragments/position-forms  :: edit-placement-field"></div>
     <div th:replace="fragments/position-forms  :: submit-cancel"></div>
   </form>
 </div>
+
+<!-- Form for editing job (educator) -->
+<div th:fragment="educator-edit-job-form" xmlns:th="http://www.thymeleaf.org" id="educator-edit-job-form">
+  <form th:action="@{~/educator/update-job?id={jid}( jid=${id} )}" th:object="${job}" method="post">
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: job-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing a placement (educator) -->
+<div th:fragment="educator-edit-placement-form" xmlns:th="http://www.thymeleaf.org" id="educator-edit-placement-form">
+  <form th:action="@{~/educator/update-placement?id={pid}( pid=${id} )}" th:object="${placement}" method="post">
+    <div th:replace="fragments/position-forms  :: position-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-position-fields"></div>
+    <div th:replace="fragments/position-forms  :: edit-placement-field"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for creating an EOI -->
+<div th:fragment="new-eoi-form" xmlns:th="http://www.thymeleaf.org" id="new-eoi-form">
+  <form th:action="@{~/educator/create-expression-of-interest}" th:object="${eoi}" method="post">
+    <div th:replace="fragments/position-forms  :: eoi-form"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+
+<!-- Form for editing an EOI -->
+<div th:fragment="edit-eoi-form" xmlns:th="http://www.thymeleaf.org" id="edit-eoi-form">
+  <form th:action="@{~/educator/update-expression-of-interest?id={eid}( eid=${id} )}" th:object="${eoi}" method="post">
+    <div th:replace="fragments/position-forms  :: eoi-form"></div>
+    <div th:replace="fragments/position-forms  :: edit-eoi-field"></div>
+    <div th:replace="fragments/position-forms  :: submit-cancel"></div>
+  </form>
+</div>
+

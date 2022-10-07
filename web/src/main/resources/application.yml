@@ -4,18 +4,37 @@ module:
 
 spring:
   application:
+    domain: http://localhost:8080
+    view-attachment-path: ${spring.application.domain}/api/v1/files/
     name: Work Integrated Learning Management Application - WILMA
 
   profiles:
-    active: dev # Set this as either dev or prod
+    active: prod # Set this as either dev or prod
 
   mail:
-    # Credentials for the sendinblue smtp service
-    site-email: projectwilma@mail.com
-    host: smtp-relay.sendinblue.com
+    # Credentials for the gmail smtp service passed in run configurations
+    site-email: wilmaproject.dev@gmail.com
+    host: smtp.gmail.com
     port: 587
-    username: projectwilma@mail.com
-    password: njYDR2S9ZCQKIkf5
+    username: wilmaproject.dev@gmail.com
+    password: bditlkfcuotzojpu
+    properties:
+      mail:
+        smtp:
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+  http:
+    multipart:
+      upload-path: web/src/main/resources/uploads/
+
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 10MB
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 api:
   v1.context-path: /api/v1

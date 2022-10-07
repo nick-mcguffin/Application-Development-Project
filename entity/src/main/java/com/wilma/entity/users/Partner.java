@@ -1,14 +1,12 @@
 package com.wilma.entity.users;
 
-import com.wilma.entity.positions.Position;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.LinkedHashSet;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import java.util.Set;
 
 @Getter
@@ -18,16 +16,38 @@ import java.util.Set;
 @Entity
 public class Partner extends UserAccount {
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     @Column(name = "Business_name")
     private String businessName;
 
-    @OneToMany(mappedBy = "partner", cascade = CascadeType.ALL)
-    private Set<Position> positions = new LinkedHashSet<>();
+    @Column(name = "profile_image_id")
+    private Integer profileImageId;
 
-    public Partner(Integer userId, String username, String password, String email, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName) {
-        super(userId, username, password, email, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles);
-        this.businessName = businessName;
+    @Column(name = "contact_number")
+    private String contactNumber;
+
+    @Column(name = "australian_business_number")
+    private String abn;
+
+    public Partner(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName) {
+        super(userId, username, password, email, bio, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles);
+        this.businessName = businessName;  
     }
+
+    public Partner(Integer userId, String username, String password, String email, String bio, boolean credentialsNonExpired, boolean accountNonLocked, boolean accountNonExpired, boolean enabled, Set<Role> roles, String businessName,String firstName, String lastName, String contactNumber, String abn) {
+        super(userId, username, password, email, bio, credentialsNonExpired, accountNonLocked, accountNonExpired, enabled, roles);
+        this.businessName = businessName;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNumber = contactNumber;
+        this.abn = abn;
+    } 
+
 
     public Partner(String username, String businessName) {
         super(username);

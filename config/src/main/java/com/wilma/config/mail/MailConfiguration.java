@@ -29,7 +29,7 @@ public class MailConfiguration {
     private String password;
 
     @Bean
-    public JavaMailSender getJavaMailSender(){
+    public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(this.getHost());
         mailSender.setPort(this.getPort());
@@ -40,8 +40,10 @@ public class MailConfiguration {
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
-        // props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.debug", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
         return mailSender;
     }
 

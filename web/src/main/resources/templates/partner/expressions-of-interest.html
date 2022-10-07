@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head"></head>
-    <link th:href="@{~/css/portal-styles.css}" rel="stylesheet"/>
-    <body onload="hidePositionsPendingTableIfEmpty()">
-    <!-- Top Navigation Bar-->
-    <div th:replace="fragments/navigation :: top-navigation"></div>
-    <body class="bg-dark bg-opacity-10">
+    <link th:href="@{~/css/portal-styles.css}" rel="stylesheet" />
+    <body>
+        <!-- Top Navigation Bar-->
+        <div th:replace="fragments/navigation :: top-navigation"></div>
         <div class="d-flex" id="wrapper">
             <!-- Sidebar Menu -->
             <div th:replace="fragments/navigation :: sidebar"></div>
@@ -14,15 +13,14 @@
 
                     <!-- breadcrumb -->
                     <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
+                        <ol class="breadcrumb mt-2">
                             <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                             <li class="breadcrumb-item active" aria-current="page">Expressions of Interest</li>
                         </ol>
                     </nav>
                     <!-- Pending Expressions Of Interest Table-->
-                    <h1 class="text-center m-3">Pending Expressions of Interest</h1>    
-                    <div th:replace="fragments/expressions-of-interest-tables :: partnerExpressionsOfInterest"></div>
-                    
+                    <h1 class="text-center m-3 text-style">Expressions of Interest</h1>    
+                    <div th:replace="fragments/expressions-of-interest-tables :: partner-pending-expressions-of-interest"></div>
                 </div>
             </div>
         </div>

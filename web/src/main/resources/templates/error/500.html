@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="fragments/head"></head>
+
+  <body>
+    <div th:replace="fragments/navigation :: top-navigation"></div>
+    <div class="container py-5">
+        <h3 class="center">\{{{(>_<)}}}/  Oh now this is not good... But our techies are on it</h3>
+        <h3 class="center"><span th:text="${message}"></span></h3>
+        <img src="/assets/computer-problem-152211_640.png" class="d-block w-25 mx-auto" />
+    </div>
+    
+  </body>
+</html>

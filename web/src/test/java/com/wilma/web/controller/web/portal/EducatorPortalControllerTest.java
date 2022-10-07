@@ -3,6 +3,8 @@ package com.wilma.web.controller.web.portal;
 import com.wilma.service.forum.CategoryService;
 import com.wilma.service.forum.ForumService;
 import com.wilma.service.forum.TagService;
+import com.wilma.service.positions.EOIService;
+import com.wilma.service.positions.PositionService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -22,6 +24,10 @@ class EducatorPortalControllerTest {
     private ForumService forumService;
     @Mock
     private TagService tagService;
+    @Mock
+    private EOIService eoiService;
+    @Mock
+    private PositionService positionService;
     @InjectMocks
     private EducatorPortalController controller;
 

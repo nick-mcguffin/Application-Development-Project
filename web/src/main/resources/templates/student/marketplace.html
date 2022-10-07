@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head"></head>
 <link th:href="@{~/css/portal-styles.css}" rel="stylesheet" />
-<body onload="hidePositionsPendingTableIfEmpty()">
+<link th:href="@{~/css/forum.css}" rel="stylesheet" />
+<script type="text/javascript" th:src="@{~/js/multiselect-dropdown.js}"></script>
+<body>
 <!-- Top Navigation Bar -->
 <div th:replace="fragments/navigation :: top-navigation"></div>
 
@@ -13,16 +15,30 @@
             <div class="container-fluid">
 
                 <!-- breadcrumb -->
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
+                <nav aria-label="breadcrumb" th:switch="${#strings.toLowerCase(type)}">
+                    <ol th:case="null" class="breadcrumb mt-2">
                         <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Marketplace</li>
                     </ol>
+                    <ol th:case="job" class="breadcrumb mt-2">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{marketplace}">Marketplace</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Job Details</li>
+                    </ol>
+                    <ol th:case="placement" class="breadcrumb mt-2">
+                        <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+                        <li class="breadcrumb-item"><a th:href="@{marketplace}">Marketplace</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Placement Details</li>
+                    </ol>
                 </nav>
+                <h1 class="text-center m-3 text-style">Jobs & Placements</h1>
 
-                <h1 class="text-center m-3">Jobs & Placements</h1>
-
-                <div th:replace="fragments/marketplace-tables :: approvedStudent"></div>
+                <!-- Switch fragment depending on the position type -->
+                <div id="fragment-container" th:switch="${#strings.toLowerCase(type)}">
+                    <div th:case="null" th:insert="fragments/marketplace-tables :: approvedStudent"></div>
+                    <div th:case="job" th:insert="fragments/position-details :: job-view"></div>
+                    <div th:case="placement" th:insert="fragments/position-details :: placement-view"></div>
+                </div>
 
             </div>
         </div>

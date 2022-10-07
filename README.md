@@ -1,8 +1,5 @@
 # Work Integrated Learning Management Application (WILMA)
 
-## MySQL Database & User
-- [create-db-and-user.sql](sql/create-db-and-user.sql)
-
 
 <table style="undefined;table-layout: fixed; width: 671px">
 <colgroup>
@@ -143,4 +140,4 @@ Tasks include:
 <a href="https://discord.gg/8KpQFS4AEC" title="Join our discord server" >
 <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" />
 </a>
- 
+

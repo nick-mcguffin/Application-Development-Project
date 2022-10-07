@@ -6,7 +6,8 @@
                 id="partner-form"
                 class="row g-3 form-border mt-3"
                 th:action="@{/register}"
-                method="post">
+                method="post"
+                th:object="${userDTO}">
             <div class="form-icon center mt-3">
                 <span><i class="icon icon-user"></i></span>
             </div>
@@ -14,51 +15,41 @@
             <div class="col-12"></div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="partnerUsername" class="form-label">Username</label>
-                <input type="text" class="form-control" id="partnerUsername" aria-describedby="partnerUsername">
+                <input type="text" id="partnerUsername" th:field="*{username}" class="form-control" required minlength="6" maxlength="20">
             </div>
             <div class="col-md-6"></div>
             <div class="col-5 ms-5 me-3">
                 <label for="partnerEmail" class="form-label">E-mail</label>
-                <input type="email" class="form-control" id="partnerEmail" aria-describedby="partnerEmail">
+                <input type="email" th:field="*{email}" class="form-control" id="partnerEmail" aria-describedby="partnerEmail" required>
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div class="col-5 ms-5 m-3">
                 <label for="partnerPassword" class="form-label">Password</label>
-                <input type="password" class="form-control" id="partnerPassword" aria-describedby="partnerPassword">
+                <input type="password" th:field="*{password}" class="form-control" id="partnerPassword" aria-describedby="partnerPassword" required minlength="8" maxlength="20">
                 <small id="passwordHelp" class="form-text text-muted">
                     Must be 8-20 characters long.
                 </small>
             </div>
             <div class="col-md-5 ms-5 m-3">
-                <label for="partnerFirstName" class="form-label">First Name</label>
-                <input type="text" class="form-control" id="partnerFirstName" aria-describedby="partnerFirstName">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" th:field="*{firstName}" class="form-control" id="firstName" aria-describedby="partnerFirstName" required maxlength="20">
             </div>
 
             <div class="col-md-5 ms-5 m-3">
                 <label for="partnerLastName" class="form-label">Last Name</label>
-                <input type="text" class="form-control" id="partnerLastName" aria-describedby="partnerLastName">
+                <input type="text" th:field="*{lastName}" class="form-control" id="partnerLastName" aria-describedby="partnerLastName" required maxlength="30">
             </div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="businessName" class="form-label">Business Name</label>
-                <input type="text" class="form-control" id="businessName" aria-describedby="businessName">
+                <input type="text" th:field="*{businessName}" class="form-control" id="businessName" aria-describedby="businessName" required>
             </div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="partnerPhone" class="form-label">Contact Number</label>
-                <input type="text" class="form-control" id="partnerPhone" aria-describedby="partnerPhone">
+                <input type="text" th:field="*{contactNumber}" class="form-control" id="partnerPhone" aria-describedby="partnerPhone" required>
             </div>
             <div class="col-md-5 ms-5 m-3">
                 <label for="abn" class="form-label">Australian Business Number (ABN)</label>
-                <input type="text" class="form-control" id="abn" aria-describedby="abn">
-            </div>
-            <div class="col-md-5 ms-5 m-3">
-                <label for="positionDiscipline" class="form-label">Placement Position Discipline</label>
-                <select class="form-select" id="positionDiscipline" aria-label="positionDiscipline">
-                    <option selected>Select...</option>
-                    <option value="Software Development">Software Development</option>
-                    <option value="Networking">Networking</option>
-                    <option value="Business Analysis">Business Analysis</option>
-                    <option value="Project Management">Project Management</option>
-                </select>
+                <input type="text" th:field="*{abn}" class="form-control" id="abn" aria-describedby="abn" required>
             </div>
             <div class="form-group mb-3 text-center">
                 <button type="submit" class="btn form-button">Register</button>

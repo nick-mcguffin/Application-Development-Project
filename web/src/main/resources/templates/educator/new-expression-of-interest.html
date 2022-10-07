@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head"></head>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css" rel="stylesheet">
+<body>
+
+<div th:replace="fragments/navigation :: top-navigation"></div>
+
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar Menu -->
+  <div th:replace="fragments/navigation :: sidebar"></div>
+  <div id="page-content-wrapper">
+    <div class="container-fluid">
+
+      <!-- breadcrumb -->
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mt-2">
+          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+          <li class="breadcrumb-item"><a th:href="@{/educator/expressions-of-interest}">Expressions Of Interest</a></li>
+          <li class="breadcrumb-item active" aria-current="page">New EOI</li>
+        </ol>
+      </nav>
+      <div class="form-border center-form mb-3">
+      <h1 class="text-center m-3 text-style" th:text="'New Expression Of Interest'">Title</h1>
+
+      <div id="eoi-form" th:replace="fragments/position-forms  :: new-eoi-form"></div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

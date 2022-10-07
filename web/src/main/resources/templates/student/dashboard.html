@@ -14,50 +14,58 @@
     <div class="container-fluid">
       <!-- breadcrumb -->
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
+        <ol class="breadcrumb mt-2">
           <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
           <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
         </ol>
       </nav>
       <div class="row">
-        <div class="card col-sm-12 col-md-4" style="width: 18rem;">
-          <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
+        <div class="card col-sm-12 col-md-4 form-border" style="width: 18rem;">
+          <img class="card-img-top mt-3" height="180px" width="auto" src="" th:src="@{~/assets/marketplace.jpg}"
                alt="Jobs & Placements">
           <div class="card-body">
             <h5 class="card-title">Jobs & Placements</h5>
             <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
             <p class="card-text">View and manage jobs and placements</p>
-            <a th:href="@{marketplace}" class="btn btn-primary">Browse</a>
+            <div class="center">
+              <a th:href="@{marketplace}" class="btn form-button">Browse</a>
+              </div>
           </div>
         </div>
-        <div class="card col-sm-12 col-md-4" style="width: 18rem;">
-          <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/Q&A.jpg}"
+        <div class="card col-sm-12 col-md-4 form-border" style="width: 18rem;">
+          <img class="card-img-top mt-3" height="180px" width="auto" src="" th:src="@{~/assets/Q&A.jpg}"
                alt="Q&A Forum">
           <div class="card-body">
             <h5 class="card-title">Q&A Forum</h5>
             <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
             <p class="card-text">View and manage forum post and replies</p>
-            <a th:href="@{forum}" class="btn btn-primary">Browse</a>
+            <div class="center">
+              <a th:href="@{forum}" class="btn form-button">Browse</a>
+            </div>
           </div>
         </div>
-        <div class="card col-sm-12 col-md-4" style="width: 18rem;">
-            <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/resume.jpg}"
+        <div class="card col-sm-12 col-md-4 form-border" style="width: 18rem;">
+            <img class="card-img-top mt-3" height="180px" width="auto" src="" th:src="@{~/assets/resume.jpg}"
                  alt="Q&A Forum">
             <div class="card-body">
               <h5 class="card-title">Resume Management</h5>
               <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
               <p class="card-text">View and manage past and current resumes</p>
-              <a th:href="@{resume-management}" class="btn btn-primary">Manage</a>
+              <div class="center">
+                <a th:href="@{resume-management}" class="btn form-button">Manage</a>
+              </div>
             </div>
           </div>
-        <div class="card col-sm-12 col-md-4" style="width: 18rem;">
-          <img class="card-img-top" height="180px" width="auto" src="" th:src="@{~/assets/profile.jpg}"
+        <div class="card col-sm-12 col-md-4 form-border" style="width: 18rem;">
+          <img class="card-img-top mt-3" height="180px" width="auto" src="" th:src="@{~/assets/profile.jpg}"
                alt="Profile">
           <div class="card-body">
             <h5 class="card-title">Profile</h5>
             <h6 class="card-subtitle mb-2 text-muted">Manage</h6>
             <p class="card-text">View and manage your personal profile</p>
-            <a th:href="@{profile}" class="btn btn-primary">Manage</a>
+            <div class="center">
+              <a th:href="@{profile}" class="btn form-button">Manage</a>
+            </div>
           </div>
         </div>
       </div>

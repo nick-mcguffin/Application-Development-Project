@@ -2,7 +2,7 @@
     xmlns:th="http://www.thymeleaf.org">
     <div class="container-fluid">
         <button class="btn btn-outline-secondary" id="sidebarToggle">Menu</button>
-        <img th:src="@{~/assets/cqu-logo-white.png}" width="136" height="90"/>
+        <img th:src="@{~/assets/cqu-logo-white.png}" width="140" height="92" src=""/>
         <a class="navbar-brand nav-bar-style nav-bar-title" th:href="@{~/}">Work Integrated Learning Management Application (WILMA)</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,22 +30,26 @@
     </div>
 </nav>
 
-<div th:fragment="sidebar" class="border-end bg-white" id="sidebar-wrapper" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<div th:fragment="sidebar" class="bg-white sidebar-border" id="sidebar-wrapper" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <div class="sidebar-heading border-bottom navbar-light bg-light">
-        <a class="navbar-brand" sec:authorize="isAuthenticated()">Hi <span sec:authentication="name"></span>!</a>
-        <a class="navbar-brand" sec:authorize="isAnonymous()">Hi Developer</a>
+        <a class="navbar-brand" sec:authorize="isAuthenticated()">Hi, <span sec:authentication="name"></span>!</a>
+        <a class="navbar-brand" sec:authorize="isAnonymous()">Hi, Anonymous User</a>
     </div>
     <!-- Sidebar Menu Items -->
     <div class="list-group list-group-flush">
         <div th:each="element: ${menuElements}">
-            <a  th:class="| list-group-item list-group-item-action list-group-item-light p-3 ${currentPage == element.page? 'active':''} |"
-                th:href="@{${element.path}}">
-                <span class="material-symbols-outlined" th:text="${element.icon}">house</span>
-                <span th:text="${element.displayName}"></span>
-            </a>
+            
+                <a  th:class="| list-group-item list-group-item-action list-group-item-light p-3 ${currentPage == element.page? 'active':''} |"
+                    th:href="@{${element.path}}">
+                    <span class="material-symbols-outlined" th:text="${element.icon}">house</span>
+                    <span th:text="${element.displayName}"></span>
+                </a>
+            
         </div>
+        </div>
+        
             <a class="list-group-item list-group-item-action list-group-item-light p-3" id="logout-sidebar-bottom"
                 th:href="@{~/}">
             <span class="material-symbols-outlined">logout</span>Logout</a>
-    </div>
+
 </div>

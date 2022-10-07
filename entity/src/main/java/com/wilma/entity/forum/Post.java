@@ -42,11 +42,4 @@ public class Post extends ForumContent {
         this.tags = tags;
     }
 
-    private boolean addReply(Reply reply){
-        return replies.add(reply);
-    }
-
-    private boolean removeReply(Reply reply){
-        return replies.remove(reply);
-    }
 }

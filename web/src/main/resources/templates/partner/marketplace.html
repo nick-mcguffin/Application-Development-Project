@@ -14,22 +14,25 @@
 
       <!-- breadcrumb -->
       <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+        <ol class="breadcrumb mt-2">
+          <li class="breadcrumb-item"><a th:href="@{/}" style="text-decoration: underline;">Home</a></li>
           <li class="breadcrumb-item active" aria-current="page">Marketplace</li>
         </ol>
       </nav>
 
-      <h1 class="text-center m-3">Jobs & Placements</h1>
+      <h1 class="text-center m-3 text-style">Jobs & Placements</h1>
 
-      <div th:replace="fragments/marketplace-tables :: partner"></div>
-
+      <div th:replace="fragments/marketplace-tables :: partner-jobs"></div>
+      <br/>
+      <br/>
+      <div th:replace="fragments/marketplace-tables :: partner-placements"></div>
+      <br/>
+      <br/>
       <div class="d-grid col-md-3 gap-2 mx-auto">
-        <a class="btn btn-primary" th:href="@{~/partner/new-position}">Create New Placement</a>
-        <a class="btn btn-primary" th:href="@{~/partner/expressions-of-interest}">View Expressions Of Interest</a>
+        <a class="btn form-button" th:href="@{~/partner/new-position?type=Placement}">Create New Placement</a>
+        <a class="btn form-button" th:href="@{~/partner/new-position?type=Job}">Create New Job</a>
+        <a class="btn form-button" th:href="@{~/partner/expressions-of-interest}">View Expressions Of Interest</a>
       </div>
-
-      <div th:replace="fragments/marketplace-tables :: partner-expression-of-interest"></div>
 
     </div>
   </div>

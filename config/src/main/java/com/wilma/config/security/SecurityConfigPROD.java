@@ -25,10 +25,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 public class SecurityConfigPROD {
 
     /**
-     *
-     * @param http The http security builder
+     * @param http                  The http security builder
      * @param bCryptPasswordEncoder The chosen password encoder
-     * @param userDetailsService The chosen user details service
+     * @param userDetailsService    The chosen user details service
      * @return The custom authentication manager
      * @throws Exception Methods thrown by subsequent methods called from within
      */
@@ -44,6 +43,7 @@ public class SecurityConfigPROD {
 
     /**
      * Instantiating our BCrypt password encoder, so it can be auto-wired throughout the application
+     *
      * @return The BCrypt password encoder
      */
     @Bean
@@ -52,21 +52,23 @@ public class SecurityConfigPROD {
     }
 
     @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
         return new LoginSuccessHandler();
     }
 
     /**
      * Instantiating the access denied handler so that it can be aut-wired throughout the application
+     *
      * @return The custom access denied handler
      */
     @Bean
-    public AccessDeniedHandler accessDeniedHandler(){
+    public AccessDeniedHandler accessDeniedHandler() {
         return new CustomAccessDeniedHandler();
     }
 
     /**
      * Defines security filters to be implemented by the application
+     *
      * @param http The http security builder
      * @return A security filter chain containing the defined filers
      * @throws Exception Multiple exception possibilities
