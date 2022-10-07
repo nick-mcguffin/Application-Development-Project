@@ -1,8 +1,5 @@
 # Work Integrated Learning Management Application (WILMA)
 
-## MySQL Database & User
-- [create-db-and-user.sql](sql/create-db-and-user.sql)
-
 
 <table style="undefined;table-layout: fixed; width: 671px">
 <colgroup>
@@ -144,6 +141,3 @@ Tasks include:
 <img src="https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white" />
 </a>
 
-# OpenAPI - Swagger
-- The Swagger UI page is available at http://localhost:8080/swagger-ui/index.html
-- JSON format http://localhost:8080/v3/api-docs
